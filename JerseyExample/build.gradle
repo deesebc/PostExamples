@@ -1,0 +1,46 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.gretty:gretty:+'
+  }
+}
+
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: 'org.gretty'
+
+group = "es.home.example"
+version = "1.0.0-SNAPSHOT"
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+clean {
+    delete = ["build", "bin"]
+}
+
+eclipse {
+    jdt {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    classpath {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25.1'
+	compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1'
+}

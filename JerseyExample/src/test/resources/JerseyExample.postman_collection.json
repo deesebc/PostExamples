@@ -1,0 +1,84 @@
+{
+	"variables": [],
+	"info": {
+		"name": "JerseyExample",
+		"_postman_id": "ce878c84-badb-66d7-429e-6bf94d9e0a1c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/JerseyExample/rest/book",
+			"request": {
+				"url": "http://localhost:8080/JerseyExample/rest/book",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/JerseyExample/rest/book/2",
+			"request": {
+				"url": "http://localhost:8080/JerseyExample/rest/book/2",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/JerseyExample/rest/book/2",
+			"request": {
+				"url": "http://localhost:8080/JerseyExample/rest/book/2",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"author\": \"Alfred Bester\",\n    \"name\": \"The stars my destination - updated\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/JerseyExample/rest/book/2",
+			"request": {
+				"url": "http://localhost:8080/JerseyExample/rest/book/2",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/JerseyExample/rest/book/",
+			"request": {
+				"url": "http://localhost:8080/JerseyExample/rest/book/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4,\n    \"author\": \"Frederik Pohl\",\n    \"name\": \"Gateway\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

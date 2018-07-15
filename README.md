@@ -4,6 +4,10 @@
 
 Project to explain how it works Jersey JAX-RS with jersey-servlet:1.19 and hibernate and maven
 
+## ExampleSpringBootREST
+
+Project to explain how we can create a Spring Boot REST service with spring-boot:1.5.6.RELEASE and JPA, H2 and maven
+
 ## ExampleSpringSecurity
 
 Project to explain how it works spring security with spring-boot:1.4.0.RELEASE

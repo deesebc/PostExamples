@@ -4,7 +4,6 @@ plugins {
 
 apply plugin: "java"
 apply plugin: "eclipse"
-apply plugin: 'org.flywaydb.flyway'
 
 group = "es.home.example"
 version = "1.0.0-SNAPSHOT"

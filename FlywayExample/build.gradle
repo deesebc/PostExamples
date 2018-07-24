@@ -1,0 +1,46 @@
+plugins {
+    id "org.flywaydb.flyway" version "5.1.4"
+}
+
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: 'org.flywaydb.flyway'
+
+group = "es.home.example"
+version = "1.0.0-SNAPSHOT"
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/'
+    user = 'root'
+    password = 'root'
+    schemas = ['flywayExample']
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+clean {
+    delete = ["build", "bin"]
+}
+
+eclipse {
+    jdt {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    classpath {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+}

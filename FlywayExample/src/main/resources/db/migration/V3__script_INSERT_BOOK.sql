@@ -1,0 +1,2 @@
+INSERT INTO flywayExample.BOOK (ID, NAME, AUTHOR, PAGES) VALUES (1, 'The stars my destination','Alfred Bester',400);
+INSERT INTO flywayExample.BOOK (ID, NAME, AUTHOR, PAGES) VALUES (2, 'The Ender\'s game ','Orson Scott Card',400);

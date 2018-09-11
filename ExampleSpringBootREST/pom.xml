@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.home.example</groupId>
-	<artifactId>exampleSpringBoot</artifactId>
-	<version>1.0.2</version>
+	<artifactId>ExampleSpringBootREST</artifactId>
+	<version>1.0.3</version>
 	<packaging>war</packaging>
-	<name>exampleSpringBoot</name>
+	<name>ExampleSpringBootREST</name>
 	<description>This is simple boot application for Spring boot actuator test</description>
 
 	<parent>

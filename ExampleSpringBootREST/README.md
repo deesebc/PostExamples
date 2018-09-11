@@ -9,6 +9,7 @@ You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com
 * Version 1.0.0: How to do a simple web service with Spring Boot and REST. Link: http://jakartaeeyyo.blogspot.com/2017/08/web-services-con-spring-boot-nivel.html  
 * Version 1.0.1: How to do with JPA and a DB H2. Link: http://jakartaeeyyo.blogspot.com/2017/08/web-service-con-spring-boot-jpa-y-h2.html
 * Version 1.0.2: How to do its REST client. Link: http://jakartaeeyyo.blogspot.com/2017/10/how-to-cliente-rest-con-spring-boot.html
+* Version 1.0.3: We add a YAML and JSON swagger files for the API
 
 ## Run
 

@@ -4,3 +4,8 @@
 */target/**
 */build/**
 */bin/**
+/.gradle/
+
+\.project
+
+\.settings/

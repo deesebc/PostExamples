@@ -19,3 +19,7 @@ Project to explain how it works JAX-WS with jaxws-rt:2.2.10
 ## JerseyExample
 
 Project to explain how it works Jersey JAX-RS with jersey-container-servlet:2.25.1 and jetty and gradle
+
+## MSF4JExample
+
+Project to explain how it works MSF4J version: 2.6.2 

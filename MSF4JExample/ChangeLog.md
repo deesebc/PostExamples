@@ -7,3 +7,7 @@
 ## 1.1.0-SNAPSHOT
 
 - We include swagger support
+
+### 1.2.0-SNAPSHOT
+
+- We include an exception mapper

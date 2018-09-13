@@ -9,7 +9,10 @@ Project to explain how it works MSF4J version: 2.6.2
 Follow the steps:
 - Execute 'mvn package' over the application
 - Execute 'java -jar target/MS4JExample-1.0.0-SNAPSHOT.jar'
-- Launch a call to 'http://localhost:9090/book/list' or 'http://localhost:9090/book/8'
+- Launch a call to 
+	- http://localhost:9090/book/list
+	- http://localhost:9090/book/8
+	- http://localhost:9090/swagger
 
 ## Tags
 

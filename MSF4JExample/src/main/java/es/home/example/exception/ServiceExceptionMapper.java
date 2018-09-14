@@ -24,6 +24,7 @@ public class ServiceExceptionMapper implements ExceptionMapper<Exception> {
 	@Override
 	public Response toResponse(final Exception exception) {
 		System.out.println("ServiceExceptionMapper");
+		exception.printStackTrace();
 		return Response.ok(new EntityReponse("Internal server error"), MediaType.APPLICATION_JSON).build();
 	}
 

@@ -11,3 +11,5 @@
 \.settings/
 
 MSF4JExample/metrics/
+
+MSF4JExample/deployment\.yaml

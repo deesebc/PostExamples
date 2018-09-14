@@ -14,3 +14,6 @@
 
 ### 1.3.0-SNAPSHOT
 - We include the use of metrics
+
+### 1.4.0-SNAPSHOT
+- We include the use of JPA with H2

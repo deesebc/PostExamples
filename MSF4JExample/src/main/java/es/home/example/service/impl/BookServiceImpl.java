@@ -1,6 +1,5 @@
 package es.home.example.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +15,7 @@ import org.wso2.carbon.metrics.core.annotation.Counted;
 import org.wso2.carbon.metrics.core.annotation.Timed;
 import org.wso2.msf4j.Request;
 
+import es.home.example.dao.BookDao;
 import es.home.example.pojo.Book;
 import es.home.example.service.BookService;
 
@@ -23,8 +23,14 @@ import es.home.example.service.BookService;
 @Produces(MediaType.APPLICATION_JSON)
 public class BookServiceImpl implements BookService {
 
+	private BookDao dao;
+
 	public BookServiceImpl() {
 		System.out.println("BookServiceImpl");
+	}
+
+	public BookServiceImpl(final BookDao dao) {
+		this.dao = dao;
 	}
 
 	@PreDestroy
@@ -37,7 +43,7 @@ public class BookServiceImpl implements BookService {
 	@Path("/{bookId}")
 	@Timed
 	public Book getBookById(@PathParam("bookId") final Integer bookId) {
-		return new Book(bookId, "Alfred Bester", "The starts my destination");
+		return dao.findById(bookId);
 	}
 
 	@Override
@@ -45,12 +51,7 @@ public class BookServiceImpl implements BookService {
 	@Path("/list")
 	@Counted(name = "getList", monotonic = true)
 	public List<Book> getList(@Context final Request request) {
-		System.out.println("HttpMethod: " + request.getHttpMethod());
-		System.out.println("ContentType " + request.getContentType());
-		List<Book> exit = new ArrayList<>();
-		exit.add(new Book(1, "Alfred Bester", "The starts my destination"));
-		exit.add(new Book(2, "Orson Scott Card", "Ender's game"));
-		return exit;
+		return dao.getResultList();
 	}
 
 	@PostConstruct

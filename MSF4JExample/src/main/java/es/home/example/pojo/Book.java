@@ -1,43 +1,42 @@
 package es.home.example.pojo;
 
-public class Book {
-	private Integer id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class Book extends GenericEntity<Integer> {
+
+	private static final long serialVersionUID = 1L;
 	private String author;
-	private String name;
+	private String title;
 
 	public Book() {
 		super();
 	}
 
-	public Book(final Integer id, final String author, final String name) {
+	public Book(final Integer id, final String author, final String title) {
 		super();
 		this.id = id;
 		this.author = author;
-		this.name = name;
+		this.title = title;
 	}
 
+	@Column(name = "AUTHOR", length = 255)
 	public String getAuthor() {
 		return author;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
+	@Column(name = "TITLE", length = 255)
+	public String getTitle() {
+		return title;
 	}
 
 	public void setAuthor(final String author) {
 		this.author = author;
 	}
 
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 
 }

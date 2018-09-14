@@ -11,3 +11,6 @@
 ### 1.2.0-SNAPSHOT
 
 - We include an exception mapper
+
+### 1.3.0-SNAPSHOT
+- We include the use of metrics

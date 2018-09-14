@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.wso2.carbon.metrics.core.annotation.Counted;
+import org.wso2.carbon.metrics.core.annotation.Timed;
 import org.wso2.msf4j.Request;
 
 import es.home.example.pojo.Book;
@@ -28,12 +30,12 @@ public class BookServiceImpl implements BookService {
 	@PreDestroy
 	public void destroy() {
 		System.out.println("destroy");
-
 	}
 
 	@Override
 	@GET
 	@Path("/{bookId}")
+	@Timed
 	public Book getBookById(@PathParam("bookId") final Integer bookId) {
 		return new Book(bookId, "Alfred Bester", "The starts my destination");
 	}
@@ -41,6 +43,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@GET
 	@Path("/list")
+	@Counted(name = "getList", monotonic = true)
 	public List<Book> getList(@Context final Request request) {
 		System.out.println("HttpMethod: " + request.getHttpMethod());
 		System.out.println("ContentType " + request.getContentType());
@@ -53,5 +56,6 @@ public class BookServiceImpl implements BookService {
 	@PostConstruct
 	public void init() {
 		System.out.println("init");
+		System.out.println("deploymentYamlPath: " + System.getProperty("msf4j.conf"));
 	}
 }

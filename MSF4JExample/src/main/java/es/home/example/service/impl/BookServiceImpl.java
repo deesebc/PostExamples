@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.persistence.Persistence;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,7 +16,6 @@ import org.wso2.carbon.metrics.core.annotation.Timed;
 import org.wso2.msf4j.Request;
 
 import es.home.example.dao.BookDao;
-import es.home.example.dao.impl.BookDaoImpl;
 import es.home.example.pojo.Book;
 import es.home.example.service.BookService;
 
@@ -32,6 +30,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	public BookServiceImpl(final BookDao dao) {
+		System.out.println("BookServiceImpl with dao");
 		this.dao = dao;
 	}
 
@@ -60,6 +59,7 @@ public class BookServiceImpl implements BookService {
 	public void init() {
 		System.out.println("init");
 		System.out.println("deploymentYamlPath: " + System.getProperty("msf4j.conf"));
-		dao = new BookDaoImpl(Persistence.createEntityManagerFactory("es.home.example.jpa.config"));
+		// dao = new
+		// BookDaoImpl(Persistence.createEntityManagerFactory("es.home.example.jpa.config"));
 	}
 }

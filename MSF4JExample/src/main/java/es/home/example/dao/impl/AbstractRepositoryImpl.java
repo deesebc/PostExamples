@@ -17,9 +17,9 @@ import es.home.example.pojo.GenericEntity;
 public abstract class AbstractRepositoryImpl<P extends GenericEntity<? extends Serializable>, K>
 		implements AbstractRepository<P, K> {
 
-	private EntityManagerFactory emf;
+	protected EntityManagerFactory emf;
 
-	private Class<P> clazz;
+	protected Class<P> clazz;
 
 	@SuppressWarnings("unchecked")
 	public AbstractRepositoryImpl() {

@@ -17,3 +17,6 @@
 
 ### 1.4.0-SNAPSHOT
 - We include the use of JPA with H2
+
+### 1.5.0-SNAPSHOT 
+- We include basic authorization

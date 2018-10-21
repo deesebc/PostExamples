@@ -1,0 +1,53 @@
+<definitions
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy"
+	xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://impl.example.ws.home.es/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	targetNamespace="http://impl.example.ws.home.es/"
+	name="WebServiceSampleImplService">
+	<import namespace="http://example.ws.home.es/"
+		location="http://localhost:8080/ExampleWS/webservice-sample?wsdl=1" />
+	<binding xmlns:ns1="http://example.ws.home.es/"
+		name="WebServiceSampleImplPortBinding" type="ns1:WebServiceSample">
+		<soap:binding
+			transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<operation name="despide">
+			<soap:operation soapAction="" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="saluda">
+			<soap:operation soapAction="" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="getUsers">
+			<soap:operation soapAction="" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="WebServiceSampleImplService">
+		<port name="WebServiceSampleImplPort"
+			binding="tns:WebServiceSampleImplPortBinding">
+			<soap:address
+				location="http://localhost:8080/ExampleWS/webservice-sample" />
+		</port>
+	</service>
+</definitions>

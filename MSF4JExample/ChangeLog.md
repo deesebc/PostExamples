@@ -20,3 +20,6 @@
 
 ### 1.5.0-SNAPSHOT 
 - We include basic authorization
+
+### 1.6.0-SNAPSHOT 
+- We include OAuth2 authorization

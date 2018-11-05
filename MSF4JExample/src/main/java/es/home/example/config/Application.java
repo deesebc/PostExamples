@@ -13,6 +13,7 @@ import es.home.example.dao.impl.BookDaoImpl;
 import es.home.example.exception.ServiceExceptionMapper;
 import es.home.example.service.impl.BookServiceImpl;
 import es.home.example.service.impl.OAuthValidatorServiceImpl;
+import es.home.example.websocket.GroupChatWebsocket;
 
 public class Application {
     private final static String AUTH_SERVER_URL_S = "AUTH_SERVER_URL";
@@ -25,7 +26,11 @@ public class Application {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("es.home.example.jpa.config");
         MetricsInterceptor mInterceptor = new MetricsInterceptor();
         new MicroservicesRunner().addInterceptor(mInterceptor).addExceptionMapper(new ServiceExceptionMapper())
-                .deploy(getDeployService(emf)).start();
+                .deploy(getDeployService(emf)).deployWebSocketEndpoint(deployWSockets()).start();
+    }
+
+    private static Object deployWSockets() {
+        return new GroupChatWebsocket();
     }
 
     private static Object[] getDeployService(final EntityManagerFactory emf) {

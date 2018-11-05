@@ -26,6 +26,12 @@ To call a service:
 
 *curl -v -H "Authorization: Bearer <OAuth Access token>" http://localhost:9090/book/list*
 
+### Websocket
+
+You need to connect to: ws://localhost:9090/groupChat/{groupName}/{userName}
+
+You can connect with different clients and send message between them. 
+
 ## Tags
 
  WSO2, REST, JAX-WS

@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '1.7.4'
+	testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.7.4'
+    testCompile group: 'org.powermock', name: 'powermock-reflect', version: '1.7.4'
+    
+}
+

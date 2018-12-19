@@ -1,4 +1,4 @@
-# JerseyExample
+# FOPExample
 
 Project to explain how create a PDF in Java. We can do it with Apache FOP with org.apache.xmlgraphics.fop:2.3
 

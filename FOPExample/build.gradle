@@ -42,6 +42,8 @@ repositories {
 dependencies {
 	compile group: 'org.apache.xmlgraphics', name: 'fop', version: '2.3'
 	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	compile group: 'net.sf.saxon', name: 'saxon', version: '8.7'
+	
 	testCompile(
             'org.junit.jupiter:junit-jupiter-api:5.1.0'
     )

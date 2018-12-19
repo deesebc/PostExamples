@@ -23,22 +23,22 @@ import org.xml.sax.SAXException;
 
 public class FoXSLTAndSourceExample {
 
-    public static void getPDF(final String xmlText, final String xslRelativeFilePath, final String outputFileRelPath)
-            throws SAXException, IOException, TransformerException {
-        // Step 1: Construct a FopFactory without configuration
-        FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
-        // Step 2: Construct fop with desired output format associated to the output
-        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(new File(outputFileRelPath)))) {
-            Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
-            // Step 3: Setup JAXP using identity transformer with a XSL
-            Source template = new StreamSource(new FileInputStream(new File(xslRelativeFilePath)));
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer(template);
-            // Step 4: Setup input and output for transformation
-            StreamSource src = new StreamSource(IOUtils.toInputStream(xmlText));
-            Result res = new SAXResult(fop.getDefaultHandler());
-            // Step 5: Start transformation and FOP processing
-            transformer.transform(src, res);
-        }
-    }
+	public static void getPDF(final String xmlText, final String xslRelativeFilePath, final String outputFileRelPath)
+			throws SAXException, IOException, TransformerException {
+		// Step 1: Construct a FopFactory without configuration
+		FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
+		// Step 2: Construct fop with desired output format associated to the output
+		try (OutputStream out = new BufferedOutputStream(new FileOutputStream(new File(outputFileRelPath)))) {
+			Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
+			// Step 3: Setup JAXP using identity transformer with a XSL
+			Source template = new StreamSource(new FileInputStream(new File(xslRelativeFilePath)));
+			TransformerFactory factory = new net.sf.saxon.TransformerFactoryImpl();
+			Transformer transformer = factory.newTransformer(template);
+			// Step 4: Setup input and output for transformation
+			StreamSource src = new StreamSource(IOUtils.toInputStream(xmlText));
+			Result res = new SAXResult(fop.getDefaultHandler());
+			// Step 5: Start transformation and FOP processing
+			transformer.transform(src, res);
+		}
+	}
 }

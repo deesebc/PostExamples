@@ -1,0 +1,20 @@
+<bookstore>
+  <book category="Science fiction">
+    <title lang="en">The Stars My Destination</title>
+    <author>	Alfred Bester</author>
+    <year>1957</year>
+    <price>19.99</price>
+  </book>
+  <book category="Young adult">
+    <title lang="en">The Philosopher's Stone</title>
+    <author>J K. Rowling</author>
+    <year>1997</year>
+    <price>29.99</price>
+  </book>
+  <book category="Fantasy">
+    <title lang="en">Mythago Wood</title>
+    <author>Robert Holdstock</author>
+    <year>1984</year>
+    <price>9.99</price>
+  </book>
+</bookstore>

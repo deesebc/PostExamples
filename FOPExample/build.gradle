@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: "eclipse"
+
+group = "es.home.example"
+version = "1.0.0-SNAPSHOT"
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+clean {
+    delete = ["build", "bin"]
+}
+
+eclipse {
+    jdt {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    classpath {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.apache.xmlgraphics', name: 'fop', version: '2.3'
+	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	testCompile(
+            'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    )
+    testRuntime(
+            'org.junit.jupiter:junit-jupiter-engine:5.1.0',
+            'org.junit.vintage:junit-vintage-engine:5.1.0',
+            'org.junit.platform:junit-platform-launcher:1.1.0',
+            'org.junit.platform:junit-platform-runner:1.1.0'
+    )
+}

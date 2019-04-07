@@ -1,19 +1,14 @@
-buildscript {
-  repositories {
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'org.gretty:gretty:+'
-  }
-}
-
-apply plugin: "java"
-apply plugin: "eclipse"
-apply plugin: 'org.gretty'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
 
 group = "es.home.example"
 version = "1.0.0-SNAPSHOT"
+
+jettyRun {
+    contextPath = 'JerseyExample'
+    scanIntervalSeconds = 2
+}
 
 compileJava {
     sourceCompatibility = 1.8
@@ -22,17 +17,6 @@ compileJava {
 
 clean {
     delete = ["build", "bin"]
-}
-
-eclipse {
-    jdt {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-    classpath {
-        downloadSources = true
-        downloadJavadoc = false
-    }
 }
 
 repositories {

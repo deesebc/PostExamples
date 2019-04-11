@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "BetVictorSample",
+		"_postman_id": "8d16321d-6507-e2c8-62cd-37966bd594a6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8280/wordCounter/text?start=1&end=2&countMin=2&countMax=5",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8082/wordCounter/text?start=5&end=100&countMin=2&countMax=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"wordCounter",
+						"text"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "5",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "end",
+							"value": "100",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "countMin",
+							"value": "2",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "countMax",
+							"value": "30",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/wordCounter/history",
+			"request": {
+				"url": "http://localhost:8082/wordCounter/history",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

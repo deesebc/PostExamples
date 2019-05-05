@@ -11,7 +11,7 @@ You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com
 * Version 1.0.2: How to do its REST client. Link: http://jakartaeeyyo.blogspot.com/2017/10/how-to-cliente-rest-con-spring-boot.html
 * Version 1.0.3: We add a YAML and JSON swagger files for the API
 * Version 1.0.4: We add Lombok to avoid write recurrent methods
-* Version 2.0.0: We change from Spring Boot 1.5.6.RELEASE to 2.1.4.RELEASE and include Web Flux
+* Version 2.0.0: We change from Spring Boot 1.5.6.RELEASE to 2.1.4.RELEASE
 
 ## Run
 

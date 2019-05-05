@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.home.example.knowledge.pojo.Saludo;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
-@Log4j
+@Log4j2
 @RestController
 public class SaludoRestController {
     @GetMapping("/saludo")

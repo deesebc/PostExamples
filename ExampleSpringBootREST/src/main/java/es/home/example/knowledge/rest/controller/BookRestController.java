@@ -1,6 +1,7 @@
 package es.home.example.knowledge.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class BookRestController {
     }
 
     @GetMapping("/{id}")
-    public Book findById(@NonNull @PathVariable("id") final Integer id) {
-        return repository.findOne(id);
+    public Optional<Book> findById(@NonNull @PathVariable("id") final Integer id) {
+        return repository.findById(id);
     }
 }

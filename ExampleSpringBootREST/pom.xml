@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.home.example</groupId>
   <artifactId>ExampleSpringBootREST</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <packaging>war</packaging>
   <name>ExampleSpringBootREST</name>
   <description>This is simple boot application for Spring boot actuator test</description>
@@ -50,7 +50,6 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.6</version>
     </dependency>
     <!-- TEST -->
     <dependency>

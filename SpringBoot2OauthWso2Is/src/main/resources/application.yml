@@ -1,0 +1,24 @@
+server:
+    port: 8082
+    servlet:
+        context-path: /sbowi
+    session:
+      cookie:
+        name: UISESSION
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      clientId: lwN1Aa2pKgnt5rX78JtZGQFiJtoa
+      clientSecret: n9RZfVrN8zJsfEq53bYt5f8eZNka
+      accessTokenUri: https://localhost:9443/oauth2/token
+      userAuthorizationUri: https://localhost:9443/oauth2/authorize
+      scope: profile, openid
+      tokenName: code
+      authenticationScheme: header
+    resource:
+      userInfoUri: https://localhost:9443/oauth2/userinfo
+spring:
+  thymeleaf:
+    cache: false

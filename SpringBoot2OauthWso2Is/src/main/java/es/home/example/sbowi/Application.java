@@ -11,6 +11,7 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     public RequestContextListener requestContextListener() {
+        // allow us to access to request scope outside the dispatch servlet
         return new RequestContextListener();
     }
 

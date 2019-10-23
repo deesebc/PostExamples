@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PrincipalExtractor githubPrincipalExtractor() {
+    public PrincipalExtractor wso2PrincipalExtractor() {
         return new WSO2IsPrincipalExtractor();
     }
 

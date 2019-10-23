@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Spring Boot 2 Oauth WOS2 IS SSO</title>
@@ -8,12 +10,13 @@
 </head>
 
 <body>
-<div class="container">
-	<div class="col-sm-12">
-		<h1>Profile Page</h1>
-		Welcome, <span th:text="${#authentication.name}"> Name</span>
-		
+	<div class="container">
+		<div class="col-sm-12">
+			<h1>Profile Page</h1>
+			<div sec:authorize="isAuthenticated()">
+				Welcome <span sec:authentication="name">John Doe</span> !!
+			</div>
+		</div>
 	</div>
-</div>
 </body>
 </html>

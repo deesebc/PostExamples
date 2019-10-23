@@ -12,9 +12,9 @@ security:
     client:
       clientId: lwN1Aa2pKgnt5rX78JtZGQFiJtoa
       clientSecret: n9RZfVrN8zJsfEq53bYt5f8eZNka
+      scope: openid
       accessTokenUri: https://localhost:9443/oauth2/token
       userAuthorizationUri: https://localhost:9443/oauth2/authorize
-      scope: profile, openid
       tokenName: code
       authenticationScheme: header
     resource:

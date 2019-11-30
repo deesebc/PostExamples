@@ -27,3 +27,7 @@ Project to explain how it works MSF4J version: 2.6.2
 ## TestingExample
 
 Project to explain how mocks static with PowerMock version: 1.7.4
+
+## Wiremock
+
+Project to explain how works Wiremock

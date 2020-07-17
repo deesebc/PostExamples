@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.example.home.ApacheCamelRestExample.pojo.Book;
-import com.example.home.ApacheCamelRestExample.repository.DBMockRepository;
 
 @Component
 public class BookRouter extends RouteBuilder {
@@ -16,23 +15,26 @@ public class BookRouter extends RouteBuilder {
     public void configure() throws Exception {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 
-        rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().bean(DBMockRepository.class,
-                "getAll(})");
+        rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().to("sql:{{sql.selectAll}}")
+                .log("---select all books---");
 
         rest().get("book/{id}").description("Details of an book by id").outType(Book.class)
-                .produces(MediaType.APPLICATION_XML_VALUE).route()
-                .bean(DBMockRepository.class, "findById(${header.id})");
+                .produces(MediaType.APPLICATION_JSON_VALUE).route().log("--- 1 select a book ${body} ---")
+                .to("sql:{{sql.selectById}}").log("--- 2 select a book ${body} ---");
 
-        rest().post("book").type(Book.class).produces(MediaType.APPLICATION_JSON_VALUE).route()
-                .routeId("postBookRoute").bean(DBMockRepository.class, "create(${body})")
-                .log("---creating a book---");
+        rest().post("book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postBookRoute")
+                .to("sql:{{sql.insert}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
+                .setBody(constant(null));
 
-        rest().delete("book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route()
-                .bean(DBMockRepository.class, "remove(${header.id})");
+        rest().delete("book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().to("sql:{{sql.delete}}")
+                .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setBody(constant(null));
 
-        rest().put("book/{id}").type(Book.class).produces(MediaType.APPLICATION_JSON_VALUE).route().choice()
-                .when().simple("${header.id} < 1").bean(BookRouter.class, "negativeId").otherwise()
-                .bean(DBMockRepository.class, "update(${header.id}, ${body})");
+        // remove .type(Book.class)
+        rest().put("book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().choice().when()
+                .simple("${header.id} < 1").bean(BookRouter.class, "negativeId").otherwise()
+                .to("sql:{{sql.update}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
+                .setBody(constant(null));
     }
 
     public void negativeId(final Exchange exchange) {

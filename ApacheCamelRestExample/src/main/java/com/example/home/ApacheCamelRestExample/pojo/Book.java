@@ -1,6 +1,6 @@
 package com.example.home.ApacheCamelRestExample.pojo;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@XmlRootElement
 public class Book {
 
+    @JsonProperty
     private Integer id;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String author;
 }

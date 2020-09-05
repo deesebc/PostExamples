@@ -23,3 +23,19 @@ services:
     volumes:
       - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
       - ./configs/mysql/scripts:/docker-entrypoint-initdb.d
+
+  portainer:
+    image: portainer/portainer:latest
+    mem_limit: 2G
+    container_name: sandbox-portainer
+    hostname: sandbox-portainer
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.99
+    ports:
+      - 9000:9000
+      - 8000:8000
+    command: --admin-password "$$2y$$10$$lO6tHD/1fYPxc3dJ.9ahl.y97R7Zo4nDMZuLD/nXBc93eHfpcZN0q"   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data

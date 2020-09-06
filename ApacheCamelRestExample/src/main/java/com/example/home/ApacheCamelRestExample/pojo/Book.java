@@ -21,13 +21,11 @@ import lombok.ToString;
 @Entity(name = "BOOK")
 @Table(name = "BOOK")
 @NamedQuery(name = "findAll", query = "SELECT b FROM BOOK b")
-// @NamedQuery(name = "removeBookById", query = "DELETE FROM BOOK b WHERE b.id = :id ")
 public class Book {
 
     @JsonProperty
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @JsonProperty
     private String name;

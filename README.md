@@ -1,5 +1,9 @@
 # PostExamples
 
+## ApacheCamelRestExample
+
+Project to explain how it works Apache Camel 2.25.1. A basic CRUD Example, with Mock, SQL and JPA. 
+
 ## ExampleJaxRS
 
 Project to explain how it works Jersey JAX-RS with jersey-servlet:1.19 and hibernate and maven

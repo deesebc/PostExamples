@@ -124,4 +124,21 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>local</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <mysql.hostname>localhost</mysql.hostname>
+      </properties>
+    </profile>
+    <profile>
+      <id>standalone</id>
+      <properties>
+        <mysql.hostname>sandbox-mysql</mysql.hostname>
+      </properties>
+    </profile>
+  </profiles>
 </project>

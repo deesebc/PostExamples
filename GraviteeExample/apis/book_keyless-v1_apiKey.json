@@ -1,0 +1,93 @@
+{
+  "name": "book_keyless",
+  "version": "v1",
+  "description": "api book keyless",
+  "visibility": "PRIVATE",
+  "paths": {
+    "/": []
+  },
+  "resources": [],
+  "properties": [],
+  "members": [
+    {
+      "source": "memory",
+      "sourceId": "admin",
+      "role": "PRIMARY_OWNER"
+    }
+  ],
+  "pages": [],
+  "plans": [
+    {
+      "id": "317e151b-c5c1-434a-be15-1bc5c1d34ab0",
+      "name": "Plan_API_KEY",
+      "description": "Plan_API_KEY",
+      "validation": "MANUAL",
+      "security": "API_KEY",
+      "securityDefinition": "{\"propagateApiKey\":false}",
+      "type": "API",
+      "status": "PUBLISHED",
+      "apis": [
+        "d2d43d20-ecec-469d-943d-20ecece69dd4"
+      ],
+      "order": 1,
+      "characteristics": [],
+      "created_at": 1600511800843,
+      "updated_at": 1600511828341,
+      "published_at": 1600511828341,
+      "paths": {
+        "/": []
+      },
+      "comment_required": false
+    }
+  ],
+  "metadata": [
+    {
+      "key": "email-support",
+      "name": "email-support",
+      "format": "MAIL",
+      "value": "${(api.primaryOwner.email)!''}",
+      "defaultValue": "support@change.me",
+      "apiId": "d2d43d20-ecec-469d-943d-20ecece69dd4"
+    }
+  ],
+  "path_mappings": [],
+  "proxy": {
+    "virtual_hosts": [
+      {
+        "path": "/book"
+      }
+    ],
+    "strip_context_path": false,
+    "preserve_host": false,
+    "groups": [
+      {
+        "name": "default-group",
+        "endpoints": [
+          {
+            "name": "default",
+            "target": "http://sandbox-camel:9090/book",
+            "weight": 1,
+            "backup": false,
+            "type": "HTTP",
+            "inherit": true
+          }
+        ],
+        "load_balancing": {
+          "type": "ROUND_ROBIN"
+        },
+        "http": {
+          "connectTimeout": 5000,
+          "idleTimeout": 60000,
+          "keepAlive": true,
+          "readTimeout": 10000,
+          "pipelining": false,
+          "maxConcurrentConnections": 100,
+          "useCompression": true,
+          "followRedirects": false,
+          "encodeURI": false
+        }
+      }
+    ]
+  },
+  "response_templates": {}
+}

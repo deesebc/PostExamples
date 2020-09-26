@@ -18,6 +18,10 @@ You can see an explanation in English here:
 * CRUD-SQL: https://medium.com/@danielblancocuadrado/apache-camel-rest-crud-and-the-sql-component-ad7c1eb21c94
 * Portainer: https://medium.com/@danielblancocuadrado/portainer-how-to-make-your-work-with-docker-easier-b3f8d7c0aeff
 
+## Jaeger
+
+You need to add export JAEGER_SERVICE_NAME=Camel to works this example.
+
 ## Tags
 
 API, web services, integration, ESB, apache, camel, REST, CRUD

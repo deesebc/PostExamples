@@ -6,7 +6,7 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.3.0.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example.home</groupId>
   <artifactId>ApacheCamelRestExample</artifactId>
@@ -39,6 +39,11 @@
       <artifactId>camel-servlet-starter</artifactId>
       <version>${camel.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-opentracing-starter</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
     <!-- components -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -64,6 +69,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+    <!-- thirds -->
+    <dependency>
+      <groupId>io.jaegertracing</groupId>
+      <artifactId>jaeger-client</artifactId>
+      <version>0.31.0</version>
     </dependency>
     <!-- runtime -->
     <dependency>

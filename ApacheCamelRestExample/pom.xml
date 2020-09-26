@@ -30,6 +30,10 @@
       <groupId>org.apache.camel.springboot</groupId>
       <artifactId>camel-servlet-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-opentracing-starter</artifactId>
+    </dependency>
     <!-- components -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -55,6 +59,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+    <!-- thirds -->
+    <dependency>
+      <groupId>io.jaegertracing</groupId>
+      <artifactId>jaeger-client</artifactId>
+      <version>0.31.0</version>
     </dependency>
     <!-- runtime -->
     <dependency>

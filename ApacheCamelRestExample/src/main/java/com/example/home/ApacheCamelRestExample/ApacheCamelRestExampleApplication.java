@@ -19,7 +19,7 @@ public class ApacheCamelRestExampleApplication {
     public static JaegerTracer getTracer() {
         Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv().withType("const").withParam(1);
         Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
-        Configuration config = new Configuration("jaeger tutorial").withSampler(samplerConfig).withReporter(reporterConfig);
+        Configuration config = new Configuration("jaeger tutorial 02").withSampler(samplerConfig).withReporter(reporterConfig);
         return config.getTracer();
     }
 

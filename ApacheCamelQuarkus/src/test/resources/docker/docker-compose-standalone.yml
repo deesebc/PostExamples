@@ -1,0 +1,60 @@
+version: '2.4'
+networks:
+  sandbox-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  mysql:
+    image: mysql:5.7.26
+    mem_limit: 2G
+    container_name: sandbox-mysql
+    hostname: sandbox-mysql
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.1
+    environment:
+      MYSQL_HOST: sandbox-mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./configs/mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+
+  portainer:
+    image: portainer/portainer:latest
+    mem_limit: 2G
+    container_name: sandbox-portainer
+    hostname: sandbox-portainer
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.99
+    ports:
+      - 9000:9000
+      - 8000:8000
+    command: --admin-password "$$2y$$12$$mJwNaPjz6yhRGIXXG/5YhOLtKrG48veRIzZ7w3aMTThznS8c0TmIa"   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
+
+      
+  camel:
+    image: camel-quarkus-runner:latest
+    mem_limit: 3G
+    container_name: sandbox-camel
+    hostname: sandbox-camel
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.3
+    ports:
+      - 8099:8099

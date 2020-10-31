@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.example.home.ApacheCamelRestExample.pojo.Book;
 
 @Component
-public class BookRouter extends RouteBuilder {
+public class BookJPARouter extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
@@ -39,7 +39,7 @@ public class BookRouter extends RouteBuilder {
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setBody(constant(null));
 
         rest().put("book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).type(Book.class).route().choice()
-                .when().simple("${header.id} < 1").bean(BookRouter.class, "negativeId").otherwise()
+                .when().simple("${header.id} < 1").bean(BookJPARouter.class, "negativeId").otherwise()
                 .process(new Processor() {
                     @Override
                     public void process(final Exchange exchange) {

@@ -17,15 +17,6 @@ public class BookCaffeineRouter extends RouteBuilder {
     public void configure() throws Exception {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 
-        // cache configuration
-        //        from("caffeine-cache://BookCache?createCacheIfNotExist=true").routeId("book-cache").end();
-
-        //        rest("/cache/book").get().route().log("1").end();
-        //        rest().get("/cache/book").route().log("2").end();
-        //        rest("/cache").get("/book").route().log("3").end();
-        //        rest("/cache").get("book").route().log("4").end();
-        //        rest("cache").get("book").route().log("5").end();
-
         rest("/cache").get("book").produces(MediaType.APPLICATION_JSON_VALUE).route()
         .to("sql:{{sql.selectAll}}")
         .log("--- cache select all books---");
@@ -45,17 +36,23 @@ public class BookCaffeineRouter extends RouteBuilder {
         .otherwise().log("Cache is working");
 
         rest().post("cache/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postBookRoute")
-        .to("sql:{{sql.insert}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
+        .to("sql:{{sql.insert}}")
+        .log("POST BODY ${body}")
+        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
         .setBody(constant(null));
 
         rest().delete("cache/book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().to("sql:{{sql.delete}}")
+        .setHeader(CaffeineConstants.ACTION, constant(CaffeineConstants.ACTION_INVALIDATE))
+        .setHeader(CaffeineConstants.KEY, header("id"))
+        .toF("caffeine-cache://%s", "BookCache")
         .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setBody(constant(null));
 
-        // remove .type(Book.class)
         rest().put("cache/book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().choice().when()
         .simple("${header.id} < 1").bean(BookSQLRouter.class, "negativeId").otherwise()
-        .to("sql:{{sql.update}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
+        .to("sql:{{sql.update}}")
+        .log("PUT BODY ${body}")
+        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
         .setBody(constant(null));
     }
 

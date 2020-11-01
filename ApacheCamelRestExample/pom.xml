@@ -44,6 +44,10 @@
       <groupId>org.apache.camel.springboot</groupId>
       <artifactId>camel-opentracing-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-caffeine-starter</artifactId>
+    </dependency>
     <!-- components -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -64,6 +68,10 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-sql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-caffeine</artifactId>
     </dependency>
     <!-- DB -->
     <dependency>

@@ -32,7 +32,7 @@ public class BookSQLRouter extends RouteBuilder {
 
         // remove .type(Book.class)
         rest().put("sql/book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().choice().when()
-        .simple("${header.id} < 1").bean(BookEHCacheRouter.class, "negativeId").otherwise()
+        .simple("${header.id} < 1").bean(BookSQLRouter.class, "negativeId").otherwise()
         .to("sql:{{sql.update}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
         .setBody(constant(null));
     }

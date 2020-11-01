@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.example.home.ApacheCamelRestExample.pojo.Book;
 
 @Component
-public class BookEHCacheRouter extends RouteBuilder {
+public class BookCaffeineRouter extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
@@ -32,28 +32,17 @@ public class BookEHCacheRouter extends RouteBuilder {
 
         rest().get("cache/book/{id}").description("Details of an book by id").outType(Book.class)
         .produces(MediaType.APPLICATION_JSON_VALUE).route()
-        .log("--- cache select a book ${body}. Header Id: ${header.id} ---")
-        .setProperty("bookId", simple("${header.id}"))
-        .log("--- set Property ---")
-        // Prepare headers
-        //        .setHeader(EhcacheConstants.ACTION, constant(EhcacheConstants.ACTION_GET))
-        //        .setHeader(EhcacheConstants.KEY, exchangeProperty("bookId"))
-        .to("caffeine-cache://BookCache?action=GET&key=id")
-        .log("--- get cache ---")
-        .log("--- ACTION_HAS_RESULTs --- ${header.CamelCaffeineActionHasResult}")
-        .log("--- ACTION_HAS_RESULTs --- "+simpleF("${header.%s}",CaffeineConstants.ACTION_HAS_RESULT))
+        .log("Cache : Select Book By Id: ${header.id}")
+        .setHeader(CaffeineConstants.ACTION, constant(CaffeineConstants.ACTION_GET))
+        .setHeader(CaffeineConstants.KEY, header("id"))
+        .toF("caffeine-cache://%s", "BookCache")
+        .log("Has Result ${header.CamelCaffeineActionHasResult} ActionSucceeded ${header.CamelCaffeineActionSucceeded}")
         .choice().when(header(CaffeineConstants.ACTION_HAS_RESULT).isEqualTo(Boolean.FALSE))
-        .log("--- no cache. we obtain the value ---")
         .to("sql:{{sql.selectById}}")
-        .to("caffeine-cache://BookCache?action=PUT&key=id")
-        .otherwise().log("--- ACTION_HAS_RESULT is not null ---")
-        .end();
-
-
-
-        //        rest().get("sql/book/{id}").description("Details of an book by id").outType(Book.class)
-        //        .produces(MediaType.APPLICATION_JSON_VALUE).route().log("--- 1 select a book ${body} ---")
-        //        .to("sql:{{sql.selectById}}").log("--- 2 select a book ${body} ---");
+        .setHeader(CaffeineConstants.ACTION, constant(CaffeineConstants.ACTION_PUT))
+        .setHeader(CaffeineConstants.KEY, header("id"))
+        .toF("caffeine-cache://%s", "BookCache")
+        .otherwise().log("Cache is working");
 
         rest().post("cache/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postBookRoute")
         .to("sql:{{sql.insert}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))

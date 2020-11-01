@@ -22,7 +22,7 @@ public class BookSQLRouter extends RouteBuilder {
         .produces(MediaType.APPLICATION_JSON_VALUE).route().log("--- 1 select a book ${body} ---")
         .to("sql:{{sql.selectById}}").log("--- 2 select a book ${body} ---");
 
-        rest().post("sql/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postBookRoute")
+        rest().post("sql/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postSqlBookRoute")
         .to("sql:{{sql.insert}}").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
         .setBody(constant(null));
 

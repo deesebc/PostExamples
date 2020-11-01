@@ -35,7 +35,7 @@ public class BookCaffeineRouter extends RouteBuilder {
         .toF("caffeine-cache://%s", "BookCache")
         .otherwise().log("Cache is working");
 
-        rest().post("cache/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postBookRoute")
+        rest().post("cache/book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("postCacheBookRoute")
         .to("sql:{{sql.insert}}")
         .log("POST BODY ${body}")
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
@@ -48,10 +48,17 @@ public class BookCaffeineRouter extends RouteBuilder {
         .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200)).setBody(constant(null));
 
-        rest().put("cache/book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).route().choice().when()
+        rest().put("cache/book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).type(Book.class).route().choice().when()
         .simple("${header.id} < 1").bean(BookSQLRouter.class, "negativeId").otherwise()
-        .to("sql:{{sql.update}}")
-        .log("PUT BODY ${body}")
+        .log("PUT : Body: ${body}")//${body[id]
+        .to("sql:UPDATE BOOK SET NAME = :#${body.name}, AUTHOR = :#${body.author} WHERE ID = :#id")
+        .process(exchange -> {
+            final Book book = exchange.getIn().getBody(Book.class);
+            book.setId(Integer.valueOf(exchange.getIn().getHeader("id").toString()));
+        })
+        .setHeader(CaffeineConstants.ACTION, constant(CaffeineConstants.ACTION_PUT))
+        .setHeader(CaffeineConstants.KEY, header("id"))
+        .toF("caffeine-cache://%s", "BookCache")
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
         .setBody(constant(null));
     }

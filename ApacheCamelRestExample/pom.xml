@@ -73,6 +73,15 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-caffeine</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-micrometer</artifactId>
+    </dependency>
+    <!-- micrometer -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-graphite</artifactId>
+    </dependency>
     <!-- DB -->
     <dependency>
       <groupId>org.hibernate</groupId>

@@ -21,6 +21,21 @@ public class MockRouter extends RouteBuilder {
 
         rest("/mockCounter").get().produces(MediaType.APPLICATION_JSON_VALUE).route().setBody(simple("{\"msg\":\"Hello World\"}")).unmarshal().json();
 
+
+        rest("/mockService").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
+        .serviceCall("discovery-client/books?bridgeEndpoint=true")
+        //        .serviceCall("discovery-client", "undertow:http://discovery-client/books")
+        //        .serviceCall("discovery-client", "undertow:discovery-client/books")
+        .log("Body: ${body}")
+        //        .setBody(simple("{\"msg\":\"Hello World Service\"}"))
+        .unmarshal().json();
+
+        //        System.out.println("discovery-client - url "+discoveryClient.getInstances("discovery-client").get(0).getUri());
+
+        //bueno : http://192.168.0.19:8385/books
+        //malo  : http://192.168.0.19:8385/books
+
+
     }
 
 }

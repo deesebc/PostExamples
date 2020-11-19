@@ -19,23 +19,17 @@ public class MockRouter extends RouteBuilder {
     public void configure() throws Exception {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
-        rest("/mockCounter").get().produces(MediaType.APPLICATION_JSON_VALUE).route().setBody(simple("{\"msg\":\"Hello World\"}")).unmarshal().json();
-
-
-        rest("/mockService").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
+        rest("/serviceCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
         .serviceCall("discovery-client/books?bridgeEndpoint=true")
-        //        .serviceCall("discovery-client", "undertow:http://discovery-client/books")
-        //        .serviceCall("discovery-client", "undertow:discovery-client/books")
-        .log("Body: ${body}")
-        //        .setBody(simple("{\"msg\":\"Hello World Service\"}"))
-        .unmarshal().json();
+        //Is it becouse http endpoint produces a Stream as the body and once the stream is read, it is no longer available.
+        .convertBodyTo(String.class)
+        .log("Body: ${body}").unmarshal().json();
 
-        //        System.out.println("discovery-client - url "+discoveryClient.getInstances("discovery-client").get(0).getUri());
-
-        //bueno : http://192.168.0.19:8385/books
-        //malo  : http://192.168.0.19:8385/books
-
-
+        rest("/discoveryCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
+        .serviceCall("discovery-client/books?bridgeEndpoint=true")
+        //Is it becouse http endpoint produces a Stream as the body and once the stream is read, it is no longer available.
+        .convertBodyTo(String.class)
+        .log("Body: ${body}").unmarshal().json();
     }
 
 }

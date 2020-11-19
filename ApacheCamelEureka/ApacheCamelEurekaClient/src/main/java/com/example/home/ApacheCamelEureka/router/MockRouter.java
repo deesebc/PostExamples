@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MockRouter extends RouteBuilder {
 
+    public static final String URL_DISCOVER_BOOKS = "%s/books?bridgeEndpoint=true";
+
     @Autowired
     private DiscoveryClient discoveryClient;
 
@@ -26,7 +28,7 @@ public class MockRouter extends RouteBuilder {
         .log("Body: ${body}").unmarshal().json();
 
         rest("/discoveryCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
-        .serviceCall("discovery-client/books?bridgeEndpoint=true")
+        .to(String.format(URL_DISCOVER_BOOKS, discoveryClient.getInstances("discovery-client").get(0).getUri()))
         //Is it becouse http endpoint produces a Stream as the body and once the stream is read, it is no longer available.
         .convertBodyTo(String.class)
         .log("Body: ${body}").unmarshal().json();

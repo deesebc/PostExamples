@@ -22,6 +22,7 @@
       <groupId>org.apache.camel.springboot</groupId>
       <artifactId>camel-spring-cloud-netflix-starter</artifactId>
     </dependency>
+    <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

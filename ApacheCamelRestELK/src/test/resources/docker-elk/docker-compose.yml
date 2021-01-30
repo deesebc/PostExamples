@@ -39,6 +39,7 @@ services:
       volumes:
         - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
         - ./logstash/pipeline:/usr/share/logstash/pipeline
+        - C:\Users\dblanco\logs:/tmp
       ports:
         - "5044:5044"
         - "5000:5000/tcp"

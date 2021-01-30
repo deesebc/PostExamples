@@ -10,7 +10,7 @@
   </root-->
 	<appender name="STASH"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>C:\Users\dblanco\apacheCamelELK.log</file>
+		<file>C:\Users\dblanco\logs\apacheCamelELK.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>>C:\Users\dblanco\apacheCamelELK.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>7</maxHistory>

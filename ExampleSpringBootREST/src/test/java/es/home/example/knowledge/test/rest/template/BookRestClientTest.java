@@ -28,16 +28,16 @@ public class BookRestClientTest {
 	@Rule
 	public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().port(8085));
 
+	public void finish() {
+		wireMockRule.shutdown();
+	}
+
 	@Before
 	public void setup() {
 		String body = "{\"id\":1,\"title\":\"1984\",\"author\":\"George Orwell\",\"insertDate\":null,\"updateDate\":null,\"insertUser\":null,\"updateUser\":null},{\"id\":2,\"title\":\"Fahrenheit 451\",\"author\":\"Ray Bradbury\",\"insertDate\":null,\"updateDate\":null,\"insertUser\":null,\"updateUser\":null},{\"id\":3,\"title\":\"Brave New World\",\"author\":\"Aldous Huxley\",\"insertDate\":null,\"updateDate\":null,\"insertUser\":null,\"updateUser\":null}";
 		ResponseDefinitionBuilder response = WireMock.aResponse().withBody(body).withStatus(200)
 				.withHeader("Content-Type", "application/json");
 		WireMock.stubFor(WireMock.get("/book/1").willReturn(response));
-	}
-
-	public void finish() {
-		wireMockRule.shutdown();
 	}
 
 	@Test

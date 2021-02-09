@@ -1,0 +1,85 @@
+version: "3.7"
+services:
+    mysql:
+      image: mysql:5.7.26
+      container_name: sandbox-mysql
+      hostname: sandbox-mysql
+      networks:
+        - elastic
+      environment:
+        MYSQL_HOST: sandbox-mysql
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - 3306:3306
+      volumes:
+        - ./config/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+        - ./config/mysql/scripts:/docker-entrypoint-initdb.d
+
+    portainer:
+      image: portainer/portainer:latest
+      container_name: sandbox-portainer
+      hostname: sandbox-portainer
+      networks:
+        - elastic
+      ports:
+        - 9000:9000
+        - 8000:8000
+      command: --admin-password "$$2y$$10$$lO6tHD/1fYPxc3dJ.9ahl.y97R7Zo4nDMZuLD/nXBc93eHfpcZN0q"   
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./data/portainer:/data
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+        container_name: elasticsearch
+        hostname: elasticsearch
+        environment:
+            - node.name=elasticsearch
+            - cluster.name=es-docker-cluster
+            - discovery.type=single-node
+        volumes:
+            - ./data:/usr/share/elasticsearch/data
+        networks:
+            - elastic
+        ports:
+            - 9200:9200
+            - 9300:9300
+        healthcheck:
+          test: curl -s https://localhost:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+          interval: 30s
+          timeout: 10s
+          retries: 5
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.10.2
+        container_name: kibana
+        hostname: kibana
+        volumes:
+        - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml
+        ports:
+          - "5601:5601"
+        networks:
+          - elastic
+        depends_on:
+          - elasticsearch
+    logstash:
+      image: docker.elastic.co/logstash/logstash:7.10.2
+      container_name: logstash
+      hostname: logstash
+      volumes:
+        - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
+        - ./logstash/pipeline:/usr/share/logstash/pipeline
+        - /home/dsblanco/Documentos/logs:/tmp
+        - ./lib:/usr/share/lib
+      ports:
+        - "5044:5044"
+        - "5000:5000/tcp"
+        - "5000:5000/udp"
+        - "9600:9600"
+      environment:
+        LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      networks:
+        - elastic
+      depends_on:
+        - elasticsearch
+networks:
+  elastic:
+    driver: bridge

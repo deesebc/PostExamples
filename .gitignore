@@ -15,3 +15,5 @@ MSF4JExample/metrics/
 MSF4JExample/deployment\.yaml
 GraviteeExample/docker/data
 GraviteeExample/dcg/data
+ApacheCamelRestELK/src/test/resources/docker-elk/data/
+ApacheCamelRestELK/src/test/resources/docker/data/

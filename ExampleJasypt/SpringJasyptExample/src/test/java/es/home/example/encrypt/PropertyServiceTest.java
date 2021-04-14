@@ -15,7 +15,6 @@ public class PropertyServiceTest {
 	PropertyService service;
 
 	// executing in eclipse with argument: -Djasypt_encryptor_password=XXXX
-	// Dont need @EnableEncryptableProperties
 
 	@Test
 	public void testProps() {

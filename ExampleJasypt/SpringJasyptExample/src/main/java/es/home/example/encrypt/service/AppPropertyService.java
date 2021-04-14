@@ -8,11 +8,8 @@ import lombok.Getter;
 @Service
 @Getter
 public class AppPropertyService {
-
 	@Value("${spring.datasource.username}")
 	private String usr;
-
 	@Value("${spring.datasource.password}")
 	private String pwd;
-
 }

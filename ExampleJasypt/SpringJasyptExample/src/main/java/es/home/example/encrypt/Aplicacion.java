@@ -10,9 +10,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 @ComponentScan(basePackages = { "es.home.example.encrypt" })
 @EnableEncryptableProperties
 public class Aplicacion {
-
 	public static void main(final String[] args) {
 		SpringApplication.run(Aplicacion.class, args);
 	}
-
 }

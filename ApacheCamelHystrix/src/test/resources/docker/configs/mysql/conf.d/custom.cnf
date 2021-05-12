@@ -1,0 +1,5 @@
+[mysqld]
+max_connections=1500
+max_allowed_packet=1024M
+# innodb_buffer_pool_size=1024M
+# wait_timeout=350

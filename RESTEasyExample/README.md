@@ -14,5 +14,5 @@ If you have the Web Service running you can also run the tests.
 
 ## Doc
 
-You can see an explanation in Spanish here: https://jakartaeeyyo.blogspot.com/
+You can see an explanation in Spanish here: https://DesarrolloJavaYYo.blogspot.com/
 You can see an explanation in English here: https://danielblancocuadrado.medium.com/

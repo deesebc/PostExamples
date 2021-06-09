@@ -8,10 +8,10 @@ Project to explain how it works Apache Camel 2.25.1. A basic CRUD Example, with 
 
 You can see an explanation in Spanish here: 
 
-* CRUD: https://jakartaeeyyo.blogspot.com/2020/06/apache-camel-rest-crud-service-basico.html
-* CRUD-SQL: https://jakartaeeyyo.blogspot.com/2020/07/apache-camel-rest-crud-y-el-componente.html
-* Portainer: https://jakartaeeyyo.blogspot.com/2020/09/portainer-como-facilitarte-el-trabajo.html
-* Jaeger: https://jakartaeeyyo.blogspot.com/2020/10/apache-camel-control-de-trazas-con.html
+* CRUD: https://DesarrolloJavaYYo.blogspot.com/2020/06/apache-camel-rest-crud-service-basico.html
+* CRUD-SQL: https://DesarrolloJavaYYo.blogspot.com/2020/07/apache-camel-rest-crud-y-el-componente.html
+* Portainer: https://DesarrolloJavaYYo.blogspot.com/2020/09/portainer-como-facilitarte-el-trabajo.html
+* Jaeger: https://DesarrolloJavaYYo.blogspot.com/2020/10/apache-camel-control-de-trazas-con.html
 
 You can see an explanation in English here: 
 

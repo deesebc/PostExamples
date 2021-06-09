@@ -6,7 +6,7 @@ Project to explain how it works JAX-WS with jaxws-rt:2.2.10
 
 ## Link
 
-You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com/2015/08/webservice-con-jax-ws-i.html
+You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com/2015/08/webservice-con-jax-ws-i.html
 
 ## Tags
 

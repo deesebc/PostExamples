@@ -40,7 +40,7 @@ docker build -t camel-quarkus-runner .
 
 You can see an explanation in Spanish here: 
 
-https://jakartaeeyyo.blogspot.com/2020/11/apache-camel-quarkus.html
+https://DesarrolloJavaYYo.blogspot.com/2020/11/apache-camel-quarkus.html
 
 * CRUD: 
 

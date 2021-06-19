@@ -27,9 +27,10 @@ public class BookRibbonRouter extends RouteBuilder {
 
 //.removeHeaders("CamelHttp*")
 //	rest().get("book").route().serviceCall().name("app-camel-mock-client/book?bridgeEndpoint=true")
-//	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().name("foo/book").ribbonLoadBalancer().end(); // OK
-	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().loadBalancer(loadBalancer)
-		.name("foo/book");
+	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().name("foo/book").ribbonLoadBalancer()
+		.end(); // OK
+//	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().loadBalancer(loadBalancer)
+//		.name("foo/book");
 //		.ribbonLoadBalancer().end().log("Body: ${body.[1].author}").end(); //FAIL
 //		.ribbonLoadBalancer().end().convertBodyTo(List.class).unmarshal().json(); //FAIL
     }

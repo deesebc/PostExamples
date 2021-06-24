@@ -24,16 +24,7 @@ public class BookRibbonRouter extends RouteBuilder {
 //		.ribbonLoadBalancer().end(); // OK
 
 	RibbonConfiguration configuration = new RibbonConfiguration();
-	configuration.addProperty("ServerListRefreshInterval", "1000");
-	configuration.addProperty("MaxAutoRetries", "1");
-	configuration.addProperty("MaxAutoRetriesNextServer", "2");
-	configuration.addProperty("OkToRetryOnAllOperations", "true");
-	configuration.addProperty("ReadTimeout", "2000");
-	configuration.addProperty("ConnectTimeout", "1000");
-	configuration.addProperty("retryableStatusCodes", "400");
 	configuration.setPing(new ActuatorHealthPing());
-	configuration.setClientName("LAZO");
-
 	RibbonServiceLoadBalancer loadBalancer = new RibbonServiceLoadBalancer(configuration);
 
 	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().name("app-camel-mock-client/api/book")

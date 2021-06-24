@@ -1,8 +1,13 @@
 package com.example.home.ApacheCamelRestExample.router;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.ribbon.RibbonConfiguration;
+import org.apache.camel.component.ribbon.cloud.RibbonServiceLoadBalancer;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
+
+import com.example.home.ApacheCamelRestExample.ping.ActuatorHealthPing;
 
 @Component
 public class BookRibbonRouter extends RouteBuilder {
@@ -11,37 +16,28 @@ public class BookRibbonRouter extends RouteBuilder {
     public void configure() throws Exception {
 	restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 
-	rest().get("book").route().serviceCall().name("app-camel-mock-client/book?bridgeEndpoint=true")
-		.ribbonLoadBalancer().end(); // OK
-//		.ribbonLoadBalancer().end().log("Body: ${body.[1].author}").end(); //FAIL
-//		.ribbonLoadBalancer().end().convertBodyTo(List.class).unmarshal().json(); //FAIL
+//	rest().get("book").route().serviceCall().name("app-camel-mock-client/api/book?bridgeEndpoint=true")
+//		.ribbonLoadBalancer().end(); // OK
+
+	// .removeHeader(Exchange.HTTP_URI) -> avoid to include bridgeEndpoint
+//	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().name("app-camel-mock-client/api/book")
+//		.ribbonLoadBalancer().end(); // OK
+
+	RibbonConfiguration configuration = new RibbonConfiguration();
+	configuration.addProperty("ServerListRefreshInterval", "1000");
+	configuration.addProperty("MaxAutoRetries", "1");
+	configuration.addProperty("MaxAutoRetriesNextServer", "2");
+	configuration.addProperty("OkToRetryOnAllOperations", "true");
+	configuration.addProperty("ReadTimeout", "2000");
+	configuration.addProperty("ConnectTimeout", "1000");
+	configuration.addProperty("retryableStatusCodes", "400");
+	configuration.setPing(new ActuatorHealthPing());
+	configuration.setClientName("LAZO");
+
+	RibbonServiceLoadBalancer loadBalancer = new RibbonServiceLoadBalancer(configuration);
+
+	rest().get("book").route().removeHeader(Exchange.HTTP_URI).serviceCall().name("app-camel-mock-client/api/book")
+		.loadBalancer(loadBalancer).end();
     }
-
-//	from("rest:get:book:/").serviceCall().name("discovery-client/books?bridgeEndpoint=true").ribbonLoadBalancer()
-////    .consulServiceDiscovery()
-//	.end().unmarshal().json();
-
-//rest("/serviceCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
-//	.serviceCall("discovery-client/books?bridgeEndpoint=true")
-//	// Is it becouse http endpoint produces a Stream as the body and once the stream is read, it is no
-//	// longer available.
-//	.convertBodyTo(String.class).log("Body: ${body}").unmarshal().json();
-
-//rest().get("book").route().log("--entrando--").serviceCall()
-//	.name("app-camel-mock-client/book?bridgeEndpoint=true").ribbonLoadBalancer()
-////	.consulServiceDiscovery().end();
-//	.end().log("--saliendo--").unmarshal().json();
-
-// SEMI OK
-//rest().get("book").route().log("--entrando--").serviceCall()
-//	.name("app-camel-mock-client/book?bridgeEndpoint=true").ribbonLoadBalancer()
-////.consulServiceDiscovery().end();
-//	.end().log("--saliendo--: ${body}").unmarshal().json();
-
-//rest().get("book").route().log("--entrando--").serviceCall()
-//	.name("app-camel-mock-client/book?bridgeEndpoint=true").ribbonLoadBalancer()
-////.consulServiceDiscovery().end();
-//	.end().log(">> - ${body}").convertBodyTo(String.class).marshal().json(JsonLibrary.Jackson)
-//	.log("${body}");
 
 }

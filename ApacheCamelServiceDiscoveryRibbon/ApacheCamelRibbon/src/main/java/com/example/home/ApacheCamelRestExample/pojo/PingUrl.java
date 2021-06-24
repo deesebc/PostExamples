@@ -29,6 +29,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.loadbalancer.IPing;
 import com.netflix.loadbalancer.Server;
 
@@ -49,9 +50,16 @@ public class PingUrl implements IPing {
     private static final Logger LOGGER = LoggerFactory.getLogger(PingUrl.class);
 
     public static void main(final String[] args) {
-	PingUrl p = new PingUrl(false, "/cs/hostRunning");
-	p.setExpectedContent("true");
-	Server s = new Server("ec2-75-101-231-85.compute-1.amazonaws.com", 7101);
+//	PingUrl p = new PingUrl(false, "/cs/hostRunning");
+//	p.setExpectedContent("true");
+//	Server s = new Server("ec2-75-101-231-85.compute-1.amazonaws.com", 7101);
+//
+//	boolean isAlive = p.isAlive(s);
+//	System.out.println("isAlive:" + isAlive);
+
+	PingUrl p = new PingUrl(false, "/actuator/health");
+	p.setExpectedContent("UP");
+	Server s = new Server("localhost", 9090);
 
 	boolean isAlive = p.isAlive(s);
 	System.out.println("isAlive:" + isAlive);
@@ -77,6 +85,12 @@ public class PingUrl implements IPing {
     public PingUrl(final boolean isSecure, final String pingAppendString) {
 	this.isSecure = isSecure;
 	this.pingAppendString = pingAppendString != null ? pingAppendString : "";
+    }
+
+    public PingUrl(final boolean isSecure, final String pingAppendString, final String expectedContent) {
+	this.isSecure = isSecure;
+	this.pingAppendString = pingAppendString != null ? pingAppendString : "";
+	this.expectedContent = expectedContent;
     }
 
     public String getExpectedContent() {
@@ -108,11 +122,11 @@ public class PingUrl implements IPing {
 	    content = EntityUtils.toString(response.getEntity());
 	    isAlive = response.getStatusLine().getStatusCode() == 200;
 	    if (getExpectedContent() != null) {
-		LOGGER.debug("content:" + content);
 		if (content == null) {
 		    isAlive = false;
 		} else {
-		    if (content.equals(getExpectedContent())) {
+		    String status = new ObjectMapper().readTree(content).path("status").asText();
+		    if (status.equals(getExpectedContent())) {
 			isAlive = true;
 		    } else {
 			isAlive = false;
@@ -120,7 +134,7 @@ public class PingUrl implements IPing {
 		}
 	    }
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    LOGGER.error(e.getMessage(), e);
 	} finally {
 	    // Release the connection.
 	    getRequest.abort();

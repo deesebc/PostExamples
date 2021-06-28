@@ -2,11 +2,11 @@
 
 Project to explain how we can create micro services with Spark 2.9.0
 
-You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com
+You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com
 
 ## Versions
 
-* Version 1.0.0: How to do a micro service with Spark. Link: http://jakartaeeyyo.blogspot.com/2017/08/web-services-con-spring-boot-nivel.html  
+* Version 1.0.0: How to do a micro service with Spark. Link: http://DesarrolloJavaYYo.blogspot.com/2017/08/web-services-con-spring-boot-nivel.html  
 
 
 ## Run

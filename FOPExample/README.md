@@ -4,4 +4,4 @@ Project to explain how create a PDF in Java. We can do it with Apache FOP with o
 
 Web Page: https://xmlgraphics.apache.org/fop/
 
-You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com
+You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com

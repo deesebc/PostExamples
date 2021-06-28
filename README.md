@@ -60,5 +60,5 @@ Project to explain how works Wiremock
 
 Most of the examples have an explanation in Spanish and others also in English. You can search them:
 
-- http://jakartaeeyyo.blogspot.com/
+- http://DesarrolloJavaYYo.blogspot.com/
 - https://danielblancocuadrado.medium.com/

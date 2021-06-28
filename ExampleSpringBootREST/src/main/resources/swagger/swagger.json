@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is an example for JakartaEEyYo",
+    "description": "This is an example for DesarrolloJavaYYo",
     "version": "1.0.0",
     "title": "Swagger Libbrary",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
-      "email": "jakartaEEyYo@blogger.com"
+      "email": "DesarrolloJavaYYo@blogger.com"
     },
     "license": {
       "name": "Apache 2.0",
@@ -21,7 +21,7 @@
       "description": "Everything about our Books",
       "externalDocs": {
         "description": "Find out more",
-        "url": "http://jakartaeeyyo.blogspot.com"
+        "url": "http://DesarrolloJavaYYo.blogspot.com"
       }
     }
   ],

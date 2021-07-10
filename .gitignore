@@ -17,3 +17,5 @@ GraviteeExample/docker/data
 GraviteeExample/dcg/data
 ApacheCamelRestELK/src/test/resources/docker-elk/data/
 ApacheCamelRestELK/src/test/resources/docker/data/
+
+ConsulExample/SparkMicroservices/.classpath

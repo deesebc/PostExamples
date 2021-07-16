@@ -1,0 +1,33 @@
+version: '3.5'
+
+networks:
+  consul:
+    name: consul
+    driver: bridge
+
+services:
+  consul:
+    image: consul:latest
+    container_name: consul-server-1
+    hostname: consul-server-1
+    restart: always
+    networks:
+      - consul
+    ports:
+    - 8500:8500
+    - 8600:8600/udp
+    command: agent -server -ui -node=consul-server-1 -bootstrap-expect=1 -client=0.0.0.0
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: consul-portainer
+    hostname: consul-portainer
+    networks:
+      - consul
+    ports:
+      - 9000:9000
+      - 8000:8000
+    command: --admin-password "$$2y$$12$$g//E/31sWHLyG8Ohh8iQXuqw5mzCPgjNi1w2iV5lC8YDPmwp1eI16"   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data

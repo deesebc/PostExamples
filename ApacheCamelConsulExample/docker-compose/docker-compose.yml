@@ -16,26 +16,32 @@ x-consul-server: &consul-server
 
 services:
   consul-agent-1:
+    hostname: consult-agent-1
     container_name: consult-agent-1
     <<: *consul-agent
 
   consul-agent-2:
+    hostname: consult-agent-2
     container_name: consult-agent-2
     <<: *consul-agent
 
   consul-agent-3:
+    hostname: consult-agent-3
     container_name: consult-agent-3
     <<: *consul-agent
 
   consul-server-1:
+    hostname: consult-server-1
     container_name: consult-server-1
     <<: *consul-server
 
   consul-server-2:
+    hostname: consult-server-2
     container_name: consult-server-2
     <<: *consul-server
 
   consul-server-bootstrap:
+    hostname: consul-server-bootstrap
     container_name:   consul-server-bootstrap
     <<: *consul-agent
     ports:
@@ -50,11 +56,11 @@ services:
     container_name: consul-portainer
     hostname: consul-portainer
     networks:
-      - consul
+      - consul-demo
     ports:
       - 9000:9000
       - 8000:8000
-    command: --admin-password "$$2y$$12$$g//E/31sWHLyG8Ohh8iQXuqw5mzCPgjNi1w2iV5lC8YDPmwp1eI16"   
+    command: --admin-password "$$2y$$12$$g//E/31sWHLyG8Ohh8iQXuqw5mzCPgjNi1w2iV5lC8YDPmwp1eI16"  
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data/portainer:/data

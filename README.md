@@ -1,5 +1,13 @@
 # PostExamples
 
+## ApacheCamelEureka
+
+Project to explain how it works Apache Camel with Spring and Neflix Eureka.
+
+## ApacheCamelHystrix
+
+Project to explain how it works Apache Camel with Neflix Hystrix. Include dashboard. 
+
 ## ApacheCamelMicrometer
 
 Project to explain how it works Apache Camel with Spring Actuator, Micrometer, Prometehus and Grafana.
@@ -47,3 +55,10 @@ Project to explain how mocks static with PowerMock version: 1.7.4
 ## Wiremock
 
 Project to explain how works Wiremock
+
+## Documentation
+
+Most of the examples have an explanation in Spanish and others also in English. You can search them:
+
+- http://DesarrolloJavaYYo.blogspot.com/
+- https://danielblancocuadrado.medium.com/

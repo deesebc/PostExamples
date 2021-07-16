@@ -10,4 +10,4 @@ Later you can execute this command inside the root folder of the project:
 
 ./gradlew flywayMigrate -i
 
-You can see an explanation in Spanish here: http://jakartaeeyyo.blogspot.com/2018/xxxxxx
+You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com/2018/xxxxxx

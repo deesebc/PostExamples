@@ -19,5 +19,7 @@ ApacheCamelRestELK/src/test/resources/docker-elk/data/
 ApacheCamelRestELK/src/test/resources/docker/data/
 ApacheCamelEureka/ApacheCamelEurekaClient/.classpath
 ApacheCamelHystrix/src/test/resources/docker/data/portainer/
+SpringBootAdminExample/SpringAdminClientExample/.classpath
+SpringBootAdminExample/SpringAdminServerExample/.classpath
 
 ConsulExample/SparkMicroservices/target/

@@ -12,7 +12,6 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<opentracing-version>0.31.0</opentracing-version>
 	</properties>
 	<dependencies>
 		<!-- Spring-boot -->
@@ -85,7 +84,7 @@
 			<dependency>
 				<groupId>org.apache.camel.springboot</groupId>
 				<artifactId>camel-spring-boot-dependencies</artifactId>
-				<version>3.5.0</version>
+				<version>3.11.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

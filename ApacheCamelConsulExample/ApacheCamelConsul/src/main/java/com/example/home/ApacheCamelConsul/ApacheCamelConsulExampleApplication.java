@@ -1,13 +1,13 @@
-package com.example.home.ApacheCamelRestExample;
+package com.example.home.ApacheCamelConsul;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApacheCamelRibbonExampleApplication {
+public class ApacheCamelConsulExampleApplication {
 
     public static void main(final String[] args) {
-	SpringApplication.run(ApacheCamelRibbonExampleApplication.class, args);
+	SpringApplication.run(ApacheCamelConsulExampleApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.home.ApacheCamelRestExample.pojo;
+package com.example.home.ApacheCamelConsul.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -12,7 +12,6 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<opentracing-version>0.31.0</opentracing-version>
 	</properties>
 	<dependencies>
 		<!-- Spring-boot -->
@@ -23,12 +22,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<!-- Spring cloud -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-			<version>2.2.4.RELEASE</version>
 		</dependency>
 		<!-- Camel Starters -->
 		<dependency>
@@ -45,11 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
-			<artifactId>camel-ribbon-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.springboot</groupId>
-			<artifactId>camel-spring-cloud-netflix-starter</artifactId>
+			<artifactId>camel-consul-starter</artifactId>
 		</dependency>
 		<!-- components -->
 		<dependency>
@@ -70,18 +59,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-ribbon</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-http</artifactId>
+			<artifactId>camel-consul</artifactId>
 		</dependency>
 		<!-- runtime -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -112,7 +92,7 @@
 			<dependency>
 				<groupId>org.apache.camel.springboot</groupId>
 				<artifactId>camel-spring-boot-dependencies</artifactId>
-				<version>3.5.0</version>
+				<version>3.11.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

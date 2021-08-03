@@ -36,7 +36,7 @@ public class BookMockRouter extends RouteBuilder {
 //		.log("Route ${routeId} has been invoked");
 
 	// OK
-	from("servlet:http://0.0.0.0:9090/api/book").routeId("foo-1")
+	from("servlet:http://0.0.0.0:9092/api/book").routeId("foo-1")
 		.routeProperty(ServiceDefinition.SERVICE_META_ID, "foo-2")
 		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockClient")
 		.routePolicy(new ServiceRegistrationRoutePolicy()).log("Route ${routeId} has been invoked");

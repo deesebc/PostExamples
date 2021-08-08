@@ -17,32 +17,32 @@ import de.codecentric.boot.admin.server.notify.filter.FilteringNotifier;
 
 //@Configuration
 public class NotifierConfiguration {
-    private final InstanceRepository repository;
-    private final ObjectProvider<List<Notifier>> otherNotifiers;
+	private final InstanceRepository repository;
+	private final ObjectProvider<List<Notifier>> otherNotifiers;
 
-    public NotifierConfiguration(final InstanceRepository repository,
-	    final ObjectProvider<List<Notifier>> otherNotifiers) {
-	this.repository = repository;
-	this.otherNotifiers = otherNotifiers;
-    }
+	public NotifierConfiguration(final InstanceRepository repository,
+			final ObjectProvider<List<Notifier>> otherNotifiers) {
+		this.repository = repository;
+		this.otherNotifiers = otherNotifiers;
+	}
 
-    @Bean
-    public FilteringNotifier filteringNotifier() {
-	CompositeNotifier delegate = new CompositeNotifier(otherNotifiers.getIfAvailable(Collections::emptyList));
-	return new FilteringNotifier(delegate, repository);
-    }
+	@Bean
+	public FilteringNotifier filteringNotifier() {
+		CompositeNotifier delegate = new CompositeNotifier(otherNotifiers.getIfAvailable(Collections::emptyList));
+		return new FilteringNotifier(delegate, repository);
+	}
 
-    @Bean
-    public LoggingNotifier notifier() {
-	return new LoggingNotifier(repository);
-    }
+	@Bean
+	public LoggingNotifier notifier() {
+		return new LoggingNotifier(repository);
+	}
 
-    @Primary
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public RemindingNotifier remindingNotifier() {
-	RemindingNotifier remindingNotifier = new RemindingNotifier(filteringNotifier(), repository);
-	remindingNotifier.setReminderPeriod(Duration.ofMinutes(5));
-	remindingNotifier.setCheckReminderInverval(Duration.ofSeconds(60));
-	return remindingNotifier;
-    }
+	@Primary
+	@Bean(initMethod = "start", destroyMethod = "stop")
+	public RemindingNotifier remindingNotifier() {
+		RemindingNotifier remindingNotifier = new RemindingNotifier(filteringNotifier(), repository);
+		remindingNotifier.setReminderPeriod(Duration.ofMinutes(5));
+		remindingNotifier.setCheckReminderInverval(Duration.ofSeconds(60));
+		return remindingNotifier;
+	}
 }

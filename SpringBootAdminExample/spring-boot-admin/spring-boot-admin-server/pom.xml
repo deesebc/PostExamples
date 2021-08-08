@@ -34,7 +34,7 @@
             <artifactId>spring-boot-admin-starter-server</artifactId>
             <version>${spring-boot-admin-server.version}</version>
         </dependency>
-        <!--Add login page and logout feature -->
+        <!--Add login page and logout feature 
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui-login</artifactId>
@@ -43,22 +43,27 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency>-->
+        
+        <!-- 
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-        </dependency>
+        </dependency> 
+         -->
         <!--declare the admin server as a client, for self monitoring -->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>${spring-boot-admin-starter-client.version}</version>
         </dependency>
-        <!--mail notifications -->
+        <!--mail notifications
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        --> 
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

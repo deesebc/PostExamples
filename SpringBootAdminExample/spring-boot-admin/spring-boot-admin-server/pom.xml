@@ -9,13 +9,6 @@
     <name>spring-boot-admin-server</name>
     <description>Spring Boot Admin Server</description>
 
-    <!-- parent>
-        <groupId>com.baeldung.spring-boot-modules</groupId>
-        <artifactId>spring-boot-admin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-    </parent -->
-    
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -32,18 +25,23 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
-            <version>${spring-boot-admin-server.version}</version>
+            <version>${spring-boot-admin.version}</version>
         </dependency>
         <!--Add login page and logout feature 
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui-login</artifactId>
             <version>${spring-boot-admin-server-ui-login.version}</version>
+        </dependency>--> 
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui</artifactId>
+            <version>${spring-boot-admin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
+        </dependency>
         
         <!-- 
         <dependency>
@@ -55,7 +53,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring-boot-admin-starter-client.version}</version>
+            <version>${spring-boot-admin.version}</version>
         </dependency>
         <!--mail notifications
         <dependency>
@@ -81,16 +79,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
-            </plugin>
+                </plugin>
         </plugins>
     </build>
 
     <properties>
-        <spring-boot-admin-server.version>2.4.1</spring-boot-admin-server.version>
-        <spring-boot-admin-starter-client.version>2.4.1</spring-boot-admin-starter-client.version>
-        <spring-boot-admin-server-ui-login.version>1.5.7</spring-boot-admin-server-ui-login.version>
-        <spring-boot-maven-plugin.version>2.0.4.RELEASE</spring-boot-maven-plugin.version>
+        <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
     </properties>
     
 </project>

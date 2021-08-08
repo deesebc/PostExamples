@@ -1,15 +1,15 @@
-package com.baeldung.springbootadminserver;
+package com.example.springbootadminserver;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 @EnableAdminServer
 //@SpringBootApplication(exclude = AdminServerHazelcastAutoConfiguration.class)
-@Configuration
-@EnableAutoConfiguration
+//@Configuration
+//@EnableAutoConfiguration
+@SpringBootApplication
 public class SpringBootAdminServerApplication {
 
 	// to allow us permission to inspect our URL. Necessary to auto register the server itself.

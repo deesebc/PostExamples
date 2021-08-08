@@ -9,13 +9,6 @@
     <name>spring-boot-admin-client</name>
     <description>Spring Boot Admin Client</description>
 
-    <!-- parent>
-        <groupId>com.baeldung.spring-boot-modules</groupId>
-        <artifactId>spring-boot-admin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-    </parent -->
-    
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -60,7 +53,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -73,8 +65,7 @@
     </build>
 
     <properties>
-        <spring-boot-admin-starter-client.version>2.4.1</spring-boot-admin-starter-client.version>
-        <spring-boot-maven-plugin.version>2.0.4.RELEASE</spring-boot-maven-plugin.version>
+        <spring-boot-admin-starter-client.version>2.4.3</spring-boot-admin-starter-client.version>
     </properties>
 
 </project>

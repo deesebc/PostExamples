@@ -39,67 +39,14 @@ public class BookMockRouter extends RouteBuilder {
 		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
 		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book/").routePolicy(policy)
 		.bean(BookMockRouter.class, "getById(${header.id})").marshal().json();
-
-	// DEREGISTER
-//	rest().get("service/{id}").route().log("Destroy route id: ${header.id}")
-//		.shutdownRunningTask(ShutdownRunningTask.CompleteAllTasks).log("Destroy route id: ${header.id}")
-//		.removeHeader(Exchange.HTTP_URI).setHeader(Exchange.HTTP_METHOD, simple("PUT"))
-//		.toD("http://localhost:8500/v1/agent/service/deregister/${header.id}");
-
     }
-
-    // OK
-//	from("servlet:http://localhost:9092/api/book").routeId("foo-1")
-//	from("direct:start").routeId("foo-1").routeProperty(ServiceDefinition.SERVICE_META_ID, "foo-2")
-//		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockClient")
-//		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
-//		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
-//		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book")
-//		.routePolicy(new ServiceRegistrationRoutePolicy()).log("Route ${routeId} has been invoked");
-
-//	restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
-
-//	from("servlet://0.0.0.0:9090").routePolicy(new ServiceRegistrationRoutePolicy())
-//		.log("Route ${routeId} has been invoked");
-
-//	from("servlet:http://0.0.0.0:9092").routePolicy(new ServiceRegistrationRoutePolicy()).routeGroup("my-service")
-//		.routeId("my-id").routeProperty(ServiceDefinition.SERVICE_META_PORT, "8080")
-//		.log("Route ${routeId} has been invoked");
-
-//	from("servlet:http://0.0.0.0:9092").routePolicy(new ServiceRegistrationRoutePolicy()).routeGroup("my-service")
-//		.routeId("my-id").routeProperty(ServiceDefinition.SERVICE_META_PORT, "8080")
-//		.log("Route ${routeId} has been invoked");
-
-//	from("direct:start").routePolicy(new ServiceRegistrationRoutePolicy()).routeGroup("client").routeId("mock")
-//		.log("Route ${routeId} has been invoked");
-
-//	from("direct:start").routeId("account-consul").marshal().json(JsonLibrary.Jackson)
-//		.setHeader(Exchange.HTTP_METHOD, constant("PUT"))
-//		.setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
-//		.setHeader("CamelConsulAction", constant("register"))
-//		.toD("http://localhost:8500/v1/agent/service/register");
-//	from("direct:stop").shutdownRunningTask(ShutdownRunningTask.CompleteAllTasks)
-//		.toD("http://192.168.99.100:8500/v1/agent/service/deregister/${header.id}");
-
-//	from("direct:registerFooService").setBody()
-//	.constant(
-//		ImmutableRegistration.builder().id("foo-1").name("foo").address("localhost").port(8500).build())
-//	.to("consul:agent?action=REGISTER");
-
-//from("servlet:http://0.0.0.0:9090").routeId("foo-1")
-//	.routeProperty(ServiceDefinition.SERVICE_META_ID, "foo-1")
-//	.routeProperty(ServiceDefinition.SERVICE_META_NAME, "foo")
-//	.routePolicy(new ServiceRegistrationRoutePolicy());
-
-//from("servlet:http://0.0.0.0:9090").routePolicy(new ServiceRegistrationRoutePolicy()).routeGroup("my-service")
-//	.routeId("my-id").routeProperty(ServiceDefinition.SERVICE_META_PORT, "8080")
-//	.log("Route ${routeId} has been invoked");
 
     public Collection<Book> getAll() {
 	return books.values();
     }
 
-    public Book getById() {// final Integer id) {
-	return books.get(1);
+    public Book getById(final Integer id) {
+	return books.get(id);
     }
+
 }

@@ -27,23 +27,33 @@ public class BookMockRouter extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-	// OK
-//	from("servlet:http://localhost:9092/api/book").routeId("foo-1")
-	from("direct:start").routeId("foo-1").routeProperty(ServiceDefinition.SERVICE_META_ID, "foo-2")
-		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockClient")
+	rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetAll")
+		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockGetAll")
 		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
 		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
 		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book")
-		.routePolicy(new ServiceRegistrationRoutePolicy()).log("Route ${routeId} has been invoked");
-
-	rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetAll_1")
-		.id("mockClientGetAll").log("mockClient - get - book").bean(BookMockRouter.class, "getAll(})");
+		.routePolicy(new ServiceRegistrationRoutePolicy()).log("mockClient - get - book")
+		.bean(BookMockRouter.class, "getAll(})");
 
 	rest().get("book/{id}").description("Details of an book by id").outType(Book.class)
-		.produces(MediaType.APPLICATION_JSON_VALUE).route().bean(BookMockRouter.class, "getById(${header.id})")
+		.produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetById")
+		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockGetById")
+		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
+		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
+		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book/")
+		.routePolicy(new ServiceRegistrationRoutePolicy()).bean(BookMockRouter.class, "getById(${header.id})")
 		.marshal().json();
 
     }
+
+    // OK
+//	from("servlet:http://localhost:9092/api/book").routeId("foo-1")
+//	from("direct:start").routeId("foo-1").routeProperty(ServiceDefinition.SERVICE_META_ID, "foo-2")
+//		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockClient")
+//		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
+//		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
+//		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book")
+//		.routePolicy(new ServiceRegistrationRoutePolicy()).log("Route ${routeId} has been invoked");
 
 //	restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 

@@ -33,9 +33,8 @@ public class BookMockRouter extends RouteBuilder {
 		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book").routePolicy(policy)
 		.bean(BookMockRouter.class, "getAll(})").marshal().json();
 
-	rest().get("book/{id}").description("Details of an book by id").outType(Book.class)
-		.produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockGetById")
-		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "bookGetById")
+	rest().get("book/{id}").description("Details of an book by id").produces(MediaType.APPLICATION_JSON_VALUE)
+		.route().routeId("mockGetById").routeProperty(ServiceDefinition.SERVICE_META_NAME, "bookGetById")
 		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
 		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book/").routePolicy(policy)
 		.bean(BookMockRouter.class, "getById(${header.id})").marshal().json();

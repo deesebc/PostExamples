@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import com.example.home.ApacheCamelConsul.pojo.Book;
-
 @Component
 public class BookServiceRouter extends RouteBuilder {
 
@@ -19,12 +17,12 @@ public class BookServiceRouter extends RouteBuilder {
     public void configure() throws Exception {
 
 	rest("/serviceCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route().removeHeader(Exchange.HTTP_URI)
-		.serviceCall("mockGetAll").log("Body: ${body}").endRest();
+		.serviceCall("mockGetAll").convertBodyTo(String.class).log("Body: ${body}").unmarshal().json();
 
-	rest("/serviceCall/{id}").get().produces(MediaType.APPLICATION_JSON_VALUE).outType(Book.class).route()
+	rest("/serviceCall/{id}").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
 		.removeHeader(Exchange.HTTP_PATH).setHeader(Exchange.HTTP_PATH, simple("${header.id}"))
-		.removeHeader(Exchange.HTTP_URI).serviceCall("mockGetById").log("Body: ${body}").marshal().json()
-		.endRest();
+		.removeHeader(Exchange.HTTP_URI).serviceCall("mockGetById").convertBodyTo(String.class)
+		.log("Body: ${body}").unmarshal().json();
 
     }
 

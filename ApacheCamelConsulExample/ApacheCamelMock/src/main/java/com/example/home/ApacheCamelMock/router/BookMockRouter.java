@@ -21,7 +21,6 @@ public class BookMockRouter extends RouteBuilder {
 	books.put(1, new Book(1, "Dune", "Frank Herbert"));
 	books.put(2, new Book(2, "The stars my destination", "Alfred Bester"));
 	books.put(3, new Book(3, "Ender's game", "Orson S. Card"));
-	books.put(4, new Book(4, "Configure Ribbon", "Server 2"));
     }
 
     @Override
@@ -33,7 +32,7 @@ public class BookMockRouter extends RouteBuilder {
 		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
 		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book")
 		.routePolicy(new ServiceRegistrationRoutePolicy()).log("mockClient - get - book")
-		.bean(BookMockRouter.class, "getAll(})");
+		.bean(BookMockRouter.class, "getAll(})").marshal().json();
 
 	rest().get("book/{id}").description("Details of an book by id").outType(Book.class)
 		.produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetById")

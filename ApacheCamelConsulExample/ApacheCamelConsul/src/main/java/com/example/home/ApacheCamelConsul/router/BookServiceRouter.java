@@ -17,11 +17,11 @@ public class BookServiceRouter extends RouteBuilder {
     public void configure() throws Exception {
 
 	rest("/serviceCall").get().produces(MediaType.APPLICATION_JSON_VALUE).route().removeHeader(Exchange.HTTP_URI)
-		.serviceCall("mockGetAll").convertBodyTo(String.class).log("Body: ${body}").unmarshal().json();
+		.serviceCall("bookGetAll").convertBodyTo(String.class).log("Body: ${body}").unmarshal().json();
 
 	rest("/serviceCall/{id}").get().produces(MediaType.APPLICATION_JSON_VALUE).route()
 		.removeHeader(Exchange.HTTP_PATH).setHeader(Exchange.HTTP_PATH, simple("${header.id}"))
-		.removeHeader(Exchange.HTTP_URI).serviceCall("mockGetById").convertBodyTo(String.class)
+		.removeHeader(Exchange.HTTP_URI).serviceCall("bookGetById").convertBodyTo(String.class)
 		.log("Body: ${body}").unmarshal().json();
 
     }

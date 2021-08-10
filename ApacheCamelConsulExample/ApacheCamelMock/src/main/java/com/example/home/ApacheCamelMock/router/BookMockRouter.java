@@ -25,23 +25,26 @@ public class BookMockRouter extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+	ServiceRegistrationRoutePolicy policy = new ServiceRegistrationRoutePolicy();
 
 	rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetAll")
-		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockGetAll")
+		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "bookGetAll")
 		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
-		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
-		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book")
-		.routePolicy(new ServiceRegistrationRoutePolicy()).log("mockClient - get - book")
+		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book").routePolicy(policy)
 		.bean(BookMockRouter.class, "getAll(})").marshal().json();
 
 	rest().get("book/{id}").description("Details of an book by id").outType(Book.class)
-		.produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockClientGetById")
-		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "mockGetById")
+		.produces(MediaType.APPLICATION_JSON_VALUE).route().routeId("mockGetById")
+		.routeProperty(ServiceDefinition.SERVICE_META_NAME, "bookGetById")
 		.routeProperty(ServiceDefinition.SERVICE_META_PORT, "9092")
-		.routeProperty(ServiceDefinition.SERVICE_META_HOST, "localhost")
-		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book/")
-		.routePolicy(new ServiceRegistrationRoutePolicy()).bean(BookMockRouter.class, "getById(${header.id})")
-		.marshal().json();
+		.routeProperty(ServiceDefinition.SERVICE_META_PATH, "api/book/").routePolicy(policy)
+		.bean(BookMockRouter.class, "getById(${header.id})").marshal().json();
+
+	// DEREGISTER
+//	rest().get("service/{id}").route().log("Destroy route id: ${header.id}")
+//		.shutdownRunningTask(ShutdownRunningTask.CompleteAllTasks).log("Destroy route id: ${header.id}")
+//		.removeHeader(Exchange.HTTP_URI).setHeader(Exchange.HTTP_METHOD, simple("PUT"))
+//		.toD("http://localhost:8500/v1/agent/service/deregister/${header.id}");
 
     }
 

@@ -1,0 +1,63 @@
+#https://github.com/consul/consul/blob/master/docker-compose.yml
+version: '3'
+
+x-consul-container: &consul-container
+  image: consul:latest
+  networks:
+    - consul-demo
+
+x-consul-agent: &consul-agent
+  <<: *consul-container
+  command: "agent -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+x-consul-server: &consul-server
+  <<: *consul-container
+  command: "agent -server -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+services:
+  consul-agent-1:
+    container_name: consult-agent-1
+    <<: *consul-agent
+
+  consul-agent-2:
+    container_name: consult-agent-2
+    <<: *consul-agent
+
+  consul-agent-3:
+    container_name: consult-agent-3
+    <<: *consul-agent
+
+  consul-server-1:
+    container_name: consult-server-1
+    <<: *consul-server
+
+  consul-server-2:
+    container_name: consult-server-2
+    <<: *consul-server
+
+  consul-server-bootstrap:
+    container_name:   consul-server-bootstrap
+    <<: *consul-agent
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+      - "8600:8600/udp"
+    command: "agent -server -bootstrap-expect 3 -ui -client 0.0.0.0"
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: consul-portainer
+    hostname: consul-portainer
+    networks:
+      - consul
+    ports:
+      - 9000:9000
+      - 8000:8000
+    command: --admin-password "$$2y$$12$$g//E/31sWHLyG8Ohh8iQXuqw5mzCPgjNi1w2iV5lC8YDPmwp1eI16"   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
+
+networks:
+  consul-demo:

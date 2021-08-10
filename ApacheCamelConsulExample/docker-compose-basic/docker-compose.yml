@@ -1,0 +1,40 @@
+#https://github.com/consul/consul/blob/master/docker-compose.yml
+version: '3'
+
+x-consul-container: &consul-container
+  image: consul:latest
+  networks:
+    - consul-demo
+
+x-consul-agent: &consul-agent
+  <<: *consul-container
+  command: "agent -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+x-consul-server: &consul-server
+  <<: *consul-container
+  command: "agent -server -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+services:
+#  consul-agent-1:
+#    hostname: consult-agent-1
+#    container_name: consult-agent-1
+#    <<: *consul-agent
+
+  consul-server-1:
+    hostname: consult-server-1
+    container_name: consult-server-1
+    <<: *consul-server
+
+  consul-server-bootstrap:
+    hostname: consul-server-bootstrap
+    container_name:   consul-server-bootstrap
+    <<: *consul-agent
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+      - "8600:8600/udp"
+    command: "agent -server -bootstrap-expect 2 -ui -client 0.0.0.0"
+
+networks:
+  consul-demo:

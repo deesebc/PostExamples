@@ -4,7 +4,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 	<persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<!-- tomcat: 1. configure datasource in server.xml in GlobalNamingResources. 2. configure ResourceLink in context.xml -->
 		<non-jta-data-source>java:comp/env/jdbc/almacen</non-jta-data-source>
 		<properties>

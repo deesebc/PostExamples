@@ -1,4 +1,4 @@
-package com.home.example.dbjunittest.dao;
+package com.home.example.jpajndiinttest.dao;
 
 import java.sql.SQLException;
 
@@ -11,7 +11,7 @@ public abstract class AbstractDBTest {
     private static String DIR = "./src/test/resources/h2/";
     private static String DATABASE = "db";
 //    public static String URL = "jdbc:h2:file:" + DIR + DATABASE + ";PASSWORD=SA;USER=SA;MODE=Oracle";
-    public static String URL = "jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;INIT=RUNSCRIPT FROM 'classpath:myscript.sql';";
+    public static String URL = "jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;INIT=RUNSCRIPT FROM 'classpath:schema-generator.sql';";
     public static String JNDI_DS = "datasource/maestras";
 
     public static void destroy() throws NamingException, SQLException {
@@ -23,7 +23,7 @@ public abstract class AbstractDBTest {
 	BasicDataSource dataSource = new BasicDataSource();
 	dataSource.setDriverClassName("org.h2.Driver");
 	dataSource.setUrl(URL);
-	initContext.bind("java:comp/env/datasource/maestras", dataSource);
+	initContext.bind("java:comp/env/jdbc/myds", dataSource);
     }
 
     public static void setup() throws NamingException, SQLException {

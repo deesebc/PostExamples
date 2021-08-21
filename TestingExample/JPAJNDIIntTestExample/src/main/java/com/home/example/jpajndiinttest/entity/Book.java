@@ -1,4 +1,4 @@
-package com.home.example.dbjunittest.entity;
+package com.home.example.jpajndiinttest.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

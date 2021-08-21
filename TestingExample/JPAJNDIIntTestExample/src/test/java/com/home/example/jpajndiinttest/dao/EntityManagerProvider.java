@@ -1,4 +1,4 @@
-package com.home.example.dbjunittest.dao;
+package com.home.example.jpajndiinttest.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

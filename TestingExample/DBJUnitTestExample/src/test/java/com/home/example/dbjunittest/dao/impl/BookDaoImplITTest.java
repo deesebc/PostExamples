@@ -25,19 +25,19 @@ public class BookDaoImplITTest {
     }
 
     @Test
-    public void findAll() throws InterruptedException {
+    public void findAll() {
 	List<Book> lst = dao.findAll();
 	assertThat(lst.size(), equalTo(1));
     }
 
     @Test
-    public void getByField() throws InterruptedException {
+    public void getByField() {
 	Book obj = dao.getByField("author", "Orson S. Card");
 	assertThat(obj.getId(), equalTo(1));
     }
 
     @Test
-    public void getById() throws InterruptedException {
+    public void getById() {
 	Book obj = dao.getById(1);
 	assertThat(obj.getAuthor(), equalTo("Orson S. Card"));
     }

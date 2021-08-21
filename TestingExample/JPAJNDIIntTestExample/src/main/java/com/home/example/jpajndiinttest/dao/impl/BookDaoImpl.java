@@ -1,15 +1,15 @@
-package com.home.example.dbjunittest.dao.impl;
+package com.home.example.jpajndiinttest.dao.impl;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.home.example.dbjunittest.entity.Book;
+import com.home.example.jpajndiinttest.entity.Book;
 
 @Stateless
 public class BookDaoImpl extends GenericDaoImpl<Integer, Book> {
 
-    @PersistenceContext(unitName = "puDSsct")
+    @PersistenceContext(unitName = "persistence-unit")
     protected EntityManager em;
 
     @Override

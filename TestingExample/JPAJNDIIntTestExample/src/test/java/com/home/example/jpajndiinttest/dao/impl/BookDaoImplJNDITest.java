@@ -1,4 +1,4 @@
-package com.home.example.dbjunittest.dao.impl;
+package com.home.example.jpajndiinttest.dao.impl;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,9 +11,10 @@ import javax.naming.NamingException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.home.example.dbjunittest.dao.AbstractDBTest;
-import com.home.example.dbjunittest.dao.EntityManagerProvider;
-import com.home.example.dbjunittest.entity.Book;
+import com.home.example.jpajndiinttest.dao.AbstractDBTest;
+import com.home.example.jpajndiinttest.dao.EntityManagerProvider;
+import com.home.example.jpajndiinttest.dao.impl.BookDaoImpl;
+import com.home.example.jpajndiinttest.entity.Book;
 
 public class BookDaoImplJNDITest extends AbstractDBTest {
 

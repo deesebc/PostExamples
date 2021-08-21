@@ -13,19 +13,15 @@ import org.junit.jupiter.api.Test;
 
 import com.home.example.dbjunittest.entity.Book;
 
-public class BookDaoImplTest {
+public class BookDaoImplITTest {
 
     private static BookDaoImpl dao;
-
-//    @Rule
-//    public static EntityManagerProvider provider = EntityManagerProvider.withUnit("persistence-unit-test");
 
     @BeforeAll
     public static void before() {
 	dao = new BookDaoImpl();
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit-test");
 	dao.em = emf.createEntityManager();
-//	dao.em = provider.em();
     }
 
     @Test

@@ -6,38 +6,12 @@
     <persistence-unit name="persistence-unit-test" transaction-type="RESOURCE_LOCAL">
         <class>com.home.example.dbjunittest.entity.Book</class>
         <properties>
-        	<!-- 
-        	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
-        	 <property name="hibernate.show_sql" value="true" />
-			 <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9Dialect" />
-			 <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-			 <property name="javax.persistence.jdbc.user" value="SIC" />
-			 <property name="javax.persistence.jdbc.password" value="SIC" />
-            <property name="javax.persistence.schema-generation.database.action" value="none" />
-        	 -->
-        	<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;INIT=RUNSCRIPT FROM 'classpath:myscript.sql';" />
+        	<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;INIT=RUNSCRIPT FROM 'classpath:schema-generator.sql';" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.schema-generation.database.action" value="none" />
-            <property name="eclipselink.logging.level" value="FINE"/>
             
-            
-            
-            <!--
-            <property name="url" value="jdbc:h2:mydb;INIT=RUNSCRIPT FROM 'classpath:myscript.sql';"/>
-             
-             <property name="hibernate.format_sql" value="false"/>
-        <property name="hibernate.show_sql" value="true"/>
-             -->
-              
-             <!-- 
-             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
-             <property name="hibernate.show_sql" value="true" />
-			 <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9Dialect" />
-			 <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-			 <property name="javax.persistence.jdbc.user" value="SIC" />
-			 <property name="javax.persistence.jdbc.password" value="SIC" />
-            <property name="javax.persistence.schema-generation.database.action" value="none" />
-            -->
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+ 			<property name="eclipselink.logging.parameters" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

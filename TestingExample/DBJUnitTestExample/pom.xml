@@ -13,8 +13,6 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<junit.jupiter.version>5.7.1</junit.jupiter.version>
-		<junit.platform.version>1.7.1</junit.platform.version>
 	</properties>
 
 	<dependencies>
@@ -35,72 +33,37 @@
 			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- weblogic dependencies -->
+		<!-- JAVA EE dependencies -->
 		<dependency> <!-- Java EE -->
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency> <!-- Java EE EJB -->
-			<groupId>javax.ejb</groupId>
-			<artifactId>javax.ejb-api</artifactId>
-			<version>3.2.2</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency> <!-- Java EE Servlet -->
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency> <!-- Java EE Common Annotationss -->
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<version>1.3.2</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency> <!-- Java EE Bean Validation -->
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.0.Final</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency> <!-- Contexts and Dependency Injection for Java EE -->
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency> <!-- Expression Language (EL) -->
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>19.3.0.0</version>
-			<scope>provided</scope> <!-- for integration test -->
-		</dependency>
-		<!-- need for entityManager tests -->
+		<!-- need for entityManager tests: PersistenceException: No Persistence provider for EntityManager named persistence-unit-test -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.7.9</version>
-			<scope>test</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Test -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
+			<version>5.7.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-runner</artifactId>
-			<version>${junit.platform.version}</version>
+			<version>1.7.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.23.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -110,39 +73,19 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.h-thurow</groupId>
-			<artifactId>simple-jndi</artifactId>
-			<version>0.23.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>2.7.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>2.23.0</version>
-			<scope>test</scope>
-		</dependency>
-
-
 	</dependencies>
-
-	<build></build>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

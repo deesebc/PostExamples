@@ -8,13 +8,11 @@ import com.home.example.dbjunittest.entity.Book;
 
 @Stateless
 public class BookDaoImpl extends GenericDaoImpl<Integer, Book> {
-
-    @PersistenceContext(unitName = "puDSsct")
+    @PersistenceContext(unitName = "persistence-unit")
     protected EntityManager em;
 
     @Override
     public EntityManager getEntityManager() {
 	return em;
     }
-
 }

@@ -4,8 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-
 import com.home.example.dbjunittest.dao.GenericDao;
 
 import lombok.extern.log4j.Log4j2;
@@ -41,16 +39,10 @@ public abstract class GenericDaoImpl<K, E> implements GenericDao<K, E> {
     public E getByField(final String field, final String value) {
 	log.debug(String.format("persistentClass: %s", persistentClass.getSimpleName()));
 	log.debug(String.format("field: %s", field));
-	E retorno = null;
-	try {
-	    retorno = getEntityManager()
-		    .createQuery(String.format("SELECT t FROM %s t where t.%s = :value", persistentClass.getSimpleName(), field),
-			    persistentClass)
-		    .setParameter("value", value).getSingleResult();
-	} catch (NoResultException exception) {
-	    log.warn(String.format("Not found entity %s by field %s and value %s.", persistentClass.getSimpleName(), field, value));
-	}
-	return retorno;
+	return getEntityManager()
+		.createQuery(String.format("SELECT t FROM %s t where t.%s = :value", persistentClass.getSimpleName(), field),
+			persistentClass)
+		.setParameter("value", value).getResultStream().findFirst().orElse(null);
     }
 
     @Override

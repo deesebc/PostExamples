@@ -5,29 +5,27 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
-import org.junit.Rule;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.home.example.dbjunittest.dao.EntityManagerProvider;
 import com.home.example.dbjunittest.entity.Book;
 
 public class BookDaoImplTest {
 
-    // https://arquillian.org/guides/testing_java_persistence_es/ -> arquillian
-    // https://www.christophbrill.de/en/posts/unit-testing-with-junit-and-mockito/ -> mock
-
     private static BookDaoImpl dao;
 
-    // USE persistence-url.xml
-
-    @Rule
-    public static EntityManagerProvider provider = EntityManagerProvider.withUnit("persistence-unit-test");
+//    @Rule
+//    public static EntityManagerProvider provider = EntityManagerProvider.withUnit("persistence-unit-test");
 
     @BeforeAll
     public static void before() {
 	dao = new BookDaoImpl();
-	dao.em = provider.em();
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit-test");
+	dao.em = emf.createEntityManager();
+//	dao.em = provider.em();
     }
 
     @Test

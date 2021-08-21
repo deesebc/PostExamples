@@ -3,26 +3,27 @@ package com.home.example.jpajndiinttest.dao.impl;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.naming.NamingException;
+import javax.naming.InitialContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.home.example.jpajndiinttest.dao.AbstractDBTest;
 import com.home.example.jpajndiinttest.entity.Book;
 
-public class BookDaoImplJNDITest extends AbstractDBTest {
+public class BookDaoImplJNDITest {
 
-    private static BookDaoImpl dao;
+    static BookDaoImpl dao;
+
+    static InitialContext initContext;
 
     @BeforeAll
-    public static void before() throws NamingException, SQLException {
-	AbstractDBTest.setup();
+    public static void setup() throws Exception {
+	initContext = new InitialContext();
+
 	dao = new BookDaoImpl();
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit-test");
 	dao.em = emf.createEntityManager();
@@ -45,4 +46,5 @@ public class BookDaoImplJNDITest extends AbstractDBTest {
 	Book obj = dao.getById(1);
 	assertThat(obj.getAuthor(), equalTo("Orson S. Card"));
     }
+
 }

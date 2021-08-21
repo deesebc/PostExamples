@@ -7,3 +7,5 @@
 **/data/portainer/*
 /.gradle/
 
+*.factorypath
+TestingExample/PowerMockExample/gradle/

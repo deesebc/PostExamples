@@ -7,31 +7,25 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.home.example.jpajndiinttest.dao.AbstractDBTest;
-import com.home.example.jpajndiinttest.dao.EntityManagerProvider;
-import com.home.example.jpajndiinttest.dao.impl.BookDaoImpl;
 import com.home.example.jpajndiinttest.entity.Book;
 
 public class BookDaoImplJNDITest extends AbstractDBTest {
 
-    // https://arquillian.org/guides/testing_java_persistence_es/ -> arquillian
-    // https://www.christophbrill.de/en/posts/unit-testing-with-junit-and-mockito/ -> mock
-
     private static BookDaoImpl dao;
-
-    public static EntityManagerProvider provider; // = EntityManagerProvider.withUnit("persistence-unit-test");
 
     @BeforeAll
     public static void before() throws NamingException, SQLException {
 	AbstractDBTest.setup();
-	System.out.println("----------------------------");
-	provider = EntityManagerProvider.withUnit("persistence-unit-test");
 	dao = new BookDaoImpl();
-	dao.em = provider.em();
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit-test");
+	dao.em = emf.createEntityManager();
     }
 
     @Test

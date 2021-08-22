@@ -14,7 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import com.home.example.jpajndiinttest.entity.Book;
 
-public class BookDaoImplJNDITest {
+//you can see how this class it's execute with maven-failsafe-plugin
+public class BookDaoImplIT {
 
     static BookDaoImpl dao;
 

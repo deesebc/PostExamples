@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link data-th-href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link data-th-href="@{/css/main.css}" rel="stylesheet">
+    <!-- link data-th-href="@{/css/main.css}" rel="stylesheet" -->
 </head>
 <body>
 
@@ -13,22 +13,31 @@
 
     <div class="row">
         <div id="title">
-            <h1>Spring WebFlux + Thymeleaf</h1>
+            <h1>Spring WebFlux + Server Sent Events</h1>
         </div>
-        <table id="allBooks" class="table table-striped">
+
+        <table id="books" class="table table-striped">
             <thead>
             <tr>
-                <th width="40%">Author</th>
-                <th>Name</th>
+                <th width="10%">Author</th>
+                <th width="60%">Name</th>
+                <th width="30%">Date</th>
             </tr>
             </thead>
             <tbody>
             <tr class="result" data-th-each="book : ${books}">
                 <td>[[${book.author}]]</td>
                 <td>[[${book.name}]]</td>
+                <td>[[${book.releaseDate}]]</td>
             </tr>
             </tbody>
         </table>
     </div>
 
 </div>
+
+<script data-th-src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

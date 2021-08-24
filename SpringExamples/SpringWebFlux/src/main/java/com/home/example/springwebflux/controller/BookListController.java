@@ -29,6 +29,13 @@ public class BookListController {
     @Qualifier("jdbcScheduler")
     private Scheduler jdbcScheduler;
 
+    @GetMapping("/maxWithDelay")
+    public String maxWithDelay(final Model model) {
+	Flux<Book> flux = Flux.defer(() -> Flux.fromIterable(repository.findLastReleasesByAuthor())).delayElements(Duration.ofSeconds(1));
+	model.addAttribute("books", new ReactiveDataDriverContextVariable(flux, 1));
+	return "books"; // direccionamos al students.html
+    }
+
     @GetMapping("/withDelay")
     public String withDelay(final Model model) {
 	Flux<Book> flux = Flux.defer(() -> Flux.fromIterable(repository.findAll())).delayElements(Duration.ofSeconds(1));
@@ -38,7 +45,7 @@ public class BookListController {
 
     @GetMapping("/withoutDealy")
     public String withoutDelay(final Model model) {
-	Flux<Book> flux = Flux.defer(() -> Flux.fromIterable(repository.findAll()));
+	Flux<Book> flux = Flux.defer(() -> Flux.fromIterable(repository.findLastReleasesByAuthor()));
 	model.addAttribute("books", flux.subscribeOn(jdbcScheduler));
 	return "books"; // direccionamos al students.html
     }

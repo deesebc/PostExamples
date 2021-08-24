@@ -9,12 +9,16 @@
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th width="40%">Author</th>
+        <th width="40%">Name</th>
+        <th width="20%">Release</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="s : ${books}">
-        <td th:text="${s.name}">...</td>
+    	<td th:text="${s.author}"></td>
+        <td th:text="${s.name}"></td>
+        <td th:text="${s.releaseDate}"></td>
     </tr>
     </tbody>
 </table>

@@ -39,6 +39,19 @@ public class BookDaoImplExpectedDataSetTest {
 	assertThat(lst.size(), equalTo(4));
     }
 
+    @Test
+    @ExpectedDataSet(value = "expectedRegExBooks.yml")
+    public void createRegEx() {
+	List<Book> lst = dao.findAll();
+	assertThat(lst.size(), equalTo(3));
+	Book book = new Book(4, "Foundation", "Isaac Asimov");
+	dao.em.getTransaction().begin(); // we are testing with non-jta datasource
+	dao.create(book);
+	dao.em.getTransaction().commit();
+	lst = dao.findAll();
+	assertThat(lst.size(), equalTo(4));
+    }
+
     @BeforeEach
     @DataSet("books.yml")
     public void setUpSeveral() {

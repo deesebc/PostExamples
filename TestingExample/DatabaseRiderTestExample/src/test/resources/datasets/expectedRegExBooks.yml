@@ -1,0 +1,13 @@
+book:
+  - id: "regex:\\d+"
+    name: regex:^Ender's.*
+    author: "Orson S. Card"
+  - id: 2
+    name: regex:.*starts.*
+    author: Alfred Bester
+  - id: 3
+    name: Dune
+    author: Frank Herbert
+  - id: 5
+    name: regex:.*tion$
+    author: Isaac Asimov

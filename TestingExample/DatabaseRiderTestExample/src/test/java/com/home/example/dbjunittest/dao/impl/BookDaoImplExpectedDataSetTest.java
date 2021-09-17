@@ -23,40 +23,40 @@ import com.home.example.dbjunittest.entity.Book;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class BookDaoImplExpectedDataSetTest {
 
-    private BookDaoImpl dao;
-    private ConnectionHolder connectionHolder = () -> instance("persistence-unit-test").connection();
+	private BookDaoImpl dao;
 
-    @Test
-    @ExpectedDataSet(value = "expectedBooks.yml", ignoreCols = "id")
-    public void create() {
-	List<Book> lst = dao.findAll();
-	assertThat(lst.size(), equalTo(3));
-	Book book = new Book(4, "Foundation", "Isaac Asimov");
-	dao.em.getTransaction().begin(); // we are testing with non-jta datasource
-	dao.create(book);
-	dao.em.getTransaction().commit();
-	lst = dao.findAll();
-	assertThat(lst.size(), equalTo(4));
-    }
+	private ConnectionHolder connectionHolder = () -> instance("persistence-unit-test").connection();
 
-    @Test
-    @ExpectedDataSet(value = "expectedRegExBooks.yml")
-    public void createRegEx() {
-	List<Book> lst = dao.findAll();
-	assertThat(lst.size(), equalTo(3));
-	Book book = new Book(4, "Foundation", "Isaac Asimov");
-	dao.em.getTransaction().begin(); // we are testing with non-jta datasource
-	dao.create(book);
-	dao.em.getTransaction().commit();
-	lst = dao.findAll();
-	assertThat(lst.size(), equalTo(4));
-    }
+	@Test
+	@ExpectedDataSet(value = "expectedBooks.yml", ignoreCols = "id")
+	public void create() {
+		List<Book> lst = dao.findAll();
+		assertThat(lst.size(), equalTo(3));
+		Book book = new Book(4, "Foundation", "Isaac Asimov");
+		dao.em.getTransaction().begin(); // we are testing with non-jta datasource
+		dao.create(book);
+		dao.em.getTransaction().commit();
+		lst = dao.findAll();
+		assertThat(lst.size(), equalTo(4));
+	}
 
-    @BeforeEach
-    @DataSet("books.yml")
-    public void setUpSeveral() {
-	dao = new BookDaoImpl();
-	System.out.println("limpio ??? ");
-	dao.em = em();
-    }
+	@Test
+	@ExpectedDataSet(value = "expectedRegExBooks.yml")
+	public void createRegEx() {
+		List<Book> lst = dao.findAll();
+		assertThat(lst.size(), equalTo(3));
+		Book book = new Book(4, "Foundation", "Isaac Asimov");
+		dao.em.getTransaction().begin(); // we are testing with non-jta datasource
+		dao.create(book);
+		dao.em.getTransaction().commit();
+		lst = dao.findAll();
+		assertThat(lst.size(), equalTo(4));
+	}
+
+	@BeforeEach
+	@DataSet("books.yml")
+	public void setUpSeveral() {
+		dao = new BookDaoImpl();
+		dao.em = em();
+	}
 }

@@ -73,25 +73,10 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-caffeine</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-micrometer</artifactId>
-    </dependency>
-    <!-- micrometer -->
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-graphite</artifactId>
-    </dependency>
     <!-- DB -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-    </dependency>
-    <!-- tracer -->
-    <dependency>
-      <groupId>io.jaegertracing</groupId>
-      <artifactId>jaeger-client</artifactId>
-      <version>${opentracing-version}</version>
     </dependency>
     <!-- runtime -->
     <dependency>

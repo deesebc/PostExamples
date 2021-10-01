@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE struts PUBLIC
-        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-        "http://struts.apache.org/dtds/struts-2.0.dtd">
-
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-
-    <constant name="struts.devMode" value="true"/>
-    <!-- <constant name="struts.action.extension" value="html"/> -->
-
-    <package name="default" namespace="/" extends="struts-default,json-default">
-        <default-action-ref name="index"/>
-
-        <action name="index" class="com.home.example.struts2.action.BookAction">
-            <result name="success">/pages/book.jsp</result>
-        </action>
-        <action name="searchBook" class="com.home.example.struts2.action.BookAction" method="search">
-            <result name="success">/pages/book.jsp</result>
-        </action>
-        <action name="searchBookJson" class="com.home.example.struts2.action.BookAction" method="searchJson">
-            <result name="success" type="json" />
-        </action>
-        <action name="gridView2" class="grid.example.GridViewAction" method="viewGrid">
-            <result name="success">/pages/strutsExample.jsp</result>
-        </action>
-        <action name="gridView" class="grid.example.GridViewAction" method="viewGrid">
-            <result name="success" type="json"> </result>
-        </action>
-    </package>
 
 </struts>

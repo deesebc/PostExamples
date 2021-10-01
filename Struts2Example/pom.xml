@@ -58,21 +58,6 @@
 			<artifactId>struts2-jquery-grid-plugin</artifactId>
 			<version>${struts2-query.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-datatables-plugin</artifactId>
-			<version>${struts2-query.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-richtext-plugin</artifactId>
-			<version>${struts2-query.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-tree-plugin</artifactId>
-			<version>${struts2-query.version}</version>
-		</dependency>
 		<!-- provided -->
 		<dependency> <!-- Java EE Servlet -->
 			<groupId>javax.servlet</groupId>
@@ -105,6 +90,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

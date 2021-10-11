@@ -1,0 +1,22 @@
+<div th:switch="${books}">
+    <h2 th:case="null">No books yet!</h2>
+        <div th:case="*">
+            <h2>books</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.name}"></td>
+                    <td th:text="${book.author}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

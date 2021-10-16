@@ -1,0 +1,67 @@
+version: "3.7"
+services:
+    mysql:
+      image: mysql:5.7.26
+      container_name: sandbox-mysql
+      hostname: sandbox-mysql
+      networks:
+        - elastic
+      environment:
+        MYSQL_HOST: sandbox-mysql
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - 3306:3306
+      volumes:
+        - "./config/mysql/scripts:/docker-entrypoint-initdb.d"
+        - "./config/mysql/logs:/var/log/mysql:rw"
+        - "./config/mysql/conf.d:/etc/mysql/conf.d"
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+        container_name: elasticsearch
+        hostname: elasticsearch
+        environment:
+            - node.name=elasticsearch
+            - cluster.name=es-docker-cluster
+            - discovery.type=single-node
+        volumes:
+            - ./data:/usr/share/elasticsearch/data
+        networks:
+            - elastic
+        ports:
+            - 9200:9200
+            - 9300:9300
+        healthcheck:
+          test: curl -s https://localhost:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+          interval: 30s
+          timeout: 10s
+          retries: 5
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.10.2
+        container_name: kibana
+        hostname: kibana
+        volumes:
+          - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml
+        ports:
+          - "5601:5601"
+        networks:
+          - elastic
+        depends_on:
+          - elasticsearch
+    filebeat:
+        image: docker.elastic.co/beats/filebeat:7.10.2
+        container_name: filebeat
+        hostname: filebeat
+        volumes:
+#          - ./config/modules/:/usr/share/filebeat/modules.d/:ro
+          - ./config/beats/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+        environment:
+          setup.kibana.host: "kibana:5601"
+          output.elasticsearch.hosts: "elasticsearch:9200"
+        networks:
+          - elastic
+        depends_on:
+          - elasticsearch
+    
+networks:
+  elastic:
+    driver: bridge

@@ -1,10 +1,10 @@
 <configuration>
 	<appender name="STASH"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/home/dsblanco/Documentos/logs/apache_Camel_ELK.log</file>
+		<file>./src/test/resources/docker-ebk/data/apache/apache_Camel_ELK.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>>/home/dsblanco/Documentos/logs/apacheCamelELK.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>./src/test/resources/docker-ebk/data/apache/apacheCamelELK.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>7</maxHistory>
 		</rollingPolicy>
 		<encoder class="net.logstash.logback.encoder.LogstashEncoder">

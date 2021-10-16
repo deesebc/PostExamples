@@ -8,3 +8,4 @@
 /.gradle/
 
 ExampleJaxRS/.factorypath
+ApacheCamel/ApacheCamelRestELK/src/test/resources/docker-ebk/data/

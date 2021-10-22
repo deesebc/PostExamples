@@ -1,20 +1,22 @@
-<div th:switch="${books}">
-    <h2 th:case="null">No books yet!</h2>
+<div th:switch="${incidences}">
+    <h2 th:case="null">No incidences yet!</h2>
         <div th:case="*">
             <h2>books</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Author</th>
+                        <th>Environment</th>
+                        <th>Server</th>
+                        <th>Level</th>
+                        <th>Info</th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}">
-                    <td th:text="${book.id}"></td>
-                    <td th:text="${book.name}"></td>
-                    <td th:text="${book.author}"></td>
+                <tr th:each="incidence : ${incidences}">
+                    <td th:text="${incidence.env}"></td>
+                    <td th:text="${incidence.server}"></td>
+                    <td th:text="${incidence.level}"></td>
+                    <td th:text="${incidence.info}"></td>
                 </tr>
             </tbody>
         </table>

@@ -7,10 +7,9 @@ services:
     ports:
       - 8080:8080
     volumes:
-         - ../../../target/JerseyService.war:/usr/local/tomcat/webapps/JerseyService.war
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
     networks:
       sandbox-net:
-        ipv4_address: 172.16.238.10
         aliases:
           - tomcat-server1
 
@@ -18,12 +17,11 @@ services:
     image: tomcat:9.0
     container_name: tomcat-server2
     ports:
-      - 8081:8080
+      - 8082:8080
     volumes:
-         - ../../../target/JerseyService.war:/usr/local/tomcat/webapps/JerseyService.war
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
     networks:
       sandbox-net:
-        ipv4_address: 172.16.238.20
         aliases:
           - tomcat-server2
 

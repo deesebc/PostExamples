@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Info {
 
-	private String ip;
+	private String machine;
 
 	private String property;
 

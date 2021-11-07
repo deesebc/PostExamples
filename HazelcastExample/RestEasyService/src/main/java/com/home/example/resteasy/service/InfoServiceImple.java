@@ -1,10 +1,5 @@
 package com.home.example.resteasy.service;
 
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,15 +17,8 @@ import lombok.extern.log4j.Log4j2;
 @Path("/info")
 public class InfoServiceImple {
 
-	private String getIp() throws UnknownHostException, SocketException {
-		String ip = null;
-		try (final DatagramSocket socket = new DatagramSocket()) {
-			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			ip = socket.getLocalAddress().getHostAddress();
-		}
-		log.info("ip: " + ip);
-		log.info("socketAddress: " + HazelcastHelper.getINSTANCE().getHz().getCluster().getLocalMember().getSocketAddress());
-		return ip;
+	private String getMachine() {
+		return HazelcastHelper.getINSTANCE().getHz().getCluster().getLocalMember().getSocketAddress().getHostName();
 	}
 
 	@GET
@@ -39,14 +27,8 @@ public class InfoServiceImple {
 	public Info getProperty(@PathParam("property") final String property) {
 		log.info("getProperty - init");
 		log.info("property: " + property);
-		Info info = null;
-		try {
-			IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
-			info = new Info(getIp(), property, map.get(property));
-		} catch (UnknownHostException | SocketException e) {
-			log.error(e.getMessage(), e);
-		}
-		return info;
+		IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
+		return new Info(getMachine(), property, map.get(property));
 	}
 
 	@POST
@@ -56,14 +38,9 @@ public class InfoServiceImple {
 		log.info("setProperty - init");
 		log.info("property: " + property);
 		log.info("value: " + value);
-		Info info = null;
-		try {
-			IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
-			info = new Info(getIp(), property, map.get(property));
-			map.put(property, value);
-		} catch (UnknownHostException | SocketException e) {
-			log.error(e.getMessage(), e);
-		}
+		IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
+		Info info = new Info(getMachine(), property, map.get(property));
+		map.put(property, value);
 		return info;
 	}
 

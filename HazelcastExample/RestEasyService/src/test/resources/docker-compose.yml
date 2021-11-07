@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  tomcat-server1:
+    image: tomcat:9.0
+    container_name: tomcat-server1
+    ports:
+      - 8080:8080
+    volumes:
+         - ../../../target/JerseyService.war:/usr/local/tomcat/webapps/JerseyService.war
+    networks:
+      sandbox-net:
+        ipv4_address: 172.16.238.10
+        aliases:
+          - tomcat-server1
+
+  tomcat-server2:
+    image: tomcat:9.0
+    container_name: tomcat-server2
+    ports:
+      - 8081:8080
+    volumes:
+         - ../../../target/JerseyService.war:/usr/local/tomcat/webapps/JerseyService.war
+    networks:
+      sandbox-net:
+        ipv4_address: 172.16.238.20
+        aliases:
+          - tomcat-server2
+
+networks:
+  sandbox-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"

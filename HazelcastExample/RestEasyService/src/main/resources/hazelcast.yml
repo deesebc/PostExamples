@@ -1,0 +1,8 @@
+hazelcast:
+  network:
+    join:
+      tcp-ip:
+        enabled: true
+        member-list:
+          - tomcat-server1
+          - tomcat-server2

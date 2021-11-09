@@ -21,7 +21,7 @@
         <instance-name> elements gives you the ability to get a specific Hazelcast instance from this registry
         by giving the instance's name.
     -->
-    <instance-name>hzInstance1</instance-name>
+    <instance-name>${hazelcast.instance.name}</instance-name>
     
     <network>
         <join>

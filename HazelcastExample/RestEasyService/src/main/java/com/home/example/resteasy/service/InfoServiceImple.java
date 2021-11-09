@@ -27,7 +27,6 @@ public class InfoServiceImple {
 	public Info getProperty(@PathParam("property") final String property) {
 		log.info("getProperty - init");
 		log.info("property: " + property);
-		log.info("hz: " + HazelcastHelper.getINSTANCE().getHz());
 		IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
 		return new Info(getMachine(), property, map.get(property));
 	}
@@ -39,7 +38,6 @@ public class InfoServiceImple {
 		log.info("setProperty - init");
 		log.info("property: " + property);
 		log.info("value: " + value);
-		log.info("hz: " + HazelcastHelper.getINSTANCE().getHz());
 		IMap<String, String> map = HazelcastHelper.getINSTANCE().getHz().getMap("infoProperties");
 		Info info = new Info(getMachine(), property, map.get(property));
 		map.put(property, value);

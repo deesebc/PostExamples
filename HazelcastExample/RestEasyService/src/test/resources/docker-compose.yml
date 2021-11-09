@@ -10,6 +10,9 @@ services:
          - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
          - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/DuplicateService.war
          - ./lib/hazelcast-all-4.2.2.jar:/usr/local/tomcat/lib/hazelcast-all-4.2.2.jar
+    environment:
+      JAVA_OPTS: "-Dhazelcast.instance.name=hzInstance1"
+      hazelcast_instance_name: "hzInstanceEnv2"
     networks:
       sandbox-net:
         aliases:
@@ -24,6 +27,9 @@ services:
          - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
          - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/DuplicateService.war
          - ./lib/hazelcast-all-4.2.2.jar:/usr/local/tomcat/lib/hazelcast-all-4.2.2.jar
+    environment:
+      JAVA_OPTS: "-Dhazelcast.instance.name=hzInstance2"
+      hazelcast_instance_name: "hzInstanceEnv2"
     networks:
       sandbox-net:
         aliases:

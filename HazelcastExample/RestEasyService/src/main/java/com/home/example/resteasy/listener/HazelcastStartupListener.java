@@ -21,23 +21,18 @@ public class HazelcastStartupListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(final ServletContextEvent sce) {
-		log.info("web application starting");
-//		HazelcastHelper.getINSTANCE().setHz(Hazelcast.getOrCreateHazelcastInstance());
-		HazelcastInstance hzi = Hazelcast.getHazelcastInstanceByName("hzInstance1");
-		log.info("- 1 - hzInstance1: " + hzi);
-
-//		log.info("- 1 - hzInstance1 client: " + HazelcastClient.newHazelcastClient());
-
-//		HazelcastInstance hzInstance = HazelcastClient.newHazelcastClient();
-//		if (!hzInstance.getLifecycleService().isRunning()) {
+		String instance = System.getProperty("hazelcast.instance.name");
+		String instanceEnv = System.getenv("hazelcast_instance_name");
+		log.info("web application starting: " + instance + " env: " + instanceEnv);
+		HazelcastInstance hzi = Hazelcast.getHazelcastInstanceByName(instance);
+		log.info("- 1 - " + instance + ": " + hzi);
 		if (hzi == null) {
 			hzi = Hazelcast.getOrCreateHazelcastInstance();
 			log.info("- 2 - Creando: " + hzi.getName());
 			log.info("- 2 - Creando: " + hzi.getCluster().getLocalMember().getSocketAddress().getHostName());
 		}
 		HazelcastHelper.getINSTANCE().setHz(hzi);
-		log.info("- 3 - hzInstance1: " + Hazelcast.getHazelcastInstanceByName("hzInstance1"));
+		log.info("- 3 - hzInstance1: " + Hazelcast.getHazelcastInstanceByName(instance));
 		log.info("- 4 - hzInstance1: " + HazelcastHelper.getINSTANCE().getHz());
-//		log.info("- 2 - hzInstance1 client: " + HazelcastClient.newHazelcastClient());
 	}
 }

@@ -2,6 +2,11 @@
 
 Example to see how it works Hazelcast
 
+## Documentation 
+
+In Spanish [here](http://desarrollojavayyo.blogspot.com/)  
+In English [here](https://medium.com/@danielblancocuadrado)
+
 ## Docker Compose
 
 Run docker compose up in src/test/resources folder

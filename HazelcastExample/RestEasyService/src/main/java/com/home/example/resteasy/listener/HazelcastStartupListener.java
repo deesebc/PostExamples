@@ -25,14 +25,9 @@ public class HazelcastStartupListener implements ServletContextListener {
 		String instanceEnv = System.getenv("hazelcast_instance_name");
 		log.info("web application starting: " + instance + " env: " + instanceEnv);
 		HazelcastInstance hzi = Hazelcast.getHazelcastInstanceByName(instance);
-		log.info("- 1 - " + instance + ": " + hzi);
 		if (hzi == null) {
 			hzi = Hazelcast.getOrCreateHazelcastInstance();
-			log.info("- 2 - Creando: " + hzi.getName());
-			log.info("- 2 - Creando: " + hzi.getCluster().getLocalMember().getSocketAddress().getHostName());
 		}
 		HazelcastHelper.getINSTANCE().setHz(hzi);
-		log.info("- 3 - hzInstance1: " + Hazelcast.getHazelcastInstanceByName(instance));
-		log.info("- 4 - hzInstance1: " + HazelcastHelper.getINSTANCE().getHz());
 	}
 }

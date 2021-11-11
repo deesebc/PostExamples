@@ -14,8 +14,4 @@ public final class HazelcastHelper {
 	@Getter
 	public HazelcastInstance hz;
 
-//	private HazelcastHelper() {
-//		hz = Hazelcast.newHazelcastInstance();
-//	}
-
 }

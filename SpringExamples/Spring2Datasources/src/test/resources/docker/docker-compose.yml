@@ -22,7 +22,7 @@ services:
       - 3306:3306
     volumes:
       - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./configs/mysql/scripts:/docker-entrypoint-initdb.d
+      - ./configs/mysql/pre-scripts:/docker-entrypoint-initdb.d
       
   mysql-pro:
     image: mysql:5.7.26
@@ -39,4 +39,4 @@ services:
       - 3308:3306
     volumes:
       - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./configs/mysql/scripts:/docker-entrypoint-initdb.d
+      - ./configs/mysql/pro-scripts:/docker-entrypoint-initdb.d

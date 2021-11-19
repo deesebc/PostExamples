@@ -1,18 +1,16 @@
-# ExampleSpringBootREST
+# Spring2Datasources
 
-Project to explain how we can create a Spring Boot REST service with spring-boot:2.1.4.RELEASE and JPA, H2 and maven
+Project to explain how we can create a Spring Boot REST service with two datasources
 
-You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com
+You can see an explanation in Spanish here: http://DesarrolloJavaYYo.blogspot.com](http://DesarrolloJavaYYo.blogspot.com)
 
-## Versions
-
-* Version 1.0.0: How to do a simple web service with Spring Boot and REST. Link: http://DesarrolloJavaYYo.blogspot.com/2017/08/web-services-con-spring-boot-nivel.html  
-* Version 1.0.1: How to do with JPA and a DB H2. Link: http://DesarrolloJavaYYo.blogspot.com/2017/08/web-service-con-spring-boot-jpa-y-h2.html
-* Version 1.0.2: How to do its REST client. Link: http://DesarrolloJavaYYo.blogspot.com/2017/10/how-to-cliente-rest-con-spring-boot.html
-* Version 1.0.3: We add a YAML and JSON swagger files for the API
-* Version 1.0.4: We add Lombok to avoid write recurrent methods
-* Version 2.0.0: We change from Spring Boot 1.5.6.RELEASE to 2.1.4.RELEASE
+You can see an explanation in English here: [https://medium.com/@danielblancocuadrado](https://medium.com/@danielblancocuadrado)
 
 ## Run
 
 You must run the 'Aplicacion' class as a Java application, you can do it inside eclipse.
+
+## References
+
+- https://www.baeldung.com/spring-data-jpa-multiple-databases
+- https://springframework.guru/how-to-configure-multiple-data-sources-in-a-spring-boot-application/

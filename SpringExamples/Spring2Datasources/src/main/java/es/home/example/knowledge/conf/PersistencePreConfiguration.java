@@ -44,9 +44,9 @@ public class PersistencePreConfiguration {
 
 	@Bean
 	@Primary
-	public LocalContainerEntityManagerFactoryBean preEntityManager() {
+	public LocalContainerEntityManagerFactoryBean preEntityManager(final @Qualifier("preDataSource") DataSource preDataSource) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(preDataSource());
+		em.setDataSource(preDataSource);
 		// we can also asociate the entities through schema property in @Entity annotation
 		// Example: @Table(name = "BOOK", schema = "library")
 		em.setPackagesToScan(new String[] { "es.home.example.knowledge.entity" });

@@ -6,8 +6,8 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -18,8 +18,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 @Configuration
 @PropertySource({ "classpath:persistence-multiple-db.properties" })
 @EnableJpaRepositories(basePackages = "es.home.example.knowledge.pro.repository", entityManagerFactoryRef = "proEntityManager", transactionManagerRef = "proTransactionManager")
@@ -28,21 +26,15 @@ public class PersistenceProConfiguration {
 	private Environment env;
 
 	@Bean
-	@ConfigurationProperties("app.datasource.pro.configuration")
-	public DataSource proDataSource() {
-		return proDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
-	}
-
-	@Bean
 	@ConfigurationProperties("app.datasource.pro")
-	public DataSourceProperties proDataSourceProperties() {
-		return new DataSourceProperties();
+	public DataSource proDataSource() throws Exception {
+		return DataSourceBuilder.create().build();
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean proEntityManager() {
+	public LocalContainerEntityManagerFactoryBean proEntityManager(final @Qualifier("proDataSource") DataSource proDataSource) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(proDataSource());
+		em.setDataSource(proDataSource);
 		// we can also asociate the entities through schema property in @Entity annotation
 		// Example: @Table(name = "BOOK", schema = "library")
 		em.setPackagesToScan(new String[] { "es.home.example.knowledge.entity" });

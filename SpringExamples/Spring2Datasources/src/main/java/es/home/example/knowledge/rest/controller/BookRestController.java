@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.home.example.knowledge.dev.repository.DevBookDao;
 import es.home.example.knowledge.entity.Book;
 import es.home.example.knowledge.pre.repository.PreBookDao;
 import es.home.example.knowledge.pro.repository.ProBookDao;
@@ -23,12 +24,20 @@ public class BookRestController {
 	@Autowired
 	private ProBookDao proRepository;
 
+	@Autowired
+	private DevBookDao devRepository;
+
 	@GetMapping
 	public List<Book> findAll() {
-		List<Book> pre = preRepository.findAll();
-		List<Book> pro = proRepository.findAll();
-		pre.addAll(pro);
+		List<Book> pre = findAllPre();
+		pre.addAll(findAllPro());
+		pre.addAll(findAllDev());
 		return pre;
+	}
+
+	@GetMapping("/dev")
+	public List<Book> findAllDev() {
+		return devRepository.findAll();
 	}
 
 	@GetMapping("/pre")

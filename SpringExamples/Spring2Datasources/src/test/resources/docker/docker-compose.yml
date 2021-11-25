@@ -1,0 +1,59 @@
+version: '2.4'
+networks:
+  sandbox-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  mysql-dev:
+    image: mysql:5.7.26
+    mem_limit: 2G
+    container_name: sandbox-dev-mysql
+    hostname: sandbox-dev-mysql
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.1
+    environment:
+      MYSQL_HOST: sandbox-dev-mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3304:3306
+    volumes:
+      - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./configs/mysql/dev-scripts:/docker-entrypoint-initdb.d
+
+  mysql-pre:
+    image: mysql:5.7.26
+    mem_limit: 2G
+    container_name: sandbox-pre-mysql
+    hostname: sandbox-pre-mysql
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.1
+    environment:
+      MYSQL_HOST: sandbox-pre-mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./configs/mysql/pre-scripts:/docker-entrypoint-initdb.d
+      
+  mysql-pro:
+    image: mysql:5.7.26
+    mem_limit: 2G
+    container_name: sandbox-pro-mysql
+    hostname: sandbox-pro-mysql
+    networks:
+      sandbox-net:
+        ipv4_address: 172.28.1.1
+    environment:
+      MYSQL_HOST: sandbox-pro-mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3308:3306
+    volumes:
+      - ./configs/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./configs/mysql/pro-scripts:/docker-entrypoint-initdb.d

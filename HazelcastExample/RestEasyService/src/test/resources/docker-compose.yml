@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  tomcat-server1:
+    image: tomcat:9.0
+    container_name: tomcat-server1
+    ports:
+      - 8080:8080
+    volumes:
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/DuplicateService.war
+         - ./lib/hazelcast-all-4.2.2.jar:/usr/local/tomcat/lib/hazelcast-all-4.2.2.jar
+    environment:
+      JAVA_OPTS: "-Dhazelcast.instance.name=hzInstance1"
+      hazelcast_instance_name: "hzInstanceEnv2"
+    networks:
+      sandbox-net:
+        aliases:
+          - tomcat-server1
+
+  tomcat-server2:
+    image: tomcat:9.0
+    container_name: tomcat-server2
+    ports:
+      - 8082:8080
+    volumes:
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/RestEasyService.war
+         - ../../../target/RestEasyService.war:/usr/local/tomcat/webapps/DuplicateService.war
+         - ./lib/hazelcast-all-4.2.2.jar:/usr/local/tomcat/lib/hazelcast-all-4.2.2.jar
+    environment:
+      JAVA_OPTS: "-Dhazelcast.instance.name=hzInstance2"
+      hazelcast_instance_name: "hzInstanceEnv2"
+    networks:
+      sandbox-net:
+        aliases:
+          - tomcat-server2
+
+networks:
+  sandbox-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"

@@ -1,0 +1,24 @@
+<div th:switch="${incidences}">
+    <h2 th:case="null">No incidences yet!</h2>
+        <div th:case="*">
+            <h2>books</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Server</th>
+                        <th>Level</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="incidence : ${incidences}">
+                    <td th:text="${incidence.env}"></td>
+                    <td th:text="${incidence.server}"></td>
+                    <td th:text="${incidence.level}"></td>
+                    <td th:text="${incidence.info}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

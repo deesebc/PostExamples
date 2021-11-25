@@ -1,5 +1,6 @@
-version: "3.7"
+version: "3.8"
 services:
+
     mysql:
       image: mysql:5.7.26
       container_name: sandbox-mysql
@@ -15,6 +16,7 @@ services:
         - "./config/mysql/scripts:/docker-entrypoint-initdb.d"
         - "./config/mysql/logs:/var/log/mysql:rw"
         - "./config/mysql/conf.d:/etc/mysql/conf.d"
+        
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
         container_name: elasticsearch
@@ -35,6 +37,7 @@ services:
           interval: 30s
           timeout: 10s
           retries: 5
+          
     kibana:
         image: docker.elastic.co/kibana/kibana:7.10.2
         container_name: kibana
@@ -47,13 +50,19 @@ services:
           - elastic
         depends_on:
           - elasticsearch
+          
     filebeat:
         image: docker.elastic.co/beats/filebeat:7.10.2
         container_name: filebeat
         hostname: filebeat
+        configs:
+           - source: fb_config
+             target: /usr/share/filebeat/filebeat.yml      
         volumes:
 #          - ./config/modules/:/usr/share/filebeat/modules.d/:ro
-          - ./config/beats/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+#          - ./config/beats/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+          - /var/run/docker.sock:/var/run/docker.sock:ro 
+          - /var/lib/docker/containers:/var/lib/docker/containers:ro 
         environment:
           setup.kibana.host: "kibana:5601"
           output.elasticsearch.hosts: "elasticsearch:9200"
@@ -65,3 +74,9 @@ services:
 networks:
   elastic:
     driver: bridge
+    
+configs:
+  fb_config:
+    file: $PWD/config/beats/filebeat.docker.yml
+    
+    

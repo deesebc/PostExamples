@@ -13,9 +13,11 @@ services:
       ports:
         - 3306:3306
       volumes:
-        - "./config/mysql/scripts:/docker-entrypoint-initdb.d"
-        - "./config/mysql/logs:/var/log/mysql:rw"
-        - "./config/mysql/conf.d:/etc/mysql/conf.d"
+        - ./config/mysql/scripts:/docker-entrypoint-initdb.d
+        - ./config/mysql/logs:/var/log/mysql
+        - ./config/mysql/conf.d:/etc/mysql/conf.d
+      entrypoint: ""
+      command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
         
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2

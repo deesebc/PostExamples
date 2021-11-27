@@ -1,24 +1,6 @@
 version: "3.8"
 services:
-
-    mysql:
-      image: mysql:5.7.26
-      container_name: sandbox-mysql
-      hostname: sandbox-mysql
-      networks:
-        - elastic
-      environment:
-        MYSQL_HOST: sandbox-mysql
-        MYSQL_ROOT_PASSWORD: root
-      ports:
-        - 3306:3306
-      volumes:
-        - ./config/mysql/scripts:/docker-entrypoint-initdb.d
-        - ./config/mysql/logs:/var/log/mysql
-        - ./config/mysql/conf.d:/etc/mysql/conf.d
-      entrypoint: ""
-      command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
-        
+       
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
         container_name: elasticsearch
@@ -57,22 +39,29 @@ services:
         image: docker.elastic.co/beats/filebeat:7.10.2
         container_name: filebeat
         hostname: filebeat
+        user: root
         configs:
            - source: fb_config
              target: /usr/share/filebeat/filebeat.yml      
         volumes:
-#          - ./config/beats/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
           - ./config/modules/:/usr/share/filebeat/modules.d/:ro
           - /var/run/docker.sock:/var/run/docker.sock:ro 
-          - /var/lib/docker/containers:/var/lib/docker/containers:ro 
-          - ./config/mysql/logs:/var/log/mysql
+          # This is needed for filebeat to load container log path as specified in filebeat.yml
+          - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
+          # This is needed for filebeat to load logs for system and auth modules
+          - /var/log/:/var/log/:ro
         environment:
           setup.kibana.host: "kibana:5601"
           output.elasticsearch.hosts: "elasticsearch:9200"
+        # disable strict permission checks
+        command: ["--strict.perms=false"]
+        deploy:
+          mode: global
         networks:
           - elastic
         depends_on:
           - elasticsearch
+          - kibana
     
 networks:
   elastic:

@@ -12,49 +12,62 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.3</version>
+		<version>2.5.7</version>
 	</parent>
+	
+	<properties>
+		<spring-boot-admin.version>2.5.4</spring-boot-admin.version>
+	</properties>
 
 	<dependencies>
+		<!-- Spring boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!-- dependencies used to enable admin server and UI -->
-		<!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-server</artifactId>
-			<version>${spring-boot-admin.version}</version>
-		</dependency>
-		<!--Add login page and logout feature <dependency> <groupId>de.codecentric</groupId> 
-			<artifactId>spring-boot-admin-server-ui-login</artifactId> <version>${spring-boot-admin-server-ui-login.version}</version> 
-			</dependency> -->
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-server-ui</artifactId>
-			<version>${spring-boot-admin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
-		<!-- <dependency> <groupId>com.hazelcast</groupId> <artifactId>hazelcast</artifactId> 
-			</dependency> -->
-		<!--declare the admin server as a client, for self monitoring -->
+		<!-- Spring admin -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<artifactId>spring-boot-admin-starter-server</artifactId>
 			<version>${spring-boot-admin.version}</version>
 		</dependency>
-		<!--mail notifications <dependency> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-starter-mail</artifactId> </dependency> -->
+		<dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
 		<!-- JMX -->
 		<dependency>
 			<groupId>org.jolokia</groupId>
 			<artifactId>jolokia-core</artifactId>
 		</dependency>
+		<!--Add login page and logout feature <dependency> <groupId>de.codecentric</groupId> 
+			<artifactId>spring-boot-admin-server-ui-login</artifactId> <version>${spring-boot-admin-server-ui-login.version}</version> 
+			</dependency> -->
+			<!-- 
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-ui</artifactId>
+			<version>${spring-boot-admin.version}</version>
+		</dependency>
+		 -->
+		
+
+		<!-- <dependency> <groupId>com.hazelcast</groupId> <artifactId>hazelcast</artifactId> 
+			</dependency> -->
+		<!--declare the admin server as a client, for self monitoring 
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>${spring-boot-admin.version}</version>
+		</dependency>
+		-->
+		<!--mail notifications <dependency> <groupId>org.springframework.boot</groupId> 
+			<artifactId>spring-boot-starter-mail</artifactId> </dependency> -->
 
 	</dependencies>
 
@@ -67,8 +80,6 @@
 		</plugins>
 	</build>
 
-	<properties>
-		<spring-boot-admin.version>2.4.3</spring-boot-admin.version>
-	</properties>
+	
 
 </project>

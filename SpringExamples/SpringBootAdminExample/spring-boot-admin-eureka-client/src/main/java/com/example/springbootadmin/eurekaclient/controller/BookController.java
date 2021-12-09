@@ -1,4 +1,4 @@
-package com.baeldung.springbootadminclient.controller;
+package com.example.springbootadmin.eurekaclient.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baeldung.springbootadminclient.pojo.Book;
+import com.example.springbootadmin.eurekaclient.pojo.Book;
+
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping(path = "/book")
+@Log4j2
 public class BookController {
 
 	public static Map<Integer, Book> books = new HashMap<>();
@@ -27,6 +30,9 @@ public class BookController {
 
 	@GetMapping
 	public List<Book> getAll() {
+		log.debug("Debug message");
+		log.info("Info message");
+		log.warn("Warn message");
 		return new ArrayList<>(books.values());
 	}
 

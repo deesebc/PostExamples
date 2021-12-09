@@ -1,4 +1,4 @@
-package com.baeldung.springbootadminclient.pojo;
+package com.example.springbootadmin.eurekaclient.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

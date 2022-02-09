@@ -15,7 +15,7 @@
 
 	<properties>
 		<microservice.mainClass>es.home.example.config.Application</microservice.mainClass>
-		<hibernate.version>5.3.6.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 	</properties>
 
 	<dependencies>

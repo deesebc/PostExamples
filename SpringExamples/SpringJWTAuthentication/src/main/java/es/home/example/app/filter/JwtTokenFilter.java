@@ -1,7 +1,6 @@
 package es.home.example.app.filter;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,9 +25,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@Autowired
-	JWTDetailsService service;
-
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
 			final FilterChain chain) throws ServletException, IOException {
@@ -45,16 +41,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			chain.doFilter(request, response);
 			return;
 		}
+		// Obtains UserDetails from BBDD or other app
+		UserDetails userDetails = jwtTokenUtil.getUserDetails(token);
 
-		UserDetails userDetails = service.loadUserByUsername(token);
-
+		// Associated UserDetails to Security Context
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
-				userDetails == null ? Collections.emptyList() : userDetails.getAuthorities());
-
+				userDetails.getAuthorities());
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		// Continue with the filter chain
 		chain.doFilter(request, response);
 	}
-
 }

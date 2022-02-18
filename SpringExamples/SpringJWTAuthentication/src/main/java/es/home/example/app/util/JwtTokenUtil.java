@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -19,6 +20,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 
+import es.home.example.app.filter.JWTUserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,9 +38,9 @@ public class JwtTokenUtil {
 	@Value("${jwt.api.jwtExpiration}")
 	private int jwtExpiration;
 
-	public String generateAccessToken(final User user, final List<String> roles) {
-		return JWT.create().withIssuer(loginApiIssuer).withSubject(user.getUserName()).withIssuedAt(getIssuedAt())
-				.withClaim("roles", roles).withExpiresAt(getExpireAt()).sign(getAlgorithmHS());
+	public String generateAccessToken(final Long userId, final String userName, final List<String> roles) {
+		return JWT.create().withIssuer(loginApiIssuer).withSubject(userName).withIssuedAt(getIssuedAt())
+				.withClaim("id", userId).withClaim("roles", roles).withExpiresAt(getExpireAt()).sign(getAlgorithmHS());
 	}
 
 	private Algorithm getAlgorithmHS() {
@@ -85,8 +87,30 @@ public class JwtTokenUtil {
 		return Date.from(LocalDateTime.now().plusSeconds(jwtExpiration).atZone(ZoneId.systemDefault()).toInstant());
 	}
 
+	public Long getId(final DecodedJWT token) {
+		return token.getClaim("id").asLong();
+	}
+
+	public Long getId(final String token) {
+		return getId(getVerifier().verify(token));
+	}
+
 	protected Date getIssuedAt() {
 		return Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+	}
+
+	public List<String> getRoles(final DecodedJWT token) {
+		return token.getClaim("roles").asList(String.class);
+	}
+
+	public List<String> getRoles(final String token) {
+		return getRoles(getVerifier().verify(token));
+	}
+
+	public UserDetails getUserDetails(final String token) {
+		DecodedJWT decoded = getDecodedJWT(token);
+		return JWTUserDetailsImpl.build(decoded.getClaim("id").asLong(), decoded.getSubject(),
+				decoded.getClaim("roles").asList(String.class));
 	}
 
 	public String getUsername(final DecodedJWT token) {
@@ -94,14 +118,7 @@ public class JwtTokenUtil {
 	}
 
 	public String getUsername(final String token) {
-		String retorno = null;
-		try {
-			retorno = getUsername(getVerifier().verify(token));
-		} catch (JWTVerificationException e) {
-			// Invalid signature/claims
-			log.error("Error getting username: " + e.getMessage(), e);
-		}
-		return retorno;
+		return getUsername(getVerifier().verify(token));
 	}
 
 	private JWTVerifier getVerifier() {

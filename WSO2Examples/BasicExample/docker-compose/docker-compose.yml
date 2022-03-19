@@ -1,0 +1,27 @@
+version: '3.7'
+
+networks:
+  wso2-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
+
+services:
+  wso2mi:
+    mem_limit: 1G
+    image: wso2/wso2mi:4.0.0
+    hostname: wso2mi
+    container_name: wso2mi
+    ports:
+      - 8290:8290
+      - 8253:8253
+      - 9164:9164
+    networks:
+      wso2-net:
+        ipv4_address: 172.16.238.10
+    environment:
+      JAVA_OPTS: "-DenableManagementApi=true -Duser.timezone=Europe/Madrid"
+    volumes:
+       - ./conf/deployment.toml:/home/wso2carbon/wso2mi-4.0.0/conf/deployment.toml
+       - ./apps/wso2-basic-example_1.0.0.car:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps/wso2-basic-example_1.0.0.car

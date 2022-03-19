@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/book" name="basicExample_v1_book_api" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/mock/">
+        <inSequence>
+            <log level="custom">
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/ - init"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+					[{
+					"id" : 1,
+					"author":"Frank Herbert",
+					"name":"Dune"
+					},{
+					"id" : 2,
+					"author":"Alfred Bester",
+					"name":"The starts my destination"
+					},{
+					"id" : 3,
+					"author":"Frederik Pohl",
+					"name":"Gateway"
+					}]
+				</format>
+                <args/>
+            </payloadFactory>
+            <log level="custom">
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/ - end"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/mock/{id}">
+        <inSequence>
+            <log level="custom">
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/{id} - init"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+					{
+					"id" : $1,
+					"author":"Frank Herbert",
+					"name":"Dune"
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:uri.var.id"/>
+                </args>
+            </payloadFactory>
+            <log level="custom">
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/{id} - end"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

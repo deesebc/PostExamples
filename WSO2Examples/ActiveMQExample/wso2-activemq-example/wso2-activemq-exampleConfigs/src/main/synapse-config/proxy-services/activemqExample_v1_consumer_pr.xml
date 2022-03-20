@@ -1,0 +1,24 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="activemqExample_v1_consumer_pr" transports="jms" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="transactionID" expression="get-property('MessageID')" scope="default" />
+            <property name="sourceMessageID" expression="get-property('MessageID')" scope="default" />
+            <property name="proxyMessageID" expression="get-property('MessageID')" scope="default" />
+            <log level="full">
+                <property name="transactionID" expression="get-property('transactionID')" />
+                <property name="sourceMessageID" expression="get-property('sourceMessageID')" />
+                <property name="MessageID" expression="get-property('proxyMessageID')" />
+            </log>
+            <property name="SET_ROLLBACK_ONLY" value="true" scope="axis2" />
+            <drop />
+        </inSequence>
+        <faultSequence />
+    </target>
+    <parameter name="redeliveryPolicy.maximumRedeliveries">1</parameter>
+    <parameter name="transport.jms.DestinationType">queue</parameter>
+    <parameter name="transport.jms.SessionTransacted">true</parameter>
+    <parameter name="transport.jms.Destination">activemqExample_v1_consumer_pr</parameter>
+    <parameter name="redeliveryPolicy.redeliveryDelay">2000</parameter>
+    <parameter name="transport.jms.CacheLevel">consumer</parameter>
+    <description />
+</proxy>

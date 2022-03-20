@@ -40,12 +40,10 @@ parameter.cache_level = "producer"
 [[transport.jms.listener]]
 name = "myQueueConnectionFactory"
 parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
-parameter.provider_url = "tcp://activemq:61616"
+parameter.provider_url = "failover:tcp://activemq:61616"
 parameter.connection_factory_name = "QueueConnectionFactory"
 parameter.connection_factory_type = "queue"
 parameter.cache_level = "consumer"
-#parameter.username = "admin"
-#parameter.password = "admin"
 
 [[transport.jms.listener]]
 name = "default"

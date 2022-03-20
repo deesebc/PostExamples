@@ -37,12 +37,22 @@ parameter.connection_factory_name = "QueueConnectionFactory"
 parameter.connection_factory_type = "queue"
 parameter.cache_level = "producer"
 
-#[[transport.jms.listener]]
-# name = "myQueueConnectionFactory"
-# parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
-# parameter.provider_url = "tcp://localhost:61616"
-# parameter.connection_factory_name = "QueueConnectionFactory"
-# parameter.connection_factory_type = "queue"
+[[transport.jms.listener]]
+name = "myQueueConnectionFactory"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "tcp://activemq:61616"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+parameter.cache_level = "consumer"
+#parameter.username = "admin"
+#parameter.password = "admin"
+
+[[transport.jms.listener]]
+name = "default"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "failover:tcp://activemq:61616"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
 
 # [transport.jndi.connection_factories]
 # 'connectionfactory.QueueConnectionFactory' = "amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"

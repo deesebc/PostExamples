@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="activemqExample_v1_book_api" groupId="com.home.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/activemqExample_v1_book_api.xml</file>
+    </artifact>
+    <artifact name="activemqExample_v1_book_api_swagger" groupId="com.home.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/activemqExample_v1_book_api_swagger.yaml</file>
+    </artifact>
+    <artifact name="activemqExample_v1_book_api_metadata" groupId="com.home.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/activemqExample_v1_book_api_metadata.yaml</file>
+    </artifact>
+    <artifact name="activemqExample_v1_consumer_pr" groupId="com.home.example.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/activemqExample_v1_consumer_pr.xml</file>
+    </artifact>
+</artifacts>

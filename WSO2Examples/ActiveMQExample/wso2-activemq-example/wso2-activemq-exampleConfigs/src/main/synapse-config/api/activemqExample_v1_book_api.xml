@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/mock" name="activemqExample_v1_book_api" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+<resource methods="POST" uri-template="/activeMQ/">
+    <inSequence>
+        <log level="custom">
+            <property name="MSG" value="activemqExample_v1_book_api - POST - /mock/activeMQ - init"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <m:getQuote xmlns:m="http://services.samples">
+                    <m:request>
+                        <m:book>
+                            <m:isbn>$1</m:isbn>
+                            <m:release>$2</m:release>
+                        </m:book>
+                    </m:request>
+                </m:getQuote>
+            </format>
+            <args>
+                <arg expression="$.isbn" evaluator="json"/>
+                <arg expression="$.year" evaluator="json"/>
+            </args>
+        </payloadFactory>
+        <property name="OUT_ONLY" value="true"/>
+        <call>
+        <endpoint>
+            <address uri="jms:/myqueue?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.provider.url=failover:(tcp://activemq:61616)&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.DestinationType=queue&amp;redeliveryPolicy.redeliveryDelay=30000&amp;maximumRedeliveries=10" />
+        </endpoint>
+        </call>
+        <log level="custom">
+        <property name="MSG" value="activemqExample_v1_book_api - POST - /mock/activeMQ - end"/>
+        </log>
+        <respond />
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+</resource>
+    <resource methods="GET" uri-template="/activeMQ/{broker}/{queue}/count">
+        <inSequence>
+            <log level="custom">
+                <property name="MSG" value="activemqExample_v1_book_api - POST - /mock/activeMQ/broker/queue/count - init"/>
+                <property name="BROKER" expression="$ctx:uri.var.broker"/>
+                <property name="QUEUE" expression="$ctx:uri.var.queue"/>
+            </log>
+            <property name="Authorization" expression="fn:concat('Basic ', base64Encode('admin:admin'))" scope="transport"/>  
+            <send>
+                <endpoint xmlns="http://ws.apache.org/ns/synapse" name="mock_v1_activemqCount_httpEp">
+                    <http method="GET" uri-template="http://activemq:8161/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={uri.var.broker},destinationType=Queue,destinationName={uri.var.queue}/QueueSize" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <log level="full">
+                <property name="MSG" value="activemqExample_v1_book_api - POST - /mock/activeMQ/broker/queue/count - out sequence"/>
+                <property name="value" expression="json-eval($.value)" />
+            </log>
+            <switch source="json-eval($.status)">
+                <case regex="200">
+                    <payloadFactory media-type="json">
+                        <format> { "count": $1 } </format>
+                        <args> <arg evaluator="json" expression="json-eval($.value)"/> </args>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <property name="HTTP_SC" value="500" scope="axis2" />
+                    <payloadFactory media-type="json">
+                        <format>{ "msg": "Unexpected error"}</format>
+                        <args />
+                    </payloadFactory>
+                </default>
+            </switch>
+            <respond/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>

@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="activemqExample_v1_consumer_pr" transports="jms" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full">
+                <property name="MSG" value="Receiving messages from Queue" />
+            </log>
+            <property action="set" name="OUT_ONLY" value="true"/>
+            <drop />
+        </inSequence>
+        <faultSequence />
+    </target>
+    <parameter name="redeliveryPolicy.maximumRedeliveries">1</parameter>
+    <parameter name="transport.jms.DestinationType">queue</parameter>
+    <parameter name="transport.jms.SessionTransacted">true</parameter>
+    <parameter name="transport.jms.Destination">myqueue</parameter>
+    <parameter name="redeliveryPolicy.redeliveryDelay">2000</parameter>
+    <parameter name="transport.jms.CacheLevel">consumer</parameter>
+    <description />
+</proxy>

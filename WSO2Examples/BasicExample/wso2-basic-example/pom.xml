@@ -9,7 +9,8 @@
   <name>wso2-basic-example</name>
   <description>wso2-basic-example</description>
   <modules>
-    <module>wso2-basic-exampleConfigs</module>
+    
+    <module>wso2-basic-exampleDSConfigs</module>
     <module>wso2-basic-exampleCompositeExporter</module>
   </modules>
   <scm>

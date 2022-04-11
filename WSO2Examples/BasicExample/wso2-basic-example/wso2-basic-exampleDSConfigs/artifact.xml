@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="basicExample_book_dss" groupId="com.home.example.dataservice" version="1.0.0" type="service/dataservice" serverRole="DataServicesServer">
+        <file>dataservice/basicExample_book_dss.dbs</file>
+    </artifact>
+</artifacts>

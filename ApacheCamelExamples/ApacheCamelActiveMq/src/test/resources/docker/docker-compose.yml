@@ -16,9 +16,9 @@ services:
     ports:
       - 8161:8161
       - 61616:61616
-    #volumes:
-    #  - ./configs/activemq/activemq.xml:/opt/apache-activemq-5.15.10/conf/activemq.xml
-    #networks:
+    volumes:
+      - ./configs/activemq/activemq.xml:/opt/apache-activemq-5.15.10/conf/activemq.xml
+
 
   portainer:
     image: portainer/portainer:latest

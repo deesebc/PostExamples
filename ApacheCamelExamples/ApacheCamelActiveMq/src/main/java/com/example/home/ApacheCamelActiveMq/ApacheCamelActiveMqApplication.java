@@ -14,12 +14,4 @@ public class ApacheCamelActiveMqApplication {
     SpringApplication.run(ApacheCamelActiveMqApplication.class, args);
   }
 
-  @Autowired
-  private CamelContext context;
-
-  @PostConstruct
-  public void init() throws Exception {
-    context.addComponent("activemq", ActiveMQComponent.activeMQComponent("tcp://localhost:61616"));
-  }
-
 }

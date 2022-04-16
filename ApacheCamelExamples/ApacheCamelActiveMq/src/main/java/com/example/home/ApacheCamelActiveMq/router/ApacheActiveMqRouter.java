@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookApacheMqRouter extends RouteBuilder {
+public class ApacheActiveMqRouter extends RouteBuilder {
 
   @Bean
   private ConnectionFactory activeMQConnectionFactory() {
@@ -23,9 +23,7 @@ public class BookApacheMqRouter extends RouteBuilder {
   public void configure() throws Exception {
     restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 
-    // .to("activemq:queue:myqueue?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&java.naming.provider.url=failover:(tcp://localhost:8161)&java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory")
-    // .to("activemq:queue:myqueue?deliveryDelay=1")
-
+    // Producers
     rest().post("activemq/public").produces(MediaType.APPLICATION_JSON_VALUE)
         .consumes(MediaType.APPLICATION_JSON_VALUE).route().routeId("postPublicQueue")
         .log("Public message incoming - ${body}")
@@ -42,6 +40,13 @@ public class BookApacheMqRouter extends RouteBuilder {
         .consumes(MediaType.APPLICATION_JSON_VALUE).route().routeId("notAllowedRoute")
         .log("Message incoming - ${body}").to("activemq:queue:privateQueue?exchangePattern=InOnly")
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(202));
+
+    // Consumers
+    from("activemq:queue:publicQueue").log("Reading public message incoming - ${body}").end();
+
+    from(
+        "activemq:queue:privateQueue?connectionFactory=activeMQConnectionFactory&exchangePattern=InOnly&username=privateUser&password={{activemq.privateQueue.password}}")
+            .log("Reading private message incoming - ${body}").end();
 
 
   }

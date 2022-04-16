@@ -94,7 +94,7 @@
                         <authorizationEntries>
                             <authorizationEntry queue="privateQueue" read="admins" write="admins" admin="admins" /> 
                             <authorizationEntry queue="publicQueue" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
-                            <authorizationEntry topic="ActiveMQ.Advisory.>" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
+                            <authorizationEntry topic="ActiveMQ.Advisory.>" write="*" read="*" admin="*" />
                         </authorizationEntries>
                     </authorizationMap>
                 </map>

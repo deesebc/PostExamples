@@ -82,24 +82,24 @@
             <kahaDB directory="${activemq.data}/kahadb"/>
         </persistenceAdapter>
 
-<plugins>
-    <simpleAuthenticationPlugin anonymousAccessAllowed="true">
-        <users>
-            <authenticationUser username="privateUser" password="P#s5W0rd" groups="admins" />
-        </users>
-    </simpleAuthenticationPlugin>
-    <authorizationPlugin>
-        <map>
-            <authorizationMap>
-                <authorizationEntries>
-                    <authorizationEntry queue="privateQueue" read="admins" write="admins" admin="admins" /> 
-                    <authorizationEntry queue=">" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
-                    <authorizationEntry topic="ActiveMQ.Advisory.>" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
-                </authorizationEntries>
-            </authorizationMap>
-        </map>
-     </authorizationPlugin>
-</plugins>
+        <plugins>
+            <simpleAuthenticationPlugin anonymousAccessAllowed="true">
+                <users>
+                    <authenticationUser username="privateUser" password="P#s5W0rd" groups="admins" />
+                </users>
+            </simpleAuthenticationPlugin>
+            <authorizationPlugin>
+                <map>
+                    <authorizationMap>
+                        <authorizationEntries>
+                            <authorizationEntry queue="privateQueue" read="admins" write="admins" admin="admins" /> 
+                            <authorizationEntry queue="publicQueue" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
+                            <authorizationEntry topic="ActiveMQ.Advisory.>" write="anonymous,admins" read="anonymous,admins" admin="anonymous,admins" />
+                        </authorizationEntries>
+                    </authorizationMap>
+                </map>
+            </authorizationPlugin>
+        </plugins>
 
 
           <!--

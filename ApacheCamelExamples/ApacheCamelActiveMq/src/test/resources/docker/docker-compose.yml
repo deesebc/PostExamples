@@ -17,7 +17,7 @@ services:
       - 8161:8161
       - 61616:61616
     volumes:
-      - ./configs/activemq/activemq.xml:/opt/apache-activemq-5.15.10/conf/activemq.xml
+      - ./activemq.xml:/opt/apache-activemq-5.15.6/conf/activemq.xml:rw
 
 
   portainer:

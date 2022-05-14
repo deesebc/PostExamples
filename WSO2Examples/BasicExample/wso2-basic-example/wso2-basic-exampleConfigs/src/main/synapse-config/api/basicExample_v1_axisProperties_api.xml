@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/axis2" name="basicExample_v1_axisProperties_api" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/mock">
+        <inSequence>
+            <property name="trpContentType" type="STRING" expression="$trp:Content-Type" />
+            <log level="full">
+                <property name="trp: content-type" expression="$trp:Content-Type"/>
+                <property name="axis2: messageType" expression="$axis2:messageType"/>
+                <property name="axis2: contentType" expression="$axis2:ContentType"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/messageTypeXML">
+        <inSequence>
+            <property name="trpContentType" type="STRING" expression="$trp:Content-Type" />
+            <log level="full">
+                <property name="trp: content-type" expression="$trp:Content-Type"/>
+                <property name="axis2: messageType" expression="$axis2:messageType"/>
+                <property name="axis2: contentType" expression="$axis2:ContentType"/>
+            </log>
+            <property name="messageType" value="application/xml" scope="axis2"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/ContentTypeXML">
+        <inSequence>
+            <property name="trpContentType" type="STRING" expression="$trp:Content-Type" />
+            <log level="full">
+                <property name="trp: content-type" expression="$trp:Content-Type"/>
+                <property name="axis2: messageType" expression="$axis2:messageType"/>
+                <property name="axis2: contentType" expression="$axis2:ContentType"/>
+            </log>
+            <property name="messageType" value="application/xml" scope="axis2"/>
+            <property name="ContentType" value="application/xml" scope="axis2"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/noEntityBody">
+        <inSequence>
+            <property name="trpContentType" type="STRING" expression="$trp:Content-Type" />
+            <log level="full">
+                <property name="trp: content-type" expression="$trp:Content-Type"/>
+                <property name="axis2: messageType" expression="$axis2:messageType"/>
+                <property name="axis2: contentType" expression="$axis2:ContentType"/>
+            </log>
+            <property name="NO_ENTITY_BODY" value="true" scope="axis2" type="BOOLEAN"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <!-- 
+        setCharacterEncoding
+        CHARACTER_SET_ENCODING
+        TRANSPORT_HEADERS
+        FORCE_SC_ACCEPTED
+        HTTP_SC & HTTP_SC_DESC
+        REST_URL_POSTFIX
+        OUT_ONLY
+        ERROR_CODE & ERROR_MESSAGE & ERROR_DETAIL
+        
+    -->
+</api>

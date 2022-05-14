@@ -39,7 +39,36 @@
     <resource methods="GET" uri-template="/mock/{id}">
         <inSequence>
             <log level="custom">
+                <property name="uri.var.id getProperty" expression="$ctx:uri.var.id"></property>
+                <property name="uri.var.values" expression="$url:values"></property>
                 <property name="MSG" value="basicExample_v1_book_api - get - /mock/{id} - init"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+					{
+					"id" : $1,
+					"author":"Frank Herbert",
+					"name":"Dune"
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:uri.var.id"/>
+                </args>
+            </payloadFactory>
+            <log level="custom">
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/{id} - end"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/mock/{id}?values={values}">
+        <inSequence>
+            <log level="custom">
+                <property name="uri.var.id getProperty" expression="$ctx:uri.var.id"></property>
+                <property name="uri.var.values" expression="$url:values"></property>
+                <property name="MSG" value="basicExample_v1_book_api - get - /mock/{id}?values - init"/>
             </log>
             <payloadFactory media-type="json">
                 <format>

@@ -1,22 +1,28 @@
 # PostExamples
 
-## ApacheCamelEureka
+## ApacheCamelExamples
+
+### ApacheCamelServiceDiscoveryRibbon
+
+Example to explain how it works Apache Camel with Spring and Netflix Ribbon. Added examples of how to tests the routes
+
+### ApacheCamelEureka
 
 Project to explain how it works Apache Camel with Spring and Neflix Eureka.
 
-## ApacheCamelHystrix
+### ApacheCamelHystrix
 
 Project to explain how it works Apache Camel with Neflix Hystrix. Include dashboard. 
 
-## ApacheCamelMicrometer
+### ApacheCamelMicrometer
 
 Project to explain how it works Apache Camel with Spring Actuator, Micrometer, Prometehus and Grafana.
 
-## ApacheCamelQuarkus
+### ApacheCamelQuarkus
 
 Project to explain how it works Apache Camel with Quarkus. 
 
-## ApacheCamelRestExample
+### ApacheCamelRestExample
 
 Project to explain how it works Apache Camel 2.25.1. A basic CRUD Example, with Mock, SQL and JPA. 
 

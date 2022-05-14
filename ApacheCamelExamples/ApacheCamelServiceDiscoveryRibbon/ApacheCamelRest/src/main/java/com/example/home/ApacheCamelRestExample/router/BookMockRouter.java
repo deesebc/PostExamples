@@ -14,24 +14,41 @@ import com.example.home.ApacheCamelRestExample.pojo.Book;
 @Component
 public class BookMockRouter extends RouteBuilder {
 
-    private static Map<Integer, Book> books = new HashMap<>();
+	private static Map<Integer, Book> books = new HashMap<>();
 
-    static {
-	books.put(1, new Book(1, "Dune", "Frank Herbert"));
-	books.put(2, new Book(2, "The stars my destination", "Alfred Bester"));
-	books.put(3, new Book(3, "Ender's game", "Orson S. Card"));
-	books.put(4, new Book(4, "Configure Ribbon", "Server 1"));
-    }
+	static {
+		books.put(1, new Book(1, "Dune", "Frank Herbert"));
+		books.put(2, new Book(2, "The stars my destination", "Alfred Bester"));
+		books.put(3, new Book(3, "Ender's game", "Orson S. Card"));
+		books.put(4, new Book(4, "Configure Ribbon", "Server 1"));
+	}
 
-    @Override
-    public void configure() throws Exception {
-	restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
+	@Override
+	public void configure() throws Exception {
+		restConfiguration().component("servlet").bindingMode(RestBindingMode.json_xml);
 
-	rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().bean(BookMockRouter.class, "getAll(})")
-		.marshal().json();
-    }
+//		rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).route().bean(BookMockRouter.class, "getAll(})")
+//				.marshal().json();
 
-    public Collection<Book> getAll() {
-	return books.values();
-    }
+		rest().get("book").produces(MediaType.APPLICATION_JSON_VALUE).to("direct:restGetAllBooks");
+		from("direct:restGetAllBooks").bean(BookMockRouter.class, "getAll(})").marshal().json();
+
+		rest().get("book/{id}").produces(MediaType.APPLICATION_JSON_VALUE).to("direct:restGetById");
+		from("direct:restGetById").log("From rest.get.book.id").bean(BookMockRouter.class, "getById(${header.id})")
+				.marshal().json();
+
+//		from("rest:GET:/libro/{id}").to("direct:restGetById");
+//		from("direct:restGetById").bean(BookMockRouter.class, "getById(${header.id})").marshal().json();
+
+		from("{{rest.get.libro.id}}").log("From rest.get.libro.id").bean(BookMockRouter.class, "getById(${header.id})")
+				.marshal().json();
+	}
+
+	public Collection<Book> getAll() {
+		return books.values();
+	}
+
+	public Book getById(final Integer id) {
+		return books.get(id);
+	}
 }

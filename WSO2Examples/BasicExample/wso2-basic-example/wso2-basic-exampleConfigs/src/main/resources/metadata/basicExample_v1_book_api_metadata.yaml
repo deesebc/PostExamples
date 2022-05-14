@@ -1,0 +1,10 @@
+---
+key: "basicExample_v1_book_api-1.0.0"
+name : "basicExample_v1_book_api"
+displayName : "basicExample_v1_book_api"
+description: "Sample API"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/book"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false

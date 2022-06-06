@@ -9,7 +9,7 @@ networks:
 
 services:
   wso2is:
-    image: docker.wso2.com/wso2is:5.10.0
+    image: wso2/wso2is:5.11.0
     hostname: wso2is
     container_name: wso2is
     ports:
@@ -18,9 +18,9 @@ services:
       wso2_example_net:
         ipv4_address: 10.11.13.05
     volumes:
-      - ./configs/custom-user-store-10-1.0.0.jar:/home/wso2carbon/wso2is-5.1.0/repository/components/dropins/custom-user-store-10-1.0.0.jar
-      - ./configs/log4j2.properties:/home/wso2carbon/wso2is-5.10.0/repository/conf/log4j2.properties
-      
+      - ./configs/custom-user-store-10-1.0.0.jar:/home/wso2carbon/wso2is-5.11.0/repository/components/dropins/custom-user-store-10-1.0.0.jar
+      - ./configs/log4j2.properties:/home/wso2carbon/wso2is-5.11.0/repository/conf/log4j2.properties
+  
   wso2is_mysql:
     image: mysql:8.0.13
     mem_limit: 1G

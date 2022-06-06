@@ -15,6 +15,9 @@ connection_name = "uid=admin,ou=system"
 connection_password = "admin"
 base_dn = "dc=wso2,dc=org"      #refers the base dn on which the user and group search bases will be generated
 
+[user_store_mgt]
+allowed_user_stores=["org.wso2.carbon.user.core.jdbc.UniqueIDJDBCUserStoreManager", "org.wso2.carbon.user.core.ldap.UniqueIDActiveDirectoryUserStoreManager", "org.wso2.carbon.user.core.ldap.UniqueIDReadOnlyLDAPUserStoreManager", "org.wso2.carbon.user.core.ldap.UniqueIDReadWriteLDAPUserStoreManager", "es.home.example.wso2is.userstore.CustomUserStore10"]
+
 [database.identity_db]
 type = "h2"
 url = "jdbc:h2:./repository/database/WSO2IDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"

@@ -1,0 +1,49 @@
+version: '2.4'
+
+networks:
+  wso2_example_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.11.13.0/24
+
+services:
+  wso2is:
+    image: wso2/wso2is:5.11.0
+    hostname: wso2is
+    container_name: wso2is
+    ports:
+      - 9443:9443
+    networks:
+      wso2_example_net:
+        ipv4_address: 10.11.13.05
+    volumes:
+      - ./configs/custom-user-store-10-1.0.0.jar:/home/wso2carbon/wso2is-5.11.0/repository/components/dropins/custom-user-store-10-1.0.0.jar
+      - ./configs/log4j2.properties:/home/wso2carbon/wso2is-5.11.0/repository/conf/log4j2.properties
+  
+  wso2is_mysql:
+    image: mysql:8.0.13
+    mem_limit: 1G
+    container_name: mysql
+    hostname: mysql
+    networks:
+      wso2_example_net:
+        ipv4_address: 10.11.13.10
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Europe/Madrid
+    volumes:
+      - ./configs/scripts:/docker-entrypoint-initdb.d
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - seccomp:unconfined
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-root"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s

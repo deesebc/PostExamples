@@ -22,9 +22,9 @@ services:
         ipv4_address: 172.16.238.10
     environment:
       JAVA_OPTS: "-DenableManagementApi=true -Duser.timezone=Europe/Madrid"
+      env_secret: ${ENV_SECRET}
     volumes:
        - ./conf/docker-entrypoint.sh:/home/wso2carbon/docker-entrypoint.sh
        - ./conf/deployment.toml:/home/wso2carbon/wso2mi-1.2.0/conf/deployment.toml
        - ./conf/log4j2.properties:/home/wso2carbon/wso2mi-1.2.0/conf/log4j2.properties
-       #- ./lib:/home/wso2carbon/wso2mi-4.0.0/lib
-       #- ./apps/wso2-activemq-example_1.0.0.car:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps/wso2-activemq-example_1.0.0.car
+       - ./apps/wso2-secret-exampleCompositeExporter_1.0.0.car:/home/wso2carbon/wso2mi-1.2.0/repository/deployment/server/carbonapps/wso2-secret-exampleCompositeExporter_1.0.0.car

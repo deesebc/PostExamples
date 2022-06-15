@@ -97,4 +97,5 @@ algorithm = "AES"
 # synapse.global_timeout_interval = "120000"  # interval in milliseconds
 
 [secrets]
-keystore_pwd  = "XyavU7lk1T+e/FVrY0ZYZe+JN+wu5kXumFvbhja+B89LPSl7r4aRpLM3rFtgeO9EtYmFSVxwLE+rFWDDZHlTkUtZ50cPX3T2QVq+DTfF+1zAm7lfaK94AC/nPP9PNGBRm5VHBlgUFmfUoqDCyQuOtTcXRVqcb3XO2esrRUslMKy9Ehy5V51mMY5e3m0yRd103AVjst7WV5W5xyZ/wiG/7nG3ZJD7V6LCxVTbK5pCv+jgAKvAm+6tSjCoAvrDqCLopOR6juLGSHcnemnAAj+LN1ycorI/poiaVGgPaXutcKhOt5t84WtPtq3cUCZ4cf10x9KZtBI9y2eExpTTIkXZZA=="
+keystore_pwd       = "XyavU7lk1T+e/FVrY0ZYZe+JN+wu5kXumFvbhja+B89LPSl7r4aRpLM3rFtgeO9EtYmFSVxwLE+rFWDDZHlTkUtZ50cPX3T2QVq+DTfF+1zAm7lfaK94AC/nPP9PNGBRm5VHBlgUFmfUoqDCyQuOtTcXRVqcb3XO2esrRUslMKy9Ehy5V51mMY5e3m0yRd103AVjst7WV5W5xyZ/wiG/7nG3ZJD7V6LCxVTbK5pCv+jgAKvAm+6tSjCoAvrDqCLopOR6juLGSHcnemnAAj+LN1ycorI/poiaVGgPaXutcKhOt5t84WtPtq3cUCZ4cf10x9KZtBI9y2eExpTTIkXZZA=="
+env_secret      = "$env{env_secret}"

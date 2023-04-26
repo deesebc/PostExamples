@@ -1,11 +1,8 @@
 package com.example.home.apachecamel.router;
 
-import java.io.IOException;
-
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
@@ -31,6 +28,7 @@ public class TestcontainersConf {
     //1.18 generate NoSuchMethodError optionallyMapResourceParameterAsVolume. 
     //1.17 java.lang.ClassNotFoundException: org.testcontainers.shaded.org.apache.commons.lang.StringUtils
 
+    //@Container
     static MySQLContainer<?> database = new MySQLContainer<>(MYSQL_57_IMAGE)
     .withInitScript("scripts/init_mysql.sql")
     .withDatabaseName("library").withLogConsumer(new Slf4jLogConsumer(log));

@@ -28,7 +28,7 @@ public class ApacheMySQLRouter extends RouteBuilder {
 
     from("direct:getBookById").routeId("getBookById")
         .setBody(simple("select * from library.BOOK where id = ${header.id}"))
-        .to("jdbc:dataSource?outputType=SelectOne");
+        .to("jdbc:dataSource?outputType=SelectOne").log("Body: ${body}");
   }
 
 }

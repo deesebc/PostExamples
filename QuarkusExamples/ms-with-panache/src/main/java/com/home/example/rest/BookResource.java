@@ -29,8 +29,8 @@ public class BookResource {
     @Inject
     BookRepository repository;
 
-    // @Inject
-    // BookMapper mapper;
+    @Inject
+    BookMapper mapper;
 
     //warning: if we dont add quarkus-resteasy-reactive-jackson dependency, we can not produces or consumes JSON
     @GET
@@ -63,13 +63,15 @@ public class BookResource {
         return new Success(Boolean.toString(repository.deleteById(id)));
     }
 
-    // @PUT
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public void update(final Book newBook) {
-    //     Book stored = repository.findById(newBook.getId());
-    //     mapper.update(stored, newBook);
-    //     repository.persist(stored);
-    // }
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Book update(final Book newBook) {
+        Book stored = repository.findById(newBook.getId());
+        mapper.update(stored, newBook);
+        repository.persist(stored);
+        return stored;
+    }
 
     //warning: if we don put @Transactional generates an error
     @POST

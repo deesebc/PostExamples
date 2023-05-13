@@ -1,0 +1,32 @@
+<Bundle xmlns="http://hl7.org/fhir">
+	<id value="bundle-simplificado-001" />
+	<identifier>
+		<value value="001" />
+	</identifier>
+	<type value="transaction" />
+	<entry>
+		<resource>
+			<Patient xmlns="http://hl7.org/fhir">
+				<id value="pacient-exemple1" />
+				<identifier>
+					<type>
+						<coding>
+							<code value="DNI" />
+						</coding>
+						<text value="DNI" />
+					</type>
+					<value value="37777777A" />
+				</identifier>
+				<name>
+					<family value="Garcia Rodriguez" />
+					<given value="Pepe" />
+				</name>
+				<birthDate value="1988-08-08" />
+			</Patient>
+		</resource>
+		<request>
+			<method value="POST" />
+			<url value="Paciente" />
+		</request>
+	</entry>
+</Bundle>

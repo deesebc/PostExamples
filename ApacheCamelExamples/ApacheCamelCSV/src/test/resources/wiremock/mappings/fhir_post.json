@@ -1,0 +1,16 @@
+{
+	"request": 
+	{
+		"urlPath": "/",
+		"method": "POST"
+	
+	},
+	"response": 
+	{
+		"status": 201,
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "bodyFileName":"bundle.xml"
+	}
+}

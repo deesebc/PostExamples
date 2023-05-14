@@ -2,10 +2,9 @@ package com.home.example.rest;
 
 import java.util.List;
 
-import com.home.example.entity.Book;
-import com.home.example.mapper.BookMapper;
+import com.home.example.entity.BoardGame;
+import com.home.example.mapper.BoardGameMapper;
 import com.home.example.pojo.Success;
-import com.home.example.repository.BookRepository;
 
 import io.netty.util.internal.StringUtil;
 import io.quarkus.logging.Log;
@@ -24,26 +23,24 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/book")
-public class BookResource {
-    @Inject
-    BookRepository repository;
+@Path("/boardgame")
+public class BoardGameResource {
 
     @Inject
-    BookMapper mapper;
+    BoardGameMapper mapper;
 
     //warning: if we dont add quarkus-resteasy-reactive-jackson dependency, we can not produces or consumes JSON
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Book> getAllSorted(@QueryParam("sortedBy") final String sortedBy, @QueryParam("order") final Direction order) {
+    public List<BoardGame> getAllSorted(@QueryParam("sortedBy") final String sortedBy, @QueryParam("order") final Direction order) {
         Log.info(String.format("getAllSorted: sortedBy %s order %s", sortedBy, order));
-        List<Book> retorno;
+        List<BoardGame> retorno;
         if (!StringUtil.isNullOrEmpty(sortedBy) && !StringUtil.isNullOrEmpty(sortedBy)) {
-            retorno = repository.listAll(Sort.by(sortedBy, order));
+            retorno = BoardGame.listAll(Sort.by(sortedBy, order));
         } else if (!StringUtil.isNullOrEmpty(sortedBy)) {
-            retorno = repository.listAll(Sort.by(sortedBy));
+            retorno = BoardGame.listAll(Sort.by(sortedBy));
         } else {
-            retorno = repository.listAll();
+            retorno = BoardGame.listAll();
         }
         return retorno;
     }
@@ -51,35 +48,35 @@ public class BookResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Book getBookById(@PathParam("id") final Long id) {
-        return repository.findById(id);
+    public BoardGame getBoardGameById(@PathParam("id") final Long id) {
+        return BoardGame.findById(id);
     }
 
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
     public Success deleteById(@PathParam("id") final Long id) {
-        return new Success(Boolean.toString(repository.deleteById(id)));
+        return new Success(Boolean.toString(BoardGame.deleteById(id)));
     }
 
-    //warning: if we dont put @Transactional findById and persist have different transaction and generates error:
-    //org.hibernate.PersistentObjectException: detached entity passed to persist
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Book update(final Book newBook) {
-        Book stored = repository.findById(newBook.getId());
-        mapper.update(stored, newBook);
-        repository.persist(stored);
+    public BoardGame update(final BoardGame newBoardGame) {
+        BoardGame stored = BoardGame.findById(newBoardGame.id);
+        mapper.update(stored, newBoardGame);
+        BoardGame.persist(stored);
         return stored;
     }
 
-    //warning: if we don put @Transactional generates an error. In this case is in Repository
+    //warning: if we don put @Transactional generates an error
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Book persist(final Book newBook) {
-        repository.persist(newBook);
-        return newBook;
+    @Transactional
+    public BoardGame persist(final BoardGame newBoardGame) {
+        BoardGame.persist(newBoardGame);
+        return newBoardGame;
     }
 }

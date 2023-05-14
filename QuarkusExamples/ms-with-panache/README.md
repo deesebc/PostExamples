@@ -1,5 +1,12 @@
 # ms-with-panache Project
 
+## Generation
+
+```bash
+mvn com.redhat.quarkus.platform:quarkus-maven-plugin:2.13.5.Final-redhat-00002:create \
+    -DprojectGroupId=com.home.example -DprojectArtifactId=ms-with-panache
+```
+
 ## Maven configuration
 
 * Rest: quarkus-resteasy-reactive

@@ -18,6 +18,15 @@ public class Book {
     String author;
     String name;
 
+    public Book(){
+        super();
+    }
+
+    public Book(final String author, final String name){
+        this.author=author;
+        this.name=name;
+    }
+
     public Long getId() {
         return id;
     }

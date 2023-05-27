@@ -22,6 +22,12 @@ public class Book {
         super();
     }
 
+    public Book(final Long id, final String author, final String name){
+        this.id = id;
+        this.author=author;
+        this.name=name;
+    }
+
     public Book(final String author, final String name){
         this.author=author;
         this.name=name;

@@ -3,11 +3,14 @@ package com.home.example.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.home.example.entity.Book;
+import com.home.example.repository.BookRepository;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.InjectSpy;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -19,6 +22,9 @@ import static org.hamcrest.CoreMatchers.*;
 @TestHTTPEndpoint(BookResource.class)
 public class BookResourceTest {
 
+    // @InjectSpy
+    // BookRepository repository;
+
     @Test
     public void getById() {
         when()
@@ -28,7 +34,6 @@ public class BookResourceTest {
             .body("id", is(1))
             .body("name", is("Ender Game"))
             .body("author", is("Orson S. Card"));
-
     }
 
     @Test
@@ -37,6 +42,8 @@ public class BookResourceTest {
         System.out.println(response.asPrettyString());
         assertEquals(200, response.getStatusCode(), "Status code is not 200");
         assertEquals("Ender Game", response.getBody().as(Book.class).getName(), "Name is not Ender Game");
+
+        // Mockito.verify(repository, Mockito.times(1)).findById(1l);
     }
 
     @Test

@@ -1,0 +1,13 @@
+{
+    "request": {
+      "method": "GET",
+      "urlPath": "/entidades/9996/siniestros/v2.0.0/expedientes"
+    },
+    "response": {
+      "body": "{\"status\":\"Validacion Correcta\",\"distinguishedName\":\"\",\"user\":\"\"}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "status": 200
+    }
+  }

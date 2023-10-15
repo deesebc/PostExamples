@@ -1,0 +1,13 @@
+{
+    "request": {
+      "method": "GET",
+      "urlPath": "/es/segurosrga/ldap"
+    },
+    "response": {
+      "body": "{\"status\":\"Validacion Correcta\",\"distinguishedName\":\"\",\"user\":\"\"}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "status": 200
+    }
+  }

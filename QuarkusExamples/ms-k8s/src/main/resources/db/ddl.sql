@@ -1,0 +1,11 @@
+CREATE DATABASE library;
+GRANT ALL PRIVILEGES ON library.* TO 'username-default'@'%' IDENTIFIED BY 'my_cool_secret';
+
+USE `library`;
+
+CREATE TABLE `BOOK` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(45) DEFAULT NULL,
+  `AUTHOR` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

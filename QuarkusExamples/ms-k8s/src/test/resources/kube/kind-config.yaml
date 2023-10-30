@@ -1,0 +1,12 @@
+# run: kind create cluster --config kind-config.yaml --name kind-basic
+# checkIp: docker container inspect kind-basic-control-plane --format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30000
+    hostPort: 30000
+    listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+    protocol: tcp # Optional, defaults to tcp
+- role: worker

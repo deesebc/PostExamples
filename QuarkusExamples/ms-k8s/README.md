@@ -19,6 +19,14 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
+## Generate image
+
+```shell script
+mvn clean install -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
+```
+
+create image : deesebc/ms-k8s:1.0.0-SNAPSHOT
+
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
 ## Packaging and running the application

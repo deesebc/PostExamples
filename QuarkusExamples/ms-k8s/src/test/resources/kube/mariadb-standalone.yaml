@@ -1,0 +1,78 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-initdb-pv-volume
+  labels:
+    type: local
+    app: mysql
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadOnlyMany
+  hostPath:
+    path: "/Users/deesebc/git/deesebc/PostExamples/QuarkusExamples/ms-k8s/src/test/resources/kube/config/scripts"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-initdb-pv-claim
+  labels:
+    app: mysql
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: apps/v1
+kind: Deployment # what to create?
+metadata:
+  name: mariadb-deployment
+spec: # specification for deployment resource
+  replicas: 2 # how many replicas of pods we want to create
+  selector:
+    matchLabels:
+      app: mariadb
+  template: # blueprint for pods
+    metadata:
+      labels:
+        app: mariadb # service will look for this label
+    spec: # specification for pods
+      containers: # we can have one or more containers
+      - name: mariadb
+        image: mariadb
+        ports:
+        - containerPort: 3306 
+        volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: mysql-initdb
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: my-secret-pw
+        - name: MARIADB_USER
+          value: username-default
+        - name: MARIADB_PASSWORD
+          value: my_cool_secret
+      volumes:
+        - name: mysql-initdb
+          persistentVolumeClaim:
+            claimName: mysql-initdb-pv-claim
+---
+# ... Service YAML definition
+#run: kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306  

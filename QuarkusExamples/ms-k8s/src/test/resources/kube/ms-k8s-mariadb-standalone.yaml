@@ -1,0 +1,37 @@
+# ... Deployment YAML definition
+#run:   kubectl apply -f deployment.yaml
+#scale: kubectl scale deployment --replicas=2 ms-k8s
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-k8s
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-k8s
+  template:
+    metadata:
+      labels:
+        app: ms-k8s
+    spec:
+      containers:
+        - name: ms-k8s
+          imagePullPolicy: IfNotPresent
+          image: deesebc/ms-k8s:1.0.0-SNAPSHOT
+---
+# ... Service YAML definition
+#run: kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-k8s-service
+spec:
+  type: NodePort
+  selector:
+    app: ms-k8s
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000

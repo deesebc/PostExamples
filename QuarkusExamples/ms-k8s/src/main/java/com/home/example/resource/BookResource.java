@@ -2,6 +2,8 @@ package com.home.example.resource;
 
 import java.util.List;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import com.home.example.entity.Book;
 import com.home.example.repository.BookRepository;
 
@@ -23,6 +25,10 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/book")
 public class BookResource {
+
+	@ConfigProperty(name = "greeting.message")
+	String message;
+
 	@Inject
 	BookRepository repository;
 
@@ -30,6 +36,7 @@ public class BookResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Book> getAllSorted(@QueryParam("sortedBy") final String sortedBy,
 			@QueryParam("order") final Direction order) {
+		Log.info("Message: " + message);
 		Log.info(String.format("getAllSorted: sortedBy %s order %s", sortedBy, order));
 		List<Book> retorno;
 		if (!StringUtil.isNullOrEmpty(sortedBy) && !StringUtil.isNullOrEmpty(sortedBy)) {
@@ -46,6 +53,7 @@ public class BookResource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Book getBookById(@PathParam("id") final Long id) {
+		Log.info("Message: " + message);
 		return repository.findById(id);
 	}
 

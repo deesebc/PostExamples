@@ -1,42 +1,25 @@
-kind: PersistentVolume
 apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: mysql-initdb-pv-volume
-  labels:
-    type: local
-    app: mysql
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadOnlyMany
-  hostPath:
-    path: "/Users/deesebc/git/deesebc/PostExamples/QuarkusExamples/ms-k8s/src/test/resources/kube/config/scripts"
+  name: quarkus-config
+data:
+  application.properties: |-
+    greeting.message=Overriden message
 ---
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mysql-initdb-pv-claim
-  labels:
-    app: mysql
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadOnlyMany
-  resources:
-    requests:
-      storage: 1Mi
----
+#run:   kubectl apply -f mariadb-standalone.yaml
+#logs: kubectl logs -l app=mariadb --all-containers
+#access: kubectl exec --stdin --tty mariadb-5f88dfb948-rkrr5 -- /bin/sh
 apiVersion: apps/v1
 kind: Deployment # what to create?
 metadata:
-  name: mariadb-deployment
+  name: mariadb
 spec: # specification for deployment resource
-  replicas: 2 # how many replicas of pods we want to create
+  replicas: 1 # how many replicas of pods we want to create
   selector:
     matchLabels:
       app: mariadb
+  strategy:
+    type: Recreate
   template: # blueprint for pods
     metadata:
       labels:
@@ -46,10 +29,7 @@ spec: # specification for deployment resource
       - name: mariadb
         image: mariadb
         ports:
-        - containerPort: 3306 
-        volumeMounts:
-          - mountPath: /docker-entrypoint-initdb.d
-            name: mysql-initdb
+          - containerPort: 3306
         env:
         - name: MARIADB_ROOT_PASSWORD
           value: my-secret-pw
@@ -57,10 +37,48 @@ spec: # specification for deployment resource
           value: username-default
         - name: MARIADB_PASSWORD
           value: my_cool_secret
+        volumeMounts:
+          - name: mariadb-initdb
+            mountPath: /docker-entrypoint-initdb.d
       volumes:
-        - name: mysql-initdb
-          persistentVolumeClaim:
-            claimName: mysql-initdb-pv-claim
+        - name: mariadb-initdb
+          configMap:
+            name: mariadb-initdb-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-initdb-config
+data:
+  initdb.sql: |
+    CREATE DATABASE library;
+    GRANT ALL PRIVILEGES ON library.* TO 'username-default'@'%' IDENTIFIED BY 'my_cool_secret';
+    USE `library`;
+    CREATE TABLE `BOOK` (
+      `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+      `NAME` varchar(45) DEFAULT NULL,
+      `AUTHOR` varchar(45) DEFAULT NULL,
+      PRIMARY KEY (`ID`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+    INSERT INTO BOOK (NAME, AUTHOR) VALUES('Ender Game', 'Orson S. Card');
+    INSERT INTO BOOK (NAME, AUTHOR) VALUES('The stars my destination', 'Alfred Bester');
+    INSERT INTO BOOK (NAME, AUTHOR) VALUES('Dune', 'Frank Herbert');
+    INSERT INTO BOOK (NAME, AUTHOR) VALUES('Dune', 'Frank Herbert');
+---
+# ... Service YAML definition
+#run: kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  type: ClusterIP
+  selector:
+    app: mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
 ---
 # ... Deployment YAML definition
 #run:   kubectl apply -f deployment.yaml
@@ -82,7 +100,7 @@ spec:
       containers:
         - name: ms-k8s
           imagePullPolicy: IfNotPresent
-          image: deesebc/ms-k8s:1.0.0-SNAPSHOT
+          image: deesebc/ms-k8s:1.0.1-SNAPSHOT
 ---
 # ... Service YAML definition
 #run: kubectl apply -f service.yaml
@@ -99,20 +117,5 @@ spec:
       port: 8080
       targetPort: 8080
       nodePort: 30000
----
-# ... Service YAML definition
-#run: kubectl apply -f service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: mariadb-service
-spec:
-  type: ClusterIP
-  selector:
-    app: mariadb
-  ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
 
 # curl --location 'http://localhost:30000/q/health/live'      

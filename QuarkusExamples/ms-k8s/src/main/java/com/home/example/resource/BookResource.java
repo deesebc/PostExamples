@@ -26,7 +26,7 @@ import jakarta.ws.rs.core.Response;
 @Path("/book")
 public class BookResource {
 
-	@ConfigProperty(name = "greeting.message")
+	@ConfigProperty(name = "log.message")
 	String message;
 
 	@Inject
@@ -36,7 +36,7 @@ public class BookResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Book> getAllSorted(@QueryParam("sortedBy") final String sortedBy,
 			@QueryParam("order") final Direction order) {
-		Log.info("Message: " + message);
+		Log.info("Message from application.properties: " + message);
 		Log.info(String.format("getAllSorted: sortedBy %s order %s", sortedBy, order));
 		List<Book> retorno;
 		if (!StringUtil.isNullOrEmpty(sortedBy) && !StringUtil.isNullOrEmpty(sortedBy)) {

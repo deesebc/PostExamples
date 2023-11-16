@@ -72,6 +72,44 @@ spec:
       port: 3306
       targetPort: 3306
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ms-k8s-service-account
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ms-k8s-role
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["ms-k8s-configmap"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["ms-k8s-secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ms-k8s-role-binding
+subjects:
+- kind: ServiceAccount
+  name: ms-k8s-service-account
+roleRef:
+  kind: Role
+  name: ms-k8s-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-k8s-configmap
+data:
+  log.message: log message from configmap
+---
 # ... Deployment YAML definition
 #run:   kubectl apply -f deployment.yaml
 #scale: kubectl scale deployment --replicas=2 ms-k8s
@@ -89,10 +127,12 @@ spec:
       labels:
         app: ms-k8s
     spec:
+      serviceAccountName: ms-k8s-service-account
+      automountServiceAccountToken: true
       containers:
         - name: ms-k8s
           imagePullPolicy: IfNotPresent
-          image: deesebc/ms-k8s:1.0.1-SNAPSHOT
+          image: deesebc/ms-k8s:1.0.2-SNAPSHOT
 ---
 # ... Service YAML definition
 #run: kubectl apply -f service.yaml

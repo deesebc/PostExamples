@@ -16,7 +16,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.build.timestamp.format>yyyy.MM.dd-hh.mm</maven.build.timestamp.format>
 
-		<struts2.version>2.5.31</struts2.version>
+		<struts2.version>2.5.32</struts2.version>
 		<struts2-query.version>4.0.3</struts2-query.version>
 	</properties>
 

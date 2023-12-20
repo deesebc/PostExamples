@@ -21,21 +21,35 @@ spec: # specification for deployment resource
       - name: mariadb
         image: mariadb
         ports:
-          - containerPort: 3306
-        env:
+          - containerPort: 3306 #port exposed in cluster
+        env: # allows to define environment variables
         - name: MARIADB_ROOT_PASSWORD
-          value: my-secret-pw
+          valueFrom:
+            secretKeyRef:  # allows to refer to a secret configured
+              name: mariadb-secret  #name of the secret
+              key: root.pass #key of the secret that you want to use
         - name: MARIADB_USER
           value: username-default
         - name: MARIADB_PASSWORD
-          value: my_cool_secret
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: user.pass
         volumeMounts:
-          - name: mariadb-initdb
+          - name: mariadb-initdb #configuration of the volumes
             mountPath: /docker-entrypoint-initdb.d
       volumes:
-        - name: mariadb-initdb
+        - name: mariadb-initdb #volumen to configure
           configMap:
-            name: mariadb-initdb-config
+            name: mariadb-initdb-config #refer key of the config map
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secret
+data:
+  user.pass: bXlfY29vbF9zZWNyZXQ=
+  root.pass: bXktc2VjcmV0LXB3
 ---
 apiVersion: v1
 kind: ConfigMap

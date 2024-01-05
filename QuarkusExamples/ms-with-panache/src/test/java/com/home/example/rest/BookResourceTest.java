@@ -1,22 +1,20 @@
 package com.home.example.rest;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import com.home.example.entity.Book;
-import com.home.example.repository.BookRepository;
 
+import io.quarkus.logging.Log;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectSpy;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
 
 @QuarkusTest
 @TestHTTPEndpoint(BookResource.class)
@@ -39,7 +37,7 @@ public class BookResourceTest {
     @Test
     public void getById2() {
         Response response = when().get("/1").thenReturn();
-        System.out.println(response.asPrettyString());
+        Log.info(response.asPrettyString());
         assertEquals(200, response.getStatusCode(), "Status code is not 200");
         assertEquals("Ender Game", response.getBody().as(Book.class).getName(), "Name is not Ender Game");
 
@@ -49,7 +47,7 @@ public class BookResourceTest {
     @Test
     public void getAll() {
         Response response = when().get("/").thenReturn();
-        System.out.println(response.asPrettyString());
+        Log.info(response.asPrettyString());
 
         when()
             .get("/")
@@ -65,7 +63,7 @@ public class BookResourceTest {
     public void createAndDelete() {
         ValidatableResponse vResponse = when().get("/").then();
         int size = vResponse.extract().jsonPath().getList("$").size();
-        System.out.println("Size: "+size);
+        Log.info("Size: "+size);
 
         Response response = given()
         .body( new Book("Robert Holdstock", "Bosque Mitago") )
@@ -75,7 +73,7 @@ public class BookResourceTest {
 
         Book book = response.as(Book.class);
         long id = book.getId();
-        System.out.println("id: "+id);
+        Log.info("id: "+id);
 
         when()
             .get("/")

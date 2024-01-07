@@ -9,9 +9,7 @@ import io.quarkus.test.common.QuarkusTestResourceConfigurableLifecycleManager;
 
 public class WiremockResourceConfigurable implements QuarkusTestResourceConfigurableLifecycleManager<WiremockTestAnnotation> {
 	
-	private final static String FOLDER = "src/test/resources/wiremock";
 	public static WireMockServer server;
-
 	private String port;
 
 	@Override

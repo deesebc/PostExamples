@@ -65,6 +65,14 @@ If you want to learn more about building native executables, please consult http
 
 ## Provided Code
 
+### Docker
+
+* Generate image & push
+
+```shell script
+mvn clean install -DskipTests -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
+```
+
 ### K8S Config
 
 Resources files in src/test/resources/kube

@@ -26,14 +26,14 @@ spec: # specification for deployment resource
         - name: MARIADB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:  # allows to refer to a secret configured
-              name: mariadb-secret  #name of the secret
+              name: ms-k8s-config-secret  #name of the secret
               key: root.pass #key of the secret that you want to use
         - name: MARIADB_USER
           value: username-default
         - name: MARIADB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mariadb-secret
+              name: ms-k8s-config-secret
               key: user.pass
         volumeMounts:
           - name: mariadb-initdb #configuration of the volumes
@@ -46,7 +46,7 @@ spec: # specification for deployment resource
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mariadb-secret
+  name: ms-k8s-config-secret
 data:
   user.pass: bXlfY29vbF9zZWNyZXQ=
   root.pass: bXktc2VjcmV0LXB3
@@ -95,15 +95,32 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: ms-k8s-config-role
+# rules:
+# - apiGroups: [""]
+#   resources: ["configmaps"]
+#   resourceNames: ["ms-k8s-config-configmap"]
+#   verbs: ["get"]
+# - apiGroups: [""]
+#   resources: ["secrets"]
+#   resourceNames: ["ms-k8s-config-secret"]
+#   verbs: ["get"]
 rules:
-- apiGroups: [""]
-  resources: ["configmaps"]
-  resourceNames: ["ms-k8s-config-configmap"]
-  verbs: ["get"]
-- apiGroups: [""]
-  resources: ["secrets"]
-  resourceNames: ["ms-k8s-config-secrets"]
-  verbs: ["get"]
+- apiGroups:
+  - ""
+  resourceNames:
+  - ms-k8s-config-configmap
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resourceNames:
+  - ms-k8s-config-secret
+  resources:
+  - secrets
+  verbs:
+  - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -141,11 +158,12 @@ spec:
       labels:
         app: ms-k8s-config
     spec:
+      serviceAccount: ms-k8s-config-service-account
       serviceAccountName: ms-k8s-config-service-account
       automountServiceAccountToken: true
       containers:
         - name: ms-k8s-config
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           image: deesebc/ms-k8s-config:1.0.2-SNAPSHOT
 ---
 # ... Service YAML definition

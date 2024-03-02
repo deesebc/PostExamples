@@ -75,75 +75,75 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ms-k8s-cloud-service-account
+  name: ms-k8s-config-service-account
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: ms-k8s-cloud-role
+  name: ms-k8s-config-role
 rules:
 - apiGroups: [""]
   resources: ["configmaps"]
-  resourceNames: ["ms-k8s-cloud-configmap"]
+  resourceNames: ["ms-k8s-config-configmap"]
   verbs: ["get"]
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["ms-k8s-cloud-secrets"]
+  resourceNames: ["ms-k8s-config-secrets"]
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ms-k8s-cloud-role-binding
+  name: ms-k8s-config-role-binding
 subjects:
 - kind: ServiceAccount
-  name: ms-k8s-cloud-service-account
+  name: ms-k8s-config-service-account
 roleRef:
   kind: Role
-  name: ms-k8s-cloud-role
+  name: ms-k8s-config-role
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ms-k8s-cloud-configmap
+  name: ms-k8s-config-configmap
 data:
   log.message: log message from configmap
 ---
 # ... Deployment YAML definition
 #run:   kubectl apply -f deployment.yaml
-#scale: kubectl scale deployment --replicas=2 ms-k8s-cloud
+#scale: kubectl scale deployment --replicas=2 ms-k8s-config
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-k8s-cloud
+  name: ms-k8s-config
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ms-k8s-cloud
+      app: ms-k8s-config
   template:
     metadata:
       labels:
-        app: ms-k8s-cloud
+        app: ms-k8s-config
     spec:
-      serviceAccountName: ms-k8s-cloud-service-account
+      serviceAccountName: ms-k8s-config-service-account
       automountServiceAccountToken: true
       containers:
-        - name: ms-k8s-cloud
+        - name: ms-k8s-config
           imagePullPolicy: IfNotPresent
-          image: deesebc/ms-k8s-cloud:1.0.2-SNAPSHOT
+          image: deesebc/ms-k8s-config:1.0.2-SNAPSHOT
 ---
 # ... Service YAML definition
 #run: kubectl apply -f service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-k8s-cloud-service
+  name: ms-k8s-config-service
 spec:
   type: NodePort
   selector:
-    app: ms-k8s-cloud
+    app: ms-k8s-config
   ports:
     - protocol: TCP
       port: 8080

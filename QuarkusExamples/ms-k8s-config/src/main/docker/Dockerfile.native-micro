@@ -10,11 +10,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/ms-k8s-cloud .
+# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/ms-k8s-config .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/ms-k8s-cloud
+# docker run -i --rm -p 8080:8080 quarkus/ms-k8s-config
 #
 ###
 FROM quay.io/quarkus/quarkus-micro-image:2.0

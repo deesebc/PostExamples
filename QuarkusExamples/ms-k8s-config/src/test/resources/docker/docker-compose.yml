@@ -22,7 +22,7 @@ services:
           - mariadb
 
   ms:
-    image: docker.io/deesebc/ms-k8s-cloud:1.0.0-SNAPSHOT
+    image: docker.io/deesebc/ms-k8s-config:1.0.0-SNAPSHOT
     container_name: ms
     hostname: ms
     restart: always

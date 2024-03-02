@@ -1,4 +1,4 @@
-# ms-k8s-cloud
+# ms-k8s-config
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -9,7 +9,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 ```shell script
 mvn io.quarkus.platform:quarkus-maven-plugin:3.4.3:create \
     -DprojectGroupId=com.home.example \
-    -DprojectArtifactId=ms-k8s-cloud
+    -DprojectArtifactId=ms-k8s-config
 ```
 
 ## Running the application in dev mode
@@ -25,7 +25,7 @@ You can run your application in dev mode that enables live coding using:
 mvn clean install -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
 ```
 
-create image : deesebc/ms-k8s-cloud:1.0.0-SNAPSHOT
+create image : deesebc/ms-k8s-config:1.0.0-SNAPSHOT
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
@@ -59,7 +59,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/ms-k8s-cloud-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/ms-k8s-config-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 

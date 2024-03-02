@@ -1,0 +1,41 @@
+# ... Deployment YAML definition
+#run:   kubectl apply -f deployment.yaml
+#scale: kubectl scale deployment --replicas=2 ms-k8s-cloud
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-k8s-cloud
+  labels:
+    app: ms-k8s-cloud
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-k8s-cloud
+  template:
+    metadata:
+      labels:
+        app: ms-k8s-cloud
+    spec:
+      containers:
+        - name: ms-k8s-cloud
+          imagePullPolicy: IfNotPresent
+          image: deesebc/ms-k8s-cloud:1.0.0-SNAPSHOT
+---
+# ... Service YAML definition
+#run: kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-k8s-cloud-service
+spec:
+  type: NodePort
+  selector:
+    app: ms-k8s-cloud
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
+
+# curl --location 'http://localhost:30000/q/health/live'      

@@ -1,0 +1,44 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mariadb:
+    image: mariadb
+    restart: always
+    container_name: mariadb
+    hostname: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: my-secret-pw
+      MARIADB_USER: username-default
+      MARIADB_PASSWORD: my_cool_secret
+    volumes:
+      - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+       test: ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+    networks:
+      sandbox-net:
+        aliases:
+          - mariadb
+
+  ms:
+    image: docker.io/deesebc/ms-k8s-cloud:1.0.0-SNAPSHOT
+    container_name: ms
+    hostname: ms
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      sandbox-net:
+        aliases:
+          - ms
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+networks:
+  sandbox-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"

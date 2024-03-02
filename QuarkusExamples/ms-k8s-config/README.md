@@ -65,8 +65,24 @@ If you want to learn more about building native executables, please consult http
 
 ## Provided Code
 
-### RESTEasy Reactive
+### K8S Config
 
-Easily start your Reactive RESTful Web Services
+Resources files in src/test/resources/kube
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+* create cluster
+
+```shell script
+kind create cluster --config kind-config.yaml --name kind-basic
+```
+
+* delete cluster
+
+```shell script
+kind delete cluster --name kind-basic
+```
+
+* apply deployment
+
+```shell script
+kubectl apply -f ms-k8s-config.yaml
+```

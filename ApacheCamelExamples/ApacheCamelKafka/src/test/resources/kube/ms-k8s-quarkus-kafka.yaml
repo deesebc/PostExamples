@@ -1,0 +1,269 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kafka-network
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              network/kafka-network: "true"
+  podSelector:
+    matchLabels:
+      network/kafka-network: "true"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    service: zookeeper
+  name: zookeeper
+spec:
+  serviceName: zookeeper
+  replicas: 1
+  selector:
+    matchLabels:
+      service: zookeeper
+  template:
+    metadata:
+      labels:
+        network/kafka-network: "true"
+        service: zookeeper
+    spec:
+      securityContext:
+        fsGroup: 1000
+      enableServiceLinks: false
+      containers:
+        - name: zookeeper
+          imagePullPolicy: Always
+          image: zookeeper
+          ports:
+            - containerPort: 2181
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_DATA_DIR
+              value: "/var/lib/zookeeper/data"
+            - name: ZOOKEEPER_LOG_DIR
+              value: "/var/lib/zookeeper/log"
+            - name: ZOOKEEPER_SERVER_ID
+              value: "1"
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/zookeeper/data
+              name: zookeeper-data
+            - mountPath: /var/lib/zookeeper/log
+              name: zookeeper-log
+      hostname: zookeeper
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: zookeeper-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1024Mi
+    - metadata:
+        name: zookeeper-log
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1024Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: zookeeper
+  name: zookeeper
+spec:
+  ports:
+    - name: "2181"
+      port: 2181
+      targetPort: 2181
+  selector:
+    service: zookeeper
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    service: kafka
+  name: kafka
+spec:
+  serviceName: kafka
+  replicas: 1
+  selector:
+    matchLabels:
+      service: kafka
+  template:
+    metadata:
+      labels:
+        network/kafka-network: "true"
+        service: kafka
+    spec:
+      securityContext:
+        fsGroup: 1000
+      enableServiceLinks: false
+      containers:
+        - name: kafka
+          imagePullPolicy: IfNotPresent
+          image: bitnami/kafka:latest
+          ports:
+            - containerPort: 29092
+            - containerPort: 9092
+          env:
+            - name: KAFKA_CFG_NODE_ID
+              value: "0"
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: "controller,broker"
+            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+            - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+              value: "0@kafka:9093"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "INTERNAL://:29092,LISTENER_EXTERNAL://:9092,CONTROLLER://:9093"
+            - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "INTERNAL"
+            - name: KAFKA_LISTENERS
+              value: "INTERNAL://:29092,LISTENER_EXTERNAL://:9092,CONTROLLER://:9093"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "INTERNAL:PLAINTEXT,LISTENER_EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT"
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "zookeeper:2181"
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/kafka/
+              name: kafka-data
+      hostname: kafka
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: kafka-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: kafka
+  name: kafka
+spec:
+  clusterIP: None
+  selector:
+    service: kafka
+  ports:
+    - name: internal
+      port: 29092
+      targetPort: 29092
+    - name: external
+      port: 30092
+      targetPort: 9092
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ms-k8s-cml-qks-kafka-secret
+data:
+  user.pass: bXlfY29vbF9zZWNyZXQ=
+  root.pass: bXktc2VjcmV0LXB3
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ms-k8s-cml-qks-kafka-service-account
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ms-k8s-cml-qks-kafka-role
+rules:
+- apiGroups:
+  - ""
+  resourceNames:
+  - ms-k8s-cml-qks-kafka-configmap
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resourceNames:
+  - ms-k8s-cml-qks-kafka-secret
+  resources:
+  - secrets
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ms-k8s-cml-qks-kafka-role-binding
+subjects:
+- kind: ServiceAccount
+  name: ms-k8s-cml-qks-kafka-service-account
+roleRef:
+  kind: Role
+  name: ms-k8s-cml-qks-kafka-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-k8s-cml-qks-kafka-configmap
+data:
+  log.message: log message from configmap
+---
+# ... Deployment YAML definition
+#run:   kubectl apply -f deployment.yaml
+#scale: kubectl scale deployment --replicas=2 ms-k8s-cml-qks-kafka
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-k8s-cml-qks-kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-k8s-cml-qks-kafka
+  template:
+    metadata:
+      labels:
+        app: ms-k8s-cml-qks-kafka
+    spec:
+      serviceAccount: ms-k8s-cml-qks-kafka-service-account
+      serviceAccountName: ms-k8s-cml-qks-kafka-service-account
+      automountServiceAccountToken: true
+      containers:
+        - name: ms-k8s-cml-qks-kafka
+          imagePullPolicy: Always
+          image: deesebc/ms-camel-quarkus-kafka
+---
+# ... Service YAML definition
+#run: kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-k8s-cml-qks-kafka-service
+spec:
+  type: NodePort
+  selector:
+    app: ms-k8s-cml-qks-kafka
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      nodePort: 30000
+
+# curl --location 'http://localhost:30000/q/health/live'      

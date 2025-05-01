@@ -183,7 +183,7 @@
 			</activation>
 			<properties>
 				<quarkus.package.type>native</quarkus.package.type>
-				<quarkus.native.additional-build-args>-H:ReflectionConfigurationResources=reflect-config.json</quarkus.native.additional-build-args>
+				<!-- <quarkus.native.additional-build-args>-H:ReflectionConfigurationResources=reflect-config.json</quarkus.native.additional-build-args> -->
 			</properties>
 			<build>
 				<plugins>

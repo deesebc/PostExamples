@@ -16,9 +16,10 @@ public class LogicRoute extends RouteBuilder {
       .setBody().simple("${null}")
       .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(202));
 
-    from("direct:read-kafka-in-seq").id("read-kafka-in-seq")
-            .log("init read-kafka-in-seq")
-            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(202));
+    from("kafka:my-topic").id("read-kafka-in-seq")
+            .log("init read-kafka-in-seq my-topic")
+            .log("body: ${body}")
+            .stop();
   }
 
 }
